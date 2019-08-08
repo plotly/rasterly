@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565277178806.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "4134076160",
+    "id" : "7AC292AB",
+    "lastKnownWriteTime" : 1564595882,
+    "last_content_update" : 1564595882,
+    "path" : "~/GitHub/rasterizer/R/color_setting.R",
+    "project_path" : "R/color_setting.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

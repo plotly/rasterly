@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~/GitHub/rasterizer",
+        "query" : "datashade",
+        "regex" : false
+    }
+}

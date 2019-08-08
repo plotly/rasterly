@@ -1,0 +1,10 @@
+{
+    "args" : [
+        "-IE:/Rstudio/resources/libclang/builtin-headers/3.4",
+        "-IE:/R-3.6.0/include",
+        "-DNDEBUG"
+    ],
+    "hash" : "1565277076",
+    "is_cpp" : true,
+    "pch" : ""
+}

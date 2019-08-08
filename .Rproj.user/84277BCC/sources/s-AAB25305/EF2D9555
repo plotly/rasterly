@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565277197236.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "EF2D9555",
+    "lastKnownWriteTime" : 1565275386,
+    "last_content_update" : 1565275386,
+    "path" : "~/GitHub/rasterizer/R/rasterizer.R",
+    "project_path" : "R/rasterizer.R",
+    "properties" : {
+        "cursorPosition" : "64,35",
+        "scrollLine" : "42"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
