@@ -25,6 +25,7 @@ get_raster_2D <- function(M, colour_map = c('lightblue','darkblue'), span = 50,
       # build image
       image <- rep(background, dimM[1]*dimM[2])
     } else {
+      image <- image[dimM[1]:1, ]
       if(layout == "weighted") {
         colours <- get_rgb_num(image[which_is_not_zero])
         red <- (red + colours$red)/2
@@ -94,12 +95,13 @@ get_raster_3D <- function(L, colour_key = NULL, layout = c("weighted", "cover"),
       # build image
       image <- rep(background, dimM[1]*dimM[2])
     } else {
+      image <- image[dimM[1]:1, ]
       not_background <- image != background
       image_rgb_num <- get_rgb_num(image[not_background])
-      # In R, matrix + vector, vector very be converted to matrix first.
-      red[not_background] <- (red[not_background] + image_rgb_num$red)/2
-      green[not_background] <- (green[not_background] + image_rgb_num$green)/2
-      blue[not_background] <- (blue[not_background] + image_rgb_num$blue)/2
+      # In R, matrix + vector, vector will be converted to matrix first.
+      red[not_background] <- image_rgb_num$red
+      green[not_background] <- image_rgb_num$green
+      blue[not_background] <- image_rgb_num$blue
     }
 
     colours <- grDevices::rgb(red = red,
@@ -113,9 +115,9 @@ get_raster_3D <- function(L, colour_key = NULL, layout = c("weighted", "cover"),
     image <- matrix(colours, nrow = dimM[1])
     image[dimM[1]:1, ]
   } else if (layout == "cover") {
-
+    
     if(is.null(image)) {
-      image <- rep(background, dimM[1]*dimM[2])
+      image <- matrix(rep(background, dimM[1]*dimM[2]), nrow = dimM[1])
     }
 
     lapply(1:n,

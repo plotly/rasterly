@@ -1,5 +1,10 @@
-get_aesthetics <- function(data, mapping) {
+get_aesthetics <- function(data = NULL, mapping = aes()) {
 
+  if(is.null(data)) stop("no 'data' found")
+  if(!is.data.frame(data)) stop(paste(deparse(substitute(data)), "is not a data frame"), call. = FALSE)
+  
+  if(rlang::is_empty(mapping)) stop("Miss aesthetics")
+  
   mapping_names <- names(mapping)
 
   if(!"x" %in% mapping_names)
@@ -62,5 +67,5 @@ get_aesthetics <- function(data, mapping) {
                 )
               })
 
-  stats::setNames(v, mapping_names)
+  return(stats::setNames(v, mapping_names))
 }

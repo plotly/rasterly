@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // aggregation_sumCpp
-NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_sumCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_sumCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -15,18 +15,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_sumCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_sumCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }
 // aggregation_anyCpp
-NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_anyCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_anyCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,18 +36,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_anyCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_anyCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }
 // aggregation_meanCpp
-NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_meanCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_meanCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -53,18 +57,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_meanCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_meanCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }
 // aggregation_firstCpp
-NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_firstCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_firstCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -72,18 +78,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_firstCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_firstCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }
 // aggregation_lastCpp
-NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_lastCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_lastCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -91,18 +99,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_lastCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_lastCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }
 // aggregation_maxCpp
-NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_maxCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_maxCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -110,18 +120,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_maxCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_maxCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }
 // aggregation_minCpp
-NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_minCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
+RcppExport SEXP _rasterizer_aggregation_minCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -129,12 +141,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int& >::type plot_height(plot_heightSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x_range(x_rangeSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y_range(y_rangeSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type xlim(xlimSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type ylim(ylimSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type on(onSEXP);
     Rcpp::traits::input_parameter< NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< CharacterVector& >::type glyph(glyphSEXP);
-    rcpp_result_gen = Rcpp::wrap(aggregation_minCpp(plot_width, plot_height, x_range, y_range, x, y, on, size, glyph));
+    rcpp_result_gen = Rcpp::wrap(aggregation_minCpp(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph));
     return rcpp_result_gen;
 END_RCPP
 }

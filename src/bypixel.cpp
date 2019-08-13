@@ -12,6 +12,7 @@ void R_init_rasterizer(DllInfo* info) {
 //[[Rcpp::export]]
 NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height,
                                  NumericVector& x_range, NumericVector& y_range,
+                                 NumericVector& xlim, NumericVector& ylim,
                                  NumericVector& x, NumericVector& y, NumericVector& on,
                                  NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -35,7 +36,7 @@ NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height,
     for(int i=0; i < n; i++) {
 
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -78,7 +79,7 @@ NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height,
 
     for(int i=0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -98,6 +99,7 @@ NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height,
 //[[Rcpp::export]]
 NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height,
                                  NumericVector& x_range, NumericVector& y_range,
+                                 NumericVector& xlim, NumericVector& ylim,
                                  NumericVector& x, NumericVector& y, NumericVector& on,
                                  NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -121,7 +123,7 @@ NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height,
 
     for(int i=0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -166,7 +168,7 @@ NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height,
 
     for(int i=0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
 
@@ -188,6 +190,7 @@ NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height,
 //[[Rcpp::export]]
 NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height,
                                   NumericVector& x_range, NumericVector& y_range,
+                                  NumericVector& xlim, NumericVector& ylim,
                                   NumericVector& x, NumericVector& y, NumericVector& on,
                                   NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -208,7 +211,7 @@ NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height,
 
     for(int i=0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -241,7 +244,7 @@ NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height,
 
     for(int i=0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
 
@@ -256,6 +259,7 @@ NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height,
 //[[Rcpp::export]]
 NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height,
                                    NumericVector& x_range, NumericVector& y_range,
+                                   NumericVector& xlim, NumericVector& ylim,
                                    NumericVector& x, NumericVector& y, NumericVector& on,
                                    NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -277,7 +281,7 @@ NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height,
 
     for(int i= (n-1); i >= 0; i--) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -307,7 +311,7 @@ NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height,
 
     for(int i= (n-1); i >= 0; i--) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
         R(id_y, id_x) = on[i];
@@ -322,6 +326,7 @@ NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height,
 //[[Rcpp::export]]
 NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height,
                                   NumericVector& x_range, NumericVector& y_range,
+                                  NumericVector& xlim, NumericVector& ylim,
                                   NumericVector& x, NumericVector& y, NumericVector& on,
                                   NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -343,7 +348,7 @@ NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height,
 
     for(int i= 0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -373,7 +378,7 @@ NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height,
 
     for(int i= 0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
         R(id_y, id_x) = on[i];
@@ -388,6 +393,7 @@ NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height,
 //[[Rcpp::export]]
 NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height,
                                  NumericVector& x_range, NumericVector& y_range,
+                                 NumericVector& xlim, NumericVector& ylim,
                                  NumericVector& x, NumericVector& y, NumericVector& on,
                                  NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -409,7 +415,7 @@ NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height,
 
     for(int i= 0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -440,7 +446,7 @@ NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height,
 
     for(int i= 0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
         if(R(id_y, id_x) < on[i]) R(id_y, id_x) = on[i];
@@ -454,6 +460,7 @@ NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height,
 //[[Rcpp::export]]
 NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height,
                                  NumericVector& x_range, NumericVector& y_range,
+                                 NumericVector& xlim, NumericVector& ylim,
                                  NumericVector& x, NumericVector& y, NumericVector& on,
                                  NumericVector& size, CharacterVector& glyph) {
   int n = x.size();
@@ -475,7 +482,7 @@ NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height,
 
     for(int i= 0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
 
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
@@ -506,7 +513,7 @@ NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height,
 
     for(int i= 0; i < n; i++) {
 
-      if(x[i] <= xmax && x[i] >= xmin && y[i] <= ymax && y[i] >= ymin) {
+      if(x[i] <= xlim[1] && x[i] >= xlim[0] && y[i] <= ylim[1] && y[i] >= ylim[0]) {
         id_x = floor((x[i] - xmin)/(xmax - xmin) * (plot_width - 1));
         id_y = floor((y[i] - ymin)/(ymax - ymin) * (plot_height - 1));
         if(R(id_y, id_x) > on[i]) R(id_y, id_x) = on[i];

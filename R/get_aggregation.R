@@ -1,10 +1,10 @@
 get_aggregation <- function(plot_width, plot_height, aesthetics,
-                            x_range, y_range, func, ...) {
+                            x_range, y_range, xlim, ylim, func, ...) {
   UseMethod("get_aggregation", func)
 }
 
 get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
-                                x_range, y_range,
+                                x_range, y_range, xlim, ylim, 
                                 func, ...) {
 
 
@@ -26,6 +26,7 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
                                   display = list(
                                     aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                                                        x_range = x_range, y_range = y_range,
+                                                       xlim = xlim, ylim = ylim,
                                                        x = x,
                                                        y = y,
                                                        on = if(is_on) on else numeric(0),
@@ -45,6 +46,7 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
     list(
       aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                          x_range = x_range, y_range = y_range,
+                         xlim = xlim, ylim = ylim,
                          x = aesthetics_table$x,
                          y = aesthetics_table$y,
                          on = if(is_on) aesthetics_table$on else numeric(0),
@@ -57,7 +59,7 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
 get_aggregation.default <- get_aggregation.sum
 
 get_aggregation.any <- function(plot_width, plot_height, aesthetics,
-                                x_range, y_range,
+                                x_range, y_range, xlim, ylim, 
                                 func, ...) {
 
   is_colour <- TRUE
@@ -78,6 +80,7 @@ get_aggregation.any <- function(plot_width, plot_height, aesthetics,
                                   display = list(
                                     aggregation_anyCpp(plot_width = plot_width, plot_height = plot_height,
                                                        x_range = x_range, y_range = y_range,
+                                                       xlim = xlim, ylim = ylim,
                                                        x = x,
                                                        y = y,
                                                        on = if(is_on) on else numeric(0),
@@ -96,6 +99,7 @@ get_aggregation.any <- function(plot_width, plot_height, aesthetics,
     list(
       aggregation_anyCpp(plot_width = plot_width, plot_height = plot_height,
                          x_range = x_range, y_range = y_range,
+                         xlim = xlim, ylim = ylim,
                          x = aesthetics_table$x,
                          y = aesthetics_table$y,
                          on = if(is_on) aesthetics_table$on else numeric(0),
@@ -106,7 +110,7 @@ get_aggregation.any <- function(plot_width, plot_height, aesthetics,
 }
 
 get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
-                                 x_range, y_range,
+                                 x_range, y_range, xlim, ylim, 
                                  func, ...) {
 
   is_colour <- TRUE
@@ -139,6 +143,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
                                       if(onname == xname || onname == yname) {
                                         aggregation_meanCpp(plot_width = plot_width, plot_height = plot_height,
                                                             x_range = x_range, y_range = y_range,
+                                                            xlim = xlim, ylim = ylim,
                                                             x = x,
                                                             y = y,
                                                             on = on,
@@ -149,6 +154,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
                                         # it would be twice slower
                                         sum_matrix <- aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                                                                          x_range = x_range, y_range = y_range,
+                                                                         xlim = xlim, ylim = ylim,
                                                                          x = x,
                                                                          y = y,
                                                                          on = on,
@@ -157,6 +163,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
 
                                         count_matrix <- aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                                                                            x_range = x_range, y_range = y_range,
+                                                                           xlim = xlim, ylim = ylim,
                                                                            x = x,
                                                                            y = y,
                                                                            on = numeric(0),
@@ -187,6 +194,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
 
       display <- aggregation_meanCpp(plot_width = plot_width, plot_height = plot_height,
                                      x_range = x_range, y_range = y_range,
+                                     xlim = xlim, ylim = ylim,
                                      x = aesthetics_table$x,
                                      y = aesthetics_table$y,
                                      on = aesthetics_table$on,
@@ -198,6 +206,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
       # it would be twice slower
       sum_matrix <- aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                                        x_range = x_range, y_range = y_range,
+                                       xlim = xlim, ylim = ylim,
                                        x = aesthetics_table$x,
                                        y = aesthetics_table$y,
                                        on = aesthetics_table$on,
@@ -206,6 +215,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
 
       count_matrix <- aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                                          x_range = x_range, y_range = y_range,
+                                         xlim = xlim, ylim = ylim,
                                          x = aesthetics_table$x,
                                          y = aesthetics_table$y,
                                          on = numeric(0),
@@ -219,7 +229,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
 }
 
 get_aggregation.first <- function(plot_width, plot_height, aesthetics,
-                                  x_range, y_range,
+                                  x_range, y_range, xlim, ylim, 
                                   func, ...) {
 
   is_colour <- TRUE
@@ -241,6 +251,7 @@ get_aggregation.first <- function(plot_width, plot_height, aesthetics,
                                   display = list(
                                     aggregation_firstCpp(plot_width = plot_width, plot_height = plot_height,
                                                          x_range = x_range, y_range = y_range,
+                                                         xlim = xlim, ylim = ylim,
                                                          x = x,
                                                          y = y,
                                                          on = if(is_on) on else numeric(0),
@@ -259,6 +270,7 @@ get_aggregation.first <- function(plot_width, plot_height, aesthetics,
     list(
       aggregation_firstCpp(plot_width = plot_width, plot_height = plot_height,
                            x_range = x_range, y_range = y_range,
+                           xlim = xlim, ylim = ylim,
                            x = aesthetics_table$x,
                            y = aesthetics_table$y,
                            on = if(is_on) aesthetics_table$on else numeric(0),
@@ -270,7 +282,7 @@ get_aggregation.first <- function(plot_width, plot_height, aesthetics,
 
 
 get_aggregation.last <- function(plot_width, plot_height, aesthetics,
-                                 x_range, y_range,
+                                 x_range, y_range, xlim, ylim, 
                                  func, ...) {
 
   is_colour <- TRUE
@@ -292,6 +304,7 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
                                   display = list(
                                     aggregation_lastCpp(plot_width = plot_width, plot_height = plot_height,
                                                         x_range = x_range, y_range = y_range,
+                                                        xlim = xlim, ylim = ylim,
                                                         x = x,
                                                         y = y,
                                                         on = on,
@@ -310,6 +323,7 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
     list(
       aggregation_lastCpp(plot_width = plot_width, plot_height = plot_height,
                           x_range = x_range, y_range = y_range,
+                          xlim = xlim, ylim = ylim,
                           x = aesthetics_table$x,
                           y = aesthetics_table$y,
                           on = aesthetics_table$on,
@@ -320,8 +334,8 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
 }
 
 get_aggregation.m2 <- function(plot_width, plot_height, aesthetics,
-                               x_range, y_range,
-                               func, ...) {
+                               x_range, y_range, xlim, ylim, 
+                               func, ...) { 
 
   is_colour <- TRUE
   if(is.null(aesthetics[["colour"]]$value)) is_colour <- FALSE
@@ -342,6 +356,7 @@ get_aggregation.m2 <- function(plot_width, plot_height, aesthetics,
                                   display = list(
                                     aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                                                        x_range = x_range, y_range = y_range,
+                                                       xlim = xlim, ylim = ylim,
                                                        x = x,
                                                        y = y,
                                                        on = on,
@@ -361,6 +376,7 @@ get_aggregation.m2 <- function(plot_width, plot_height, aesthetics,
     list(
       aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
                          x_range = x_range, y_range = y_range,
+                         xlim = xlim, ylim = ylim,
                          x = aesthetics_table$x,
                          y = aesthetics_table$y,
                          on = aesthetics_table$on,
@@ -371,7 +387,7 @@ get_aggregation.m2 <- function(plot_width, plot_height, aesthetics,
 }
 
 get_aggregation.max <- function(plot_width, plot_height, aesthetics,
-                                x_range, y_range,
+                                x_range, y_range, xlim, ylim, 
                                 func, ...) {
 
   is_colour <- TRUE
@@ -392,6 +408,7 @@ get_aggregation.max <- function(plot_width, plot_height, aesthetics,
                                   display = list(
                                     aggregation_maxCpp(plot_width = plot_width, plot_height = plot_height,
                                                        x_range = x_range, y_range = y_range,
+                                                       xlim = xlim, ylim = ylim,
                                                        x = x,
                                                        y = y,
                                                        on = on,
@@ -411,6 +428,7 @@ get_aggregation.max <- function(plot_width, plot_height, aesthetics,
     list(
       aggregation_maxCpp(plot_width = plot_width, plot_height = plot_height,
                          x_range = x_range, y_range = y_range,
+                         xlim = xlim, ylim = ylim,
                          x = aesthetics_table$x,
                          y = aesthetics_table$y,
                          on = aesthetics_table$on,
@@ -472,7 +490,7 @@ get_aesthetics_table <- function(aesthetics, as_data_table = FALSE,
       if(is.null(aesthetics[["pixel_share"]])) {
         size <- aesthetics[["size"]]$value
         # standardized size
-        aesthetics_table[, size := floor((size - min(size))/(max(size) - min(size)) * (aesthetics$extend_rate - 1))]
+        aesthetics_table[, size := floor((size - min(size))/(max(size) - min(size)) * (aesthetics$extend_value - 1))]
       } else {
         size <- aesthetics[["pixel_share"]]
         if(!is.numeric(size)) stop("`Size` must be numerical")
@@ -500,7 +518,7 @@ get_aesthetics_table <- function(aesthetics, as_data_table = FALSE,
     if(is_size) {
       # standardized size
       size <- aesthetics[["size"]]$value
-      aesthetics_table$size <- floor((size - min(size))/(max(size) - min(size)) * (aesthetics$extend_rate - 1))
+      aesthetics_table$size <- floor((size - min(size))/(max(size) - min(size)) * (aesthetics$extend_value - 1))
     }
   }
 
