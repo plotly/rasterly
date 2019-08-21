@@ -7,7 +7,8 @@
 canvas(data = NULL, mapping = aes(), ..., plot_width = 600,
   plot_height = 600, x_range = NULL, y_range = NULL,
   background = "#FFFFFF", colour_map = c("lightblue", "darkblue"),
-  colour_key = NULL, show_raster = TRUE)
+  colour_key = NULL, show_raster = TRUE, remove_data = FALSE,
+  variable_check = FALSE)
 }
 \arguments{
 \item{data}{Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.}

@@ -35,6 +35,7 @@
 #' @importFrom stats ecdf approx setNames
 #' @importFrom ggplot2 aes
 #' @importFrom data.table data.table
+#' @importFrom compiler cmpfun
 #'
 #'
 #' @examples
@@ -72,7 +73,9 @@ canvas <- function(data = NULL,
                    background = "#FFFFFF",
                    colour_map = c('lightblue','darkblue'),
                    colour_key = NULL,
-                   show_raster = TRUE) {
+                   show_raster = TRUE,
+                   remove_data = FALSE,
+                   variable_check = FALSE) {
   # argument check
   if (!missing(mapping) && !inherits(mapping, "uneval")) {
     stop("Mapping should be created with `aes()`.", call. = FALSE)
@@ -105,44 +108,32 @@ canvas <- function(data = NULL,
                                                'please pick a larger plot_width or plot_height',
                                                call. = FALSE)
   
-  aesthetics <- NULL
   if(!is.null(data) && !rlang::is_empty(mapping)) {
     
-    aesthetics <- get_aesthetics(data, mapping)
-    
+    start_time <- Sys.time()
+    aesthetics <- get_aesthetics(data, mapping, variable_check, ...)
+    end_time <- Sys.time()
+    print(paste("get aesthetics time:", end_time - start_time))
     
     start_time <- Sys.time()
     range <- get_range(x_range = x_range, 
                        y_range = y_range,
-                       x = aesthetics$x$value, 
-                       y = aesthetics$y$value)
+                       x = aesthetics$x, 
+                       y = aesthetics$y)
     x_range <- range$x_range
     y_range <- range$y_range
     end_time <- Sys.time()
     print(paste("get range time:", end_time - start_time))
+    
+    if(remove_data) {
+      remove(data)
+      message("The layer with new mapping aesthetics may do not work")
+    }
   }
-  
-  # rasterizer environment
-  e <- environment()
-  
-  args <- list(
-    data = data,
-    mapping = mapping,
-    plot_width = plot_width,
-    plot_height = plot_height,
-    x_range = x_range,
-    y_range = y_range,
-    background = background,
-    colour_map =  get_colour_map(p = NULL, colour_map = colour_map, ...),
-    colour_key = colour_key,
-    show_raster = show_raster,
-    aesthetics = aesthetics,
-    ...
-  )
   
   p <- structure(
     list(
-      canvas_env = list2env(args, envir = e)
+      canvas_env = environment()
     ),
     class = c("canvas", "rasterizer")
   )
@@ -165,10 +156,11 @@ aggregation_points <- function(rastObj,
                                ...,
                                xlim = NULL,
                                ylim = NULL,
+                               max_size = NULL,
                                reduction_func = NULL,
-                               extend_value = NULL,
                                layout = NULL,
-                               glyph = NULL) {
+                               glyph = NULL,
+                               group_by_data_table = NULL) {
   
   # argument check
   if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object", call. = FALSE)
@@ -177,40 +169,45 @@ aggregation_points <- function(rastObj,
     stop("Mapping should be created with `aes()`.", call. = FALSE)
   }
   
-  canvas_env <- rastObj$canvas_env
-  p <- get("args", envir = canvas_env, inherits = FALSE)
-  background <-  get_background(p = p, ...)
-  colour_map <- get_colour_map(p = p, ...)
-  alpha <- get_alpha(p = p, ...)
-  span <- get_span(p = p, ...)
-  layout <- get_layout(p = p, layout = layout)
-  extend_value <- get_extend_value(p = p, extend_value = extend_value)
-  pixel_share <- get_size(p = p, ...)
-  glyph <- get_glyph(p = p, glyph = glyph)
+  background <-  get_background(envir = rastObj$canvas_env, ...)
+  colour_map <- get_colour_map(envir = rastObj$canvas_env, ...)
+  alpha <- get_alpha(envir = rastObj$canvas_env, ...)
+  span <- get_span(envir = rastObj$canvas_env, ...)
+  layout <- get_layout(envir = rastObj$canvas_env, layout = layout)
+  glyph <- get_glyph(envir = rastObj$canvas_env, glyph = glyph)
+  group_by_data_table <- get_group_by_data_table(envir = rastObj$canvas_env, 
+                                                 group_by_data_table = group_by_data_table)
   
-  reduction_func <- if(is.null(reduction_func)) "" else {
+  reduction_func <- if(is.null(reduction_func)) {
+    func <- .get("reduction_func", envir = rastObj$canvas_env)
+    ifelse(is.null(func), "", func)
+  } else {
     if(is.character(reduction_func)) reduction_func
     else if(is.function(reduction_func)) deparse(substitute(reduction_func))
-    else stop("unknown `reduction_func` type")
+    else stop("unknown `reduction_func` type", call. = FALSE)
   }
-  if(reduction_func == "" && !is.null(p$reduction_func)) {
-    reduction_func <- p$reduction_func
+  if(reduction_func == "") {
+    reduction_func <- "sum"
   }
   # for S3 method
   class(reduction_func) <- reduction_func
-  
+
   if(!is.null(data)) {
     # new input data in this layer
     if(rlang::is_empty(mapping)) {
-      mapping <- p$mapping
+      mapping <- .get("mapping", envir = rastObj$canvas_env)
     }
-    aesthetics <- get_aesthetics(data, mapping)
+    aesthetics <- get_aesthetics(data, 
+                                 mapping, 
+                                 variable_check = get_variable_check(envir = rastObj$canvas_env, ...),
+                                 max_size = get_max_size(envir = rastObj$canvas_env, max_size = max_size), 
+                                 abs_size = get_size(envir = rastObj$canvas_env, ...))
     
     start_time <- Sys.time()
     range <- get_range(x_range = xlim, 
                        y_range = ylim,
-                       x = aesthetics$x$value, 
-                       y = aesthetics$y$value)
+                       x = aesthetics$x, 
+                       y = aesthetics$y)
     xlim <- range$x_range
     ylim <- range$y_range
     end_time <- Sys.time()
@@ -219,26 +216,36 @@ aggregation_points <- function(rastObj,
   } else {
     # data come from 'canvas'
     ## a new mapping system?
-    if(identical(mapping, p$mapping) || rlang::is_empty(mapping)) {
+    aesthetics <- NULL
+    if(identical(mapping, .get("mapping", envir = rastObj$canvas_env)) || rlang::is_empty(mapping)) {
       # This is encouraged, aesthetics is inherited from canvas enviroment
-      if(is.null(xlim)) xlim <- p$x_range
-      if(is.null(ylim)) ylim <- p$y_range
-      
-      aesthetics <- NULL
+      if(is.null(xlim)) xlim <- .get("x_range", envir = rastObj$canvas_env)
+      if(is.null(ylim)) ylim <- .get("y_range", envir = rastObj$canvas_env)
       
     } else {
       
-      aesthetics <- get_aesthetics(p$data, mapping)
-      
-      start_time <- Sys.time()
-      range <- get_range(x_range = xlim, 
-                         y_range = ylim,
-                         x = aesthetics$x$value, 
-                         y = aesthetics$y$value)
-      xlim <- range$x_range
-      ylim <- range$y_range
-      end_time <- Sys.time()
-      print(paste("get range time:", end_time - start_time))
+      tryCatch(
+        expr = {
+          aesthetics <- get_aesthetics(data = .get("data", envir = rastObj$canvas_env), 
+                                       mapping = mapping,
+                                       max_size = get_max_size(envir = rastObj$canvas_env, max_size = max_size), 
+                                       abs_size = get_size(envir = rastObj$canvas_env, ...))
+          
+          start_time <- Sys.time()
+          range <- get_range(x_range = xlim, 
+                             y_range = ylim,
+                             x = aesthetics$x$value, 
+                             y = aesthetics$y$value)
+          xlim <- range$x_range
+          ylim <- range$y_range
+          end_time <- Sys.time()
+          print(paste("get range time:", end_time - start_time))
+        },
+        error = function(e) {
+          message("data is missing; consider to set `remove_data = FALSE` or ")
+          message("set mapping aesthetics in `canvas` environment")
+        }
+      )
     }
   }
   args <- list(...)
@@ -262,16 +269,15 @@ rasterizer <- function(rastObj) {
   if(!is.aggregation(rastObj)) stop("No 'aggregation' layer", call. = FALSE)
   
   canvas_env <- rastObj[["canvas_env"]]
-  aggregation_env <- rastObj[-1]
+  rastObj[["canvas_env"]] <- NULL
+  aggregation_env <- rastObj
   remove(rastObj)
   
-  p <- get("args", envir = canvas_env, inherits = FALSE)
-  
-  plot_width <- p$plot_width
-  plot_height <- p$plot_height
-  x_range <- p$x_range
-  y_range <- p$y_range
-  show_raster <- p$show_raster
+  plot_width <- .get("plot_width", envir = canvas_env)
+  plot_height <- .get("plot_height", envir = canvas_env)
+  x_range <- .get("x_range", envir = canvas_env)
+  y_range <- .get("y_range", envir = canvas_env)
+  show_raster <- .get("show_raster", envir = canvas_env)
   
   # modify range
   lims <- lapply(aggregation_env, 
@@ -304,10 +310,6 @@ rasterizer <- function(rastObj) {
                                                             envir = canvas_env, 
                                                             inherits = FALSE)
                   
-                  aesthetics$pixel_share <- get("pixel_share", envir = envir, inherits = FALSE)
-                  aesthetics$extend_value <- get("extend_value", envir = envir, inherits = FALSE)
-                  aesthetics$glyph <- get("glyph", envir = envir, inherits = FALSE)
-                  
                   start_time <- Sys.time()
                   agg <- get_aggregation(
                     plot_width = plot_width, 
@@ -315,7 +317,9 @@ rasterizer <- function(rastObj) {
                     aesthetics = aesthetics,
                     x_range = x_range, y_range = y_range, 
                     xlim = xlim, ylim = ylim,
-                    func = get("reduction_func", envir = envir, inherits = FALSE)
+                    func = get("reduction_func", envir = envir, inherits = FALSE),
+                    glyph = get("glyph", envir = envir, inherits = FALSE),
+                    group_by_data_table = get("group_by_data_table", envir = envir, inherits = FALSE)
                   )
                   end_time <- Sys.time()
                   print(paste("get_aggregation time:", end_time - start_time))
@@ -363,7 +367,7 @@ rasterizer <- function(rastObj) {
                   return(agg)
                 }
   )
-  
+
   l <- list(
     agg = agg, 
     image = image,
@@ -378,6 +382,13 @@ rasterizer <- function(rastObj) {
 
 is.aggregation <- function(x) {
   inherits(x, "aggregation")
+}
+
+.get <- function(x, envir = parent.frame(), inherits = FALSE) {
+  
+  m <- mget(x, envir = envir, ifnotfound = list(NULL),
+            inherits = inherits)
+  return(m[[x]])
 }
 
 #' @export
