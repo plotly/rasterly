@@ -15,17 +15,19 @@
 #' independently for RGB. The darkness of the colour depends on the aggregation matrix value.
 #' @param colour_key Used for categorical variable. In general, `colour_key` would be called when "colour"
 #' is set in `aes()`
-#' @param reduction_func A reduction operator function is used when aggregating datapoints
-#' into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first` and `last`.
-#' More is coming
 #' @param show_raster Logical value. Whether show raster or not
-#' @param layout The way to layout multiple images. It is useful when data is catergorical("colour" is set in `aes()`).
-#' The default setting is "weighted", which means the final raster is the weighted combination of each category
-#' aggregation matrix. Also, we can "cover" each raster by the order of unique categories.
+#' @param remove_data Logical value. In general, data passed in `canvas()` has huge size which may take too many rooms. When data is 
+#' manipulated by given `aes()`, original data can be removed via function `remove()` by setting `remove_data = TRUE`. See details 
+#' for more information.
+#' @param variable_check Logical value. Drop unused columns. Setting `TRUE` can help to save more space by sacrificing speed.
 #'
-#'
-#' @details In `rasterizer`, only five arguments can be passed in `aes()`, "x", "y", "on", "colour" and "size".
-#' variable "on" represents the reduction function works "on" which column.
+#' @details 
+#' 1. In `rasterizer`, only five arguments can be passed in `aes()`, "x", "y", "on", "colour" and "size".
+#' variable "on" represents the reduction function works "on" which column. 
+#' 2. `remove_data` can help save space, however, drop original data can cause layers fail to set new `aes()`, 
+#' ex: canvas(data, aes(x,y), ..., remove_data = TRUE) %>% aggregation_points() %>% aggregation_points(mapping = aes(x,y,on))
+#' The second layer fail to set new `aes()` since the original data is missing, only manipulated dataframe is passed through.
+#' 
 #'
 #' @useDynLib rasterizer
 #' @import Rcpp

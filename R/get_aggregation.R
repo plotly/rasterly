@@ -16,14 +16,14 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              compiler::cmpfun(aggregation_sumCpp)(plot_width = plot_width, plot_height = plot_height,
-                                                                   x_range = x_range, y_range = y_range,
-                                                                   xlim = xlim, ylim = ylim,
-                                                                   x = x,
-                                                                   y = y,
-                                                                   on = if(is_on) on else numeric(0),
-                                                                   size = if(is_size) size else numeric(0),
-                                                                   glyph = glyph)
+                              aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
+                                                 x_range = x_range, y_range = y_range,
+                                                 xlim = xlim, ylim = ylim,
+                                                 x = x,
+                                                 y = y,
+                                                 on = if(is_on) on else numeric(0),
+                                                 size = if(is_size) size else numeric(0),
+                                                 glyph = glyph)
                             )
                           ),
                           by = if(is_colour) colour else NULL]
@@ -34,27 +34,27 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
     if(is_colour) {
       levels <- unique(aesthetics$colour)
       # agg_sumCpp return a list
-      compiler::cmpfun(agg_sumCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                   levels = levels,
-                                   category = aesthetics$colour,
-                                   plot_width = plot_width, plot_height = plot_height,
-                                   x_range = x_range, y_range = y_range,
-                                   xlim = xlim, ylim = ylim,
-                                   x = aesthetics$x,
-                                   y = aesthetics$y,
-                                   on = if(is_on) aesthetics$on else numeric(0),
-                                   size = if(is_size) aesthetics$size else numeric(0),
-                                   glyph = glyph)
+      agg_sumCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                 levels = levels,
+                 category = aesthetics$colour,
+                 plot_width = plot_width, plot_height = plot_height,
+                 x_range = x_range, y_range = y_range,
+                 xlim = xlim, ylim = ylim,
+                 x = aesthetics$x,
+                 y = aesthetics$y,
+                 on = if(is_on) aesthetics$on else numeric(0),
+                 size = if(is_size) aesthetics$size else numeric(0),
+                 glyph = glyph)
     } else {
       list(
-        compiler::cmpfun(aggregation_sumCpp)(plot_width = plot_width, plot_height = plot_height,
-                                             x_range = x_range, y_range = y_range,
-                                             xlim = xlim, ylim = ylim,
-                                             x = aesthetics$x,
-                                             y = aesthetics$y,
-                                             on = if(is_on) aesthetics$on else numeric(0),
-                                             size = if(is_size) aesthetics$size else numeric(0),
-                                             glyph = glyph)
+        aggregation_sumCpp(plot_width = plot_width, plot_height = plot_height,
+                           x_range = x_range, y_range = y_range,
+                           xlim = xlim, ylim = ylim,
+                           x = aesthetics$x,
+                           y = aesthetics$y,
+                           on = if(is_on) aesthetics$on else numeric(0),
+                           size = if(is_size) aesthetics$size else numeric(0),
+                           glyph = glyph)
       )
     }
   }
@@ -76,14 +76,14 @@ get_aggregation.any <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              compiler::cmpfun(aggregation_anyCpp)(plot_width = plot_width, plot_height = plot_height,
-                                                                   x_range = x_range, y_range = y_range,
-                                                                   xlim = xlim, ylim = ylim,
-                                                                   x = x,
-                                                                   y = y,
-                                                                   on = if(is_on) on else numeric(0),
-                                                                   size = if(is_size) size else numeric(0),
-                                                                   glyph = glyph)
+                              aggregation_anyCpp(plot_width = plot_width, plot_height = plot_height,
+                                                 x_range = x_range, y_range = y_range,
+                                                 xlim = xlim, ylim = ylim,
+                                                 x = x,
+                                                 y = y,
+                                                 on = if(is_on) on else numeric(0),
+                                                 size = if(is_size) size else numeric(0),
+                                                 glyph = glyph)
                             )
                           ),
                           by = if(is_colour) colour else NULL]
@@ -93,27 +93,27 @@ get_aggregation.any <- function(plot_width, plot_height, aesthetics,
     if(is_colour) {
       levels <- unique(aesthetics$colour)
       # agg_sumCpp return a list
-      compiler::cmpfun(agg_anyCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                   levels = levels,
-                                   category = aesthetics$colour,
-                                   plot_width = plot_width, plot_height = plot_height,
-                                   x_range = x_range, y_range = y_range,
-                                   xlim = xlim, ylim = ylim,
-                                   x = aesthetics$x,
-                                   y = aesthetics$y,
-                                   on = if(is_on) aesthetics$on else numeric(0),
-                                   size = if(is_size) aesthetics$size else numeric(0),
-                                   glyph = glyph)
+      agg_anyCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                 levels = levels,
+                 category = aesthetics$colour,
+                 plot_width = plot_width, plot_height = plot_height,
+                 x_range = x_range, y_range = y_range,
+                 xlim = xlim, ylim = ylim,
+                 x = aesthetics$x,
+                 y = aesthetics$y,
+                 on = if(is_on) aesthetics$on else numeric(0),
+                 size = if(is_size) aesthetics$size else numeric(0),
+                 glyph = glyph)
     } else {
       list(
-        compiler::cmpfun(aggregation_anyCpp)(plot_width = plot_width, plot_height = plot_height,
-                                             x_range = x_range, y_range = y_range,
-                                             xlim = xlim, ylim = ylim,
-                                             x = aesthetics$x,
-                                             y = aesthetics$y,
-                                             on = if(is_on) aesthetics$on else numeric(0),
-                                             size = if(is_size) aesthetics$size else numeric(0),
-                                             glyph = glyph)
+        aggregation_anyCpp(plot_width = plot_width, plot_height = plot_height,
+                           x_range = x_range, y_range = y_range,
+                           xlim = xlim, ylim = ylim,
+                           x = aesthetics$x,
+                           y = aesthetics$y,
+                           on = if(is_on) aesthetics$on else numeric(0),
+                           size = if(is_size) aesthetics$size else numeric(0),
+                           glyph = glyph)
       )
     }
   }
@@ -134,14 +134,14 @@ get_aggregation.first <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              compiler::cmpfun(aggregation__firstCpp)(plot_width = plot_width, plot_height = plot_height,
-                                                                      x_range = x_range, y_range = y_range,
-                                                                      xlim = xlim, ylim = ylim,
-                                                                      x = x,
-                                                                      y = y,
-                                                                      on = on,
-                                                                      size = if(is_size) size else numeric(0),
-                                                                      glyph = glyph)
+                              aggregation__firstCpp(plot_width = plot_width, plot_height = plot_height,
+                                                    x_range = x_range, y_range = y_range,
+                                                    xlim = xlim, ylim = ylim,
+                                                    x = x,
+                                                    y = y,
+                                                    on = on,
+                                                    size = if(is_size) size else numeric(0),
+                                                    glyph = glyph)
                             )
                           ),
                           by = if(is_colour) colour else NULL]
@@ -152,27 +152,27 @@ get_aggregation.first <- function(plot_width, plot_height, aesthetics,
     if(is_colour) {
       levels <- unique(aesthetics$colour)
       # agg_sumCpp return a list
-      compiler::cmpfun(agg_firstCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                     levels = levels,
-                                     category = aesthetics$colour,
-                                     plot_width = plot_width, plot_height = plot_height,
-                                     x_range = x_range, y_range = y_range,
-                                     xlim = xlim, ylim = ylim,
-                                     x = aesthetics$x,
-                                     y = aesthetics$y,
-                                     on = aesthetics$on,
-                                     size = if(is_size) aesthetics$size else numeric(0),
-                                     glyph = glyph)
+      agg_firstCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                   levels = levels,
+                   category = aesthetics$colour,
+                   plot_width = plot_width, plot_height = plot_height,
+                   x_range = x_range, y_range = y_range,
+                   xlim = xlim, ylim = ylim,
+                   x = aesthetics$x,
+                   y = aesthetics$y,
+                   on = aesthetics$on,
+                   size = if(is_size) aesthetics$size else numeric(0),
+                   glyph = glyph)
     } else {
       list(
-        compiler::cmpfun(aggregation_firstCpp)(plot_width = plot_width, plot_height = plot_height,
-                                               x_range = x_range, y_range = y_range,
-                                               xlim = xlim, ylim = ylim,
-                                               x = aesthetics$x,
-                                               y = aesthetics$y,
-                                               on = aesthetics$on,
-                                               size = if(is_size) aesthetics$size else numeric(0),
-                                               glyph = glyph)
+        aggregation_firstCpp(plot_width = plot_width, plot_height = plot_height,
+                             x_range = x_range, y_range = y_range,
+                             xlim = xlim, ylim = ylim,
+                             x = aesthetics$x,
+                             y = aesthetics$y,
+                             on = aesthetics$on,
+                             size = if(is_size) aesthetics$size else numeric(0),
+                             glyph = glyph)
       )
     }
   }
@@ -192,14 +192,14 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              compiler::cmpfun(aggregation__lastCpp)(plot_width = plot_width, plot_height = plot_height,
-                                                                     x_range = x_range, y_range = y_range,
-                                                                     xlim = xlim, ylim = ylim,
-                                                                     x = x,
-                                                                     y = y,
-                                                                     on = on,
-                                                                     size = if(is_size) size else numeric(0),
-                                                                     glyph = glyph)
+                              aggregation__lastCpp(plot_width = plot_width, plot_height = plot_height,
+                                                   x_range = x_range, y_range = y_range,
+                                                   xlim = xlim, ylim = ylim,
+                                                   x = x,
+                                                   y = y,
+                                                   on = on,
+                                                   size = if(is_size) size else numeric(0),
+                                                   glyph = glyph)
                             )
                           ),
                           by = if(is_colour) colour else NULL]
@@ -210,27 +210,27 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
     if(is_colour) {
       levels <- unique(aesthetics$colour)
       # agg_sumCpp return a list
-      compiler::cmpfun(agg_lastCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                    levels = levels,
-                                    category = aesthetics$colour,
-                                    plot_width = plot_width, plot_height = plot_height,
-                                    x_range = x_range, y_range = y_range,
-                                    xlim = xlim, ylim = ylim,
-                                    x = aesthetics$x,
-                                    y = aesthetics$y,
-                                    on = aesthetics$on,
-                                    size = if(is_size) aesthetics$size else numeric(0),
-                                    glyph = glyph)
+      agg_lastCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                  levels = levels,
+                  category = aesthetics$colour,
+                  plot_width = plot_width, plot_height = plot_height,
+                  x_range = x_range, y_range = y_range,
+                  xlim = xlim, ylim = ylim,
+                  x = aesthetics$x,
+                  y = aesthetics$y,
+                  on = aesthetics$on,
+                  size = if(is_size) aesthetics$size else numeric(0),
+                  glyph = glyph)
     } else {
       list(
-        compiler::cmpfun(aggregation_lastCpp)(plot_width = plot_width, plot_height = plot_height,
-                                              x_range = x_range, y_range = y_range,
-                                              xlim = xlim, ylim = ylim,
-                                              x = aesthetics$x,
-                                              y = aesthetics$y,
-                                              on = aesthetics$on,
-                                              size = if(is_size) aesthetics$size else numeric(0),
-                                              glyph = glyph)
+        aggregation_lastCpp(plot_width = plot_width, plot_height = plot_height,
+                            x_range = x_range, y_range = y_range,
+                            xlim = xlim, ylim = ylim,
+                            x = aesthetics$x,
+                            y = aesthetics$y,
+                            on = aesthetics$on,
+                            size = if(is_size) aesthetics$size else numeric(0),
+                            glyph = glyph)
       )
     }
   }
@@ -271,14 +271,14 @@ get_aggregation.max <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              compiler::cmpfun(aggregation__maxCpp)(plot_width = plot_width, plot_height = plot_height,
-                                                                    x_range = x_range, y_range = y_range,
-                                                                    xlim = xlim, ylim = ylim,
-                                                                    x = x,
-                                                                    y = y,
-                                                                    on = on,
-                                                                    size = if(is_size) size else numeric(0),
-                                                                    glyph = glyph)
+                              aggregation__maxCpp(plot_width = plot_width, plot_height = plot_height,
+                                                  x_range = x_range, y_range = y_range,
+                                                  xlim = xlim, ylim = ylim,
+                                                  x = x,
+                                                  y = y,
+                                                  on = on,
+                                                  size = if(is_size) size else numeric(0),
+                                                  glyph = glyph)
                             )
                           ),
                           by = if(is_colour) colour else NULL]
@@ -289,27 +289,27 @@ get_aggregation.max <- function(plot_width, plot_height, aesthetics,
     if(is_colour) {
       levels <- unique(aesthetics$colour)
       # agg_sumCpp return a list
-      compiler::cmpfun(agg_maxCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                   levels = levels,
-                                   category = aesthetics$colour,
-                                   plot_width = plot_width, plot_height = plot_height,
-                                   x_range = x_range, y_range = y_range,
-                                   xlim = xlim, ylim = ylim,
-                                   x = aesthetics$x,
-                                   y = aesthetics$y,
-                                   on = aesthetics$on,
-                                   size = if(is_size) aesthetics$size else numeric(0),
-                                   glyph = glyph)
+      agg_maxCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                 levels = levels,
+                 category = aesthetics$colour,
+                 plot_width = plot_width, plot_height = plot_height,
+                 x_range = x_range, y_range = y_range,
+                 xlim = xlim, ylim = ylim,
+                 x = aesthetics$x,
+                 y = aesthetics$y,
+                 on = aesthetics$on,
+                 size = if(is_size) aesthetics$size else numeric(0),
+                 glyph = glyph)
     } else {
       list(
-        compiler::cmpfun(aggregation_maxCpp)(plot_width = plot_width, plot_height = plot_height,
-                                             x_range = x_range, y_range = y_range,
-                                             xlim = xlim, ylim = ylim,
-                                             x = aesthetics$x,
-                                             y = aesthetics$y,
-                                             on = aesthetics$on,
-                                             size = if(is_size) aesthetics$size else numeric(0),
-                                             glyph = glyph)
+        aggregation_maxCpp(plot_width = plot_width, plot_height = plot_height,
+                           x_range = x_range, y_range = y_range,
+                           xlim = xlim, ylim = ylim,
+                           x = aesthetics$x,
+                           y = aesthetics$y,
+                           on = aesthetics$on,
+                           size = if(is_size) aesthetics$size else numeric(0),
+                           glyph = glyph)
       )
     }
   }
@@ -379,7 +379,19 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
       levels <- unique(aesthetics$colour)
       
       if(identical(aesthetics$on, aesthetics$y) || identical(aesthetics$on, aesthetics$x)) {
-        compiler::cmpfun(agg_meanCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+        agg_meanCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                    levels = levels,
+                    category = aesthetics$colour,
+                    plot_width = plot_width, plot_height = plot_height,
+                    x_range = x_range, y_range = y_range,
+                    xlim = xlim, ylim = ylim,
+                    x = aesthetics$x,
+                    y = aesthetics$y,
+                    on = aesthetics$on,
+                    size = if(is_size) aesthetics$size else numeric(0),
+                    glyph = glyph)
+      } else {
+        sum_matrix_list <- agg_sumCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
                                       levels = levels,
                                       category = aesthetics$colour,
                                       plot_width = plot_width, plot_height = plot_height,
@@ -390,29 +402,17 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
                                       on = aesthetics$on,
                                       size = if(is_size) aesthetics$size else numeric(0),
                                       glyph = glyph)
-      } else {
-        sum_matrix_list <- compiler::cmpfun(agg_sumCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                                        levels = levels,
-                                                        category = aesthetics$colour,
-                                                        plot_width = plot_width, plot_height = plot_height,
-                                                        x_range = x_range, y_range = y_range,
-                                                        xlim = xlim, ylim = ylim,
-                                                        x = aesthetics$x,
-                                                        y = aesthetics$y,
-                                                        on = aesthetics$on,
-                                                        size = if(is_size) aesthetics$size else numeric(0),
-                                                        glyph = glyph)
-        count_matrix_list <- compiler::cmpfun(agg_sumCpp)(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
-                                                          levels = levels,
-                                                          category = aesthetics$colour,
-                                                          plot_width = plot_width, plot_height = plot_height,
-                                                          x_range = x_range, y_range = y_range,
-                                                          xlim = xlim, ylim = ylim,
-                                                          x = aesthetics$x,
-                                                          y = aesthetics$y,
-                                                          on = numeric(0),
-                                                          size = if(is_size) aesthetics$size else numeric(0),
-                                                          glyph = glyph)
+        count_matrix_list <- agg_sumCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
+                                        levels = levels,
+                                        category = aesthetics$colour,
+                                        plot_width = plot_width, plot_height = plot_height,
+                                        x_range = x_range, y_range = y_range,
+                                        xlim = xlim, ylim = ylim,
+                                        x = aesthetics$x,
+                                        y = aesthetics$y,
+                                        on = numeric(0),
+                                        size = if(is_size) aesthetics$size else numeric(0),
+                                        glyph = glyph)
         lapply(1:length(levels), 
                function(i) {
                  sum_matrix <- sum_matrix_list[[i]]

@@ -1,3 +1,13 @@
+#' @title aggregation_points
+#' @description points layer for `rasterizer`
+#' @param rastObj A `rasterObj`. 
+#' @param reduction_func A reduction operator function is used when aggregating datapoints
+#' into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first` and `last` so far.
+#' More is coming
+#' @param layout The way to layout multiple images. It is useful when data is catergorical("colour" is set in `aes()`).
+#' The default setting is "weighted", which means the final raster is the weighted combination of each category
+#' aggregation matrix. Also, we can "cover" each raster by the order of unique categories.
+
 #' @export
 aggregation_points <- function(rastObj,
                                data = NULL,
@@ -13,7 +23,7 @@ aggregation_points <- function(rastObj,
   
   # argument check
   if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object", call. = FALSE)
-  
+  if(!is.rasterizer(rastObj))
   if (!missing(mapping) && !inherits(mapping, "uneval")) {
     stop("Mapping should be created with `aes()`.", call. = FALSE)
   }
@@ -106,7 +116,7 @@ aggregation_points <- function(rastObj,
     rastObj, 
     list(e)
   )
-  class(rastObj) <- c("aggregation", "rasterizer")
+  class(rastObj) <- c("aggregation", "canvas", "rasterizer")
   return(rastObj)
   invisible()
 }
