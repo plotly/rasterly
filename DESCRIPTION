@@ -2,7 +2,13 @@ Package: rasterizer
 Type: Package
 Title: Rasterizer
 Version: 0.1.0
-Author: Zehao Xu [aut, cre]
+Authors@R: c(person(given = "Zehao", family = "Xu", 
+                    email = "z267xu@uwaterloo.ca", 
+                    role = "aut"),
+             person(given = "Ryan", family = "Kyle", 
+                    email = "ryan@plot.ly", 
+                    role = "ctb")
+             )
 Maintainer: Zehao Xu <z267xu@uwaterloo.ca>
 Description: Modern heat map visualizations for large data using Plotly.js
 LinkingTo: Rcpp
