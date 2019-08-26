@@ -29,9 +29,15 @@ rasterizer <- function(rastObj) {
                      ylim = ylim
                    )
                  })
-  
+  variable_names <- lapply(aggregation_env, 
+                           function(envir) {
+                             get("variable_names", envir = envir, inherits = FALSE)
+                           })
+  # used for lapply scopping
+  # if show_raster is TRUE
   image <- NULL
-  
+  bg <- c()
+  colour <- list()
   agg <- lapply(aggregation_env, 
                 function(envir) {
                   # "aggregation" is a list of matrices modified by some specific reduction function
@@ -68,34 +74,40 @@ rasterizer <- function(rastObj) {
                   # show raster or not
                   if(show_raster) {
                     start_time <- Sys.time()
-                    image <<- if(is_categorical) {
-                      get_raster_3D(L = agg,    
-                                    colour_key = get_colour_key(
-                                      colour_key = get("colour_key", 
-                                                       envir = envir, 
-                                                       inherits = FALSE), 
-                                      n = len_agg,
-                                      canvas_colour_key = get("colour_key", 
-                                                              envir = canvas_env, 
-                                                              inherits = FALSE)
-                                    ),          
-                                    layout = get("layout", envir = envir, inherits = FALSE), 
-                                    span = get("span", envir = envir, inherits = FALSE),
-                                    zeroIgnored = TRUE, 
-                                    image = image, 
-                                    background = get("background", envir = envir, inherits = FALSE),
-                                    alpha = get("alpha", envir = envir, inherits = FALSE))
+                    background <- get("background", envir = envir, inherits = FALSE)
+                    bg <<- c(bg, background)
+                    if(is_categorical) {
+                      colour_key <- get_colour_key(
+                        colour_key = get("colour_key", 
+                                         envir = envir, 
+                                         inherits = FALSE), 
+                        n = len_agg,
+                        canvas_colour_key = get("colour_key", 
+                                                envir = canvas_env, 
+                                                inherits = FALSE)
+                      )
+                      colour <<- c(colour, list(colour_key))
+                      image <<- raster_3D(L = agg,    
+                                          colour_key = colour_key,          
+                                          layout = get("layout", envir = envir, inherits = FALSE), 
+                                          span = get("span", envir = envir, inherits = FALSE),
+                                          zeroIgnored = TRUE, 
+                                          image = image, 
+                                          background = background,
+                                          alpha = get("alpha", envir = envir, inherits = FALSE))
                     } else {
-                      get_raster_2D(M = agg[[1]], 
-                                    colour_map = get("colour_map", 
-                                                     envir = envir, 
-                                                     inherits = FALSE), 
-                                    span = get("span", envir = envir, inherits = FALSE),
-                                    zeroIgnored = TRUE, 
-                                    image = image, 
-                                    background = get("background", envir = envir, inherits = FALSE),
-                                    alpha = get("alpha", envir = envir, inherits = FALSE),
-                                    layout = get("layout", envir = envir, inherits = FALSE))
+                      colour_map <- get("colour_map", 
+                                        envir = envir, 
+                                        inherits = FALSE)
+                      colour <<- c(colour, list(colour_map))
+                      image <<- raster_2D(M = agg[[1]], 
+                                          colour_map = colour_map, 
+                                          span = get("span", envir = envir, inherits = FALSE),
+                                          zeroIgnored = TRUE, 
+                                          image = image, 
+                                          background = background,
+                                          alpha = get("alpha", envir = envir, inherits = FALSE),
+                                          layout = get("layout", envir = envir, inherits = FALSE))
                     }
                     end_time <- Sys.time()
                     print(paste("get raster time:", end_time - start_time))
@@ -103,7 +115,7 @@ rasterizer <- function(rastObj) {
                   return(agg)
                 }
   )
-
+  
   l <- list(
     agg = agg, 
     image = image,
@@ -111,7 +123,10 @@ rasterizer <- function(rastObj) {
     x_range = x_range, 
     y_range = y_range,
     plot_height = plot_height,
-    plot_width = plot_width
+    plot_width = plot_width,
+    variable_names = variable_names,
+    background = bg,
+    colour = colour
   )
   class(l) <- "rasterizer"
   return(l)
