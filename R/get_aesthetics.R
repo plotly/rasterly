@@ -2,6 +2,7 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
   
   if(is.null(data)) stop("no 'data' found")
   if(!is.data.frame(data)) stop(paste(deparse(substitute(data)), "is not a data frame"), call. = FALSE)
+  if(!data.table::is.data.table(data)) data <- data.table::as.data.table(data)
   
   if(rlang::is_empty(mapping)) stop("Miss aesthetics")
   
