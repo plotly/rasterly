@@ -76,10 +76,14 @@ aggregation_points <- function(rastObj,
     # data come from 'canvas'
     ## a new mapping system?
     aesthetics <- NULL
-    if(identical(mapping, .get("mapping", envir = rastObj$canvas_env)) || rlang::is_empty(mapping)) {
+    canvas_env_mapping <- .get("mapping", envir = rastObj$canvas_env)
+    
+    if(identical(mapping, canvas_env_mapping) || rlang::is_empty(mapping)) {
       # This is encouraged, aesthetics is inherited from canvas enviroment
       if(is.null(xlim)) xlim <- .get("x_range", envir = rastObj$canvas_env)
       if(is.null(ylim)) ylim <- .get("y_range", envir = rastObj$canvas_env)
+      
+      mapping <- canvas_env_mapping
       
     } else {
       
@@ -107,6 +111,13 @@ aggregation_points <- function(rastObj,
       )
     }
   }
+  
+  
+  variable_names <- stats::setNames(
+    sapply(mapping, function(var) sub("~", "", rlang::expr_text(var))), 
+    names(mapping)                      
+  )
+  
   args <- list(...)
   colour_key <- args$colour_key
   remove(data)
