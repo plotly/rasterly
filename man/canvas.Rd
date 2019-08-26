@@ -38,20 +38,21 @@ is set in `aes()`}
 
 \item{show_raster}{Logical value. Whether show raster or not}
 
-\item{reduction_func}{A reduction operator function is used when aggregating datapoints
-into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first` and `last`.
-More is coming}
+\item{remove_data}{Logical value. In general, data passed in `canvas()` has huge size which may take too many rooms. When data is 
+manipulated by given `aes()`, original data can be removed via function `remove()` by setting `remove_data = TRUE`. See details 
+for more information.}
 
-\item{layout}{The way to layout multiple images. It is useful when data is catergorical("colour" is set in `aes()`).
-The default setting is "weighted", which means the final raster is the weighted combination of each category
-aggregation matrix. Also, we can "cover" each raster by the order of unique categories.}
+\item{variable_check}{Logical value. Drop unused columns. Setting `TRUE` can help to save more space by sacrificing speed.}
 }
 \description{
 Set canvas for rasterizer
 }
 \details{
-In `rasterizer`, only five arguments can be passed in `aes()`, "x", "y", "on", "colour" and "size".
-variable "on" represents the reduction function works "on" which column.
+1. In `rasterizer`, only five arguments can be passed in `aes()`, "x", "y", "on", "colour" and "size".
+variable "on" represents the reduction function works "on" which column. 
+2. `remove_data` can help save space, however, drop original data can cause layers fail to set new `aes()`, 
+ex: canvas(data, aes(x,y), ..., remove_data = TRUE) %>% aggregation_points() %>% aggregation_points(mapping = aes(x,y,on))
+The second layer fail to set new `aes()` since the original data is missing, only manipulated dataframe is passed through.
 }
 \examples{
 \dontrun{
