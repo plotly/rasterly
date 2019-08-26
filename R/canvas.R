@@ -79,7 +79,7 @@ canvas <- function(data = NULL,
                    remove_data = FALSE,
                    variable_check = FALSE) {
   # argument check
-  if (!missing(mapping) && !inherits(mapping, "uneval")) {
+  if(!missing(mapping) && !inherits(mapping, "uneval")) {
     stop("Mapping should be created with `aes()`.", call. = FALSE)
   }
   
@@ -89,6 +89,8 @@ canvas <- function(data = NULL,
       is.numeric(plot_height) && plot_height > 0
     }
   )
+  plot_width <- round(plot_width)
+  plot_height <- round(plot_height)
   
   if(!is.null(x_range)) {
     stopifnot(
@@ -106,9 +108,7 @@ canvas <- function(data = NULL,
     )
   }
   
-  if(plot_width < 10 || plot_height < 10) stop('plot region is too small',
-                                               'please pick a larger plot_width or plot_height',
-                                               call. = FALSE)
+  
   
   if(!is.null(data) && !rlang::is_empty(mapping)) {
     
