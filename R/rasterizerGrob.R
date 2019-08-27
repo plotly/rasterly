@@ -22,8 +22,6 @@ rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
   if(is.aggregation(rastObj)) stop("'Aggregation' layer is passed. Forget to pass to `rasterizer()`?", call. = FALSE)
   if(is.null(rastObj$image)) stop("No image is found. Set `show_raster = TRUE`", call. = FALSE)
   
-  
-  
   args <- list(...)
   margins <- if(is.null(args$margins)) c(3.6, 4.1, 2.1, 1.1) else args$margins
   bounding_box <- ifelse(is.null(args$bounding_box), "white", args$bounding_box)

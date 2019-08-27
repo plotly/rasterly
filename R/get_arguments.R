@@ -1,21 +1,20 @@
 get_range <- function(x_range, y_range, x, y) {
-  if(is.null(x_range)) {
-    x_range <- c(min(x), max(x))
-  } else {
-    if(length(x_range) != 2 || !is.numeric(x_range)) stop("x_range should be a length 2 numerical vector")
-    if(x_range[1] > x_range[2]) x_range <- sort(x_range)
-  }
   
-  if(is.null(y_range)) {
-    y_range <- c(min(y), max(y))
-  } else {
-    if(length(y_range) != 2 || !is.numeric(y_range)) stop("y_range should be a length 2 numerical vector")
-    if(y_range[1] > y_range[2]) y_range <- sort(y_range)
-  }
   
-  list(
-    x_range = x_range,
-    y_range = y_range
+  x_range <- x_range %||% c(min(x), max(x))
+  if(length(x_range) != 2 || !is.numeric(x_range)) stop("x_range should be a length 2 numerical vector")
+  if(x_range[1] > x_range[2]) x_range <- sort(x_range)
+  
+  
+  y_range <- y_range %||% c(min(y), max(y))
+  if(length(y_range) != 2 || !is.numeric(y_range)) stop("y_range should be a length 2 numerical vector")
+  if(y_range[1] > y_range[2]) y_range <- sort(y_range)
+  
+  return(
+    list(
+      x_range = x_range,
+      y_range = y_range
+    )
   )
 }
 
@@ -23,15 +22,11 @@ get_background <- function(envir, ...) {
   
   args <- list(...)
   
-  background <- if(!is.null(args$background)) {
-    args$background
-  } else {
-    .get("background", envir = envir)
-  }
+  background <- args$background %||% .get("background", envir = envir)
   
   if(is.null(background)) stop("No background colour", call. = FALSE)
   
-  background
+  return(background)
 }
 
 get_colour_map <- function(envir, ...) {
@@ -45,23 +40,21 @@ get_colour_map <- function(envir, ...) {
   
   if(matched_name_len == 0) {
     
-    .get("colour_map", envir = envir)
+    return(.get("colour_map", envir = envir))
     
   } else if(matched_name_len > 1) {
     
     col_name <- col[which(col %in% names_args)[1]]
-    args[[col_name]]
+    return(args[[col_name]])
     
-  } else args[[which_col_name_is_mapped]]
+  } else return(args[[which_col_name_is_mapped]])
 }
 
 get_alpha <- function(envir, ...) {
   
   args <- list(...)
   
-  alpha <- if(!is.null(args$alpha)) {
-    args$alpha
-  } else {
+  alpha <- args$alpha %||% {
     if(!is.null(.get("alpha", envir = envir))) {
       .get("alpha", envir = envir)
     } else 255
@@ -74,17 +67,14 @@ get_alpha <- function(envir, ...) {
     }
   )
   
-  alpha
+  return(alpha)
 }
 
 get_span <- function(envir, ...) {
   
   args <- list(...)
   
-  span <- if(!is.null(args$span)) {
-    args$span
-  } else {
-    
+  span <- args$span %||% {
     if(!is.null(.get("span", envir = envir))) {
       .get("span", envir = envir)
     } else 50
@@ -96,14 +86,12 @@ get_span <- function(envir, ...) {
     }
   )
   
-  span
+  return(span)
 }
 
 get_colour_key <- function(colour_key, n, canvas_colour_key) {
   
-  if(is.null(colour_key)) {
-    colour_key <- canvas_colour_key
-  }
+  colour_key <- colour_key %||% canvas_colour_key
   
   if(is.null(colour_key)) colour_key <- gg_color_hue(n)
   stopifnot(
@@ -111,16 +99,12 @@ get_colour_key <- function(colour_key, n, canvas_colour_key) {
       length(colour_key) >= n
     }
   )
-  colour_key
+  return(colour_key)
 }
 
 get_max_size <- function(envir, max_size) {
   
-  max_size <- if(!is.null(max_size)) {
-    max_size
-  } else {
-    .get("max_size", envir = envir)
-  }
+  max_size <- max_size %||% .get("max_size", envir = envir)
   
   if(is.null(max_size) || is.na(max_size)) {
     max_size <- 2 
@@ -135,18 +119,14 @@ get_max_size <- function(envir, max_size) {
     }
   }
   
-  max_size
+  return(max_size)
 }
 
 get_size <- function(envir, ...) {
   
   args <- list(...)
   
-  size <- if(!is.null(args$size)) {
-    args$size
-  } else {
-    .get("size", envir = envir)
-  }
+  size <- args$size %||% .get("size", envir = envir)
   
   if(is.null(size) || is.na(size)) {
     size <- 1 
@@ -162,36 +142,28 @@ get_size <- function(envir, ...) {
     }
   }
   
-  size
+  return(size)
 }
 
 get_variable_check <- function(envir, ...) {
   
   args <- list(...)
   
-  variable_check <- if(!is.null(args$variable_check)) {
-    args$variable_check
-  } else {
-    .get("variable_check", envir = envir)
-  }
+  variable_check <- args$variable_check %||% .get("variable_check", envir = envir)
   
   if(!is.logical(variable_check) || is.null(variable_check) || is.na(variable_check)) {
     warning("variable_check is logical")
     variable_check <- FALSE
   }
   
-  variable_check
+  return(variable_check)
 }
 
 get_layout <- function(envir, ...) {
   
   args <- list(...)
   
-  layout <- if(!is.null(args$layout)) {
-    args$layout
-  } else {
-    .get("layout", envir = envir)
-  }
+  layout <- args$layout %||%  .get("layout", envir = envir)
   
   if(is.null(layout) || is.na(layout)) {
     layout <- "weighted" 
@@ -202,16 +174,12 @@ get_layout <- function(envir, ...) {
     }
   }
   
-  layout
+  return(layout)
 }
 
 get_glyph <- function(envir, glyph) {
   
-  glyph <- if(!is.null(glyph)) {
-    glyph
-  } else {
-    .get("glyph", envir = envir)
-  }
+  glyph <- glyph %||% .get("glyph", envir = envir)
   
   if(is.null(glyph) || is.na(glyph)) {
     glyph <- "circle" 
@@ -222,14 +190,12 @@ get_glyph <- function(envir, glyph) {
     }
   }
   
-  glyph
+  return(glyph)
 }
 
 get_group_by_data_table <- function(envir, group_by_data_table) {
   
-  if(is.null(group_by_data_table)) {
-    group_by_data_table <- .get("group_by_data_table", envir = envir)
-  }
+  group_by_data_table <- group_by_data_table %||% .get("group_by_data_table", envir = envir)
   
   if(is.null(group_by_data_table) || is.na(group_by_data_table)) {
     group_by_data_table <- TRUE
@@ -240,5 +206,5 @@ get_group_by_data_table <- function(envir, group_by_data_table) {
     }
   }
   
-  group_by_data_table
+  return(group_by_data_table)
 }

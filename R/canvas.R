@@ -108,8 +108,6 @@ canvas <- function(data = NULL,
     )
   }
   
-  
-  
   if(!is.null(data) && !rlang::is_empty(mapping)) {
     
     start_time <- Sys.time()
@@ -132,6 +130,13 @@ canvas <- function(data = NULL,
       message("The layer with new mapping aesthetics may do not work")
     }
   }
+  
+  # make sure all arguments exist in `canvas` environment
+  args <- list(...)
+  reduction_func <- args$reduction_func
+  layout <- args$layout
+  glyph <- args$glyph
+  group_by_data_table <- args$group_by_data_table
   
   p <- structure(
     list(
