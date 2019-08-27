@@ -14,6 +14,7 @@ colors <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00
             "#0000FF","#3F00FF","#7F00FF","#BF00FF","#FF00FF","#FF00BF","#FF007F","#FF003F")
 test_that("example works", {
   # ex1
+  ########### "sum" ##############
   canvas(data,
          mapping = aes(x = x, y = y),
          x_range = c(min_x, max_x),
@@ -21,7 +22,8 @@ test_that("example works", {
     aggregation_points(xlim = c(min_x, (max_x + min_x)/2),
                        ylim = c(min_y, (max_y + min_y)/2),
                        colour_map = fire) %>% 
-    aggregation_points(xlim = c((max_x + min_x)/2, max_x),
+    aggregation_points(mapping = aes(x = x, y = y, on = -x),
+                       xlim = c((max_x + min_x)/2, max_x),
                        ylim = c(min_y, (max_y + min_y)/2),
                        colour_map = c("lightblue", "darkblue")) %>% 
     aggregation_points(mapping = aes(x = x, y = y, colour = z),
@@ -36,6 +38,7 @@ test_that("example works", {
     rasterizer() -> ds
   expect_equal(grid::is.grob(grid::rasterGrob(ds$image)), TRUE)
   
+  ########### "any" ##############
   # reduction function is any and group_by_data_table is TRUE
   canvas(data,
          mapping = aes(x = x, y = y, on = x),
@@ -56,6 +59,127 @@ test_that("example works", {
          y_range = c(min_y, max_y),
          colour_key = colors,
          reduction_func = "any") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  ########### "mean" ##############
+  # reduction function is any and group_by_data_table is TRUE
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "mean") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  # reduction function is any and group_by_data_table is FALSE
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "mean") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  ########### "first" ##############
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "first") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  # reduction function is any and group_by_data_table is FALSE
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "first") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  ########### "last" ##############
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "last") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  # reduction function is any and group_by_data_table is FALSE
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "last") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  ########### "m2" ##############
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "m2") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  # reduction function is any and group_by_data_table is FALSE
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "m2") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  ########### "max" ##############
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "max") %>%
+    aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterizer() -> ds
+  expect_equal(is.rasterizer(ds), TRUE)
+  
+  # reduction function is any and group_by_data_table is FALSE
+  canvas(data,
+         mapping = aes(x = x, y = y, on = x),
+         background = "black",
+         x_range = c(min_x, max_x),
+         y_range = c(min_y, max_y),
+         colour_key = colors,
+         reduction_func = "max") %>%
     aggregation_points(colour_map = fire, group_by_data_table = FALSE) %>%
     rasterizer() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
