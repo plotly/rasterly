@@ -1,6 +1,5 @@
 #' @export
 #' @import grid
-#' 
 
 grid.rasterizer <- function (widget, ..., name = NULL, gp = grid::gpar(), draw = TRUE, vp = NULL) {
   
@@ -13,38 +12,47 @@ grid.rasterizer <- function (widget, ..., name = NULL, gp = grid::gpar(), draw =
 }
 
 #' @export
+plot.rasterizer <- function (x, y = NULL, ...) {
+  if (!is.null(y)) warning("argument y is ignored")
+  g <- grid.rasterizer(x, ...)
+  invisible(g)
+}
+
+#' @export
 rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
                            name = NULL, gp = grid::gpar(), vp = NULL) {
   
-  if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object", call. = FALSE)
-  if(is.canvas(rastObj)) stop("'Canvas' is passed. `Aggregation_...()` layers and
-                              `rasterizer()` is needed", call. = FALSE)
-  if(is.aggregation(rastObj)) stop("'Aggregation' layer is passed. Forget to pass to `rasterizer()`?", call. = FALSE)
-  if(is.null(rastObj$image)) stop("No image is found. Set `show_raster = TRUE`", call. = FALSE)
+  if(missing(rastObj) || !is.rasterize(rastObj)) 
+    stop("No 'rasterize' object. Forget to pass to `execute()`?", call. = FALSE)
+  if(is.rasterizeLayer(rastObj)) 
+    stop("'RasterizeLayer' is passed. Forget to pass to `execute()`?", call. = FALSE)
+  if(is.null(rastObj$image)) 
+    stop("No image is found. Set `show_raster = TRUE`", call. = FALSE)
   
   args <- list(...)
-  margins <- if(is.null(args$margins)) c(3.6, 4.1, 2.1, 1.1) else args$margins
-  bounding_box <- ifelse(is.null(args$bounding_box), "white", args$bounding_box)
+  margins <- args$margins %||% c(3.6, 4.1, 2.1, 1.1)
+  bounding_box <- args$bounding_box %||% "white"
   # title default settings
   title <- args$title
-  title_fontsize <- ifelse(is.null(args$title_fontsize), 20, args$title_fontsize)
-  title_fontfamily <- ifelse(is.null(args$title_fontfamily), "serif", args$title_fontfamily)
-  title_fontface <- ifelse(is.null(args$title_fontface), "bold", args$title_fontface)
-  title_location <- ifelse(is.null(args$title_location), 0.8, args$title_location)
-  title_hvjust <- if(is.null(args$title_hvjust)) c(0.5, 0.5) else args$title_hvjust
-  title_col <- ifelse(is.null(args$title_col), "black", args$title_col)
+  title_fontsize <- args$title_fontsize %||% 20
+  title_fontfamily <- args$title_fontfamily %||% "serif"
+  title_fontface <- args$title_fontface %||% "bold"
+  title_location <- args$title_location %||% 0.8
+  title_hvjust <- args$title_hvjust %||% c(0.5, 0.5)
+  title_col <- args$title_col %||% "black"
   # label default settings
   var_names <- unlist(rastObj$variable_names)
-  xlabel <- ifelse(is.null(args$xlabel), var_names["x"], args$xlabel) 
-  ylabel <- ifelse(is.null(args$ylabel), var_names["y"], args$ylabel) 
-  label_fontsize <- ifelse(is.null(args$label_fontsize), 12, args$label_fontsize)
-  label_fontfamily <- ifelse(is.null(args$label_fontfamily), "serif", args$label_fontfamily)
-  label_fontface <- ifelse(is.null(args$label_fontface), "plain", args$label_fontface)
-  label_location <- if(is.null(args$label_location)) c(-2.5, -3.5) else args$label_location
-  label_hvjust <- if(is.null(args$label_hvjust)) c(0.5, 0.5) else args$label_hvjust
-  label_col <- ifelse(is.null(args$label_col), "black", args$label_col)
-  # axis colour
-  axis_col <- ifelse(is.null(args$axis_col), "black", args$axis_col)
+  xlabel <- args$xlabel %||% var_names["x"]
+  ylabel <- args$ylabel %||% var_names["y"]
+  label_fontsize <- args$label_fontsize %||% 12
+  label_fontfamily <- args$label_fontfamily %||% "serif"
+  label_fontface <- args$label_fontface %||% "plain"
+  label_location <- args$label_location %||% c(-2.5, -3.5)
+  label_hvjust <- args$label_hvjust %||% c(0.5, 0.5)
+  label_col <- args$label_col %||% "black"
+  # axis 
+  axis_col <- args$axis_col %||% "black"
+  axis_fontsize <- args$axis_fontsize %||% 8
 
   rGrob <- grid::gTree(
     children = grid::gList(
@@ -59,12 +67,18 @@ rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
               grid::xaxisGrob(
                 at = grid::grid.pretty(rastObj$x_range),
                 name = "x axis",
-                gp = grid::gpar(col = axis_col)
+                gp = grid::gpar(
+                  col = axis_col,
+                  fontsize = axis_fontsize
+                )
               ),
               grid::yaxisGrob(
                 at = grid::grid.pretty(rastObj$y_range),
                 name = "y axis",
-                gp = grid::gpar(col = axis_col)
+                gp = grid::gpar(
+                  col = axis_col,
+                  fontsize = axis_fontsize
+                )
               )
             ), 
             name = "axes"
