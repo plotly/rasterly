@@ -14,5 +14,21 @@ Description: Modern heat map visualizations for large data using Plotly.js
 LinkingTo: Rcpp
 License: MIT
 Encoding: UTF-8
+Depends:
+    R (>= 3.4.0),
+    methods,
+    Rcpp
+Imports:
+    data.table,
+    rlang,
+    ggplot2
+Suggests:
+    magrittr,
+    grid,
+    stats,
+    compiler,
+    plotly,
+    loon,
+    purrr
 LazyData: true
 RoxygenNote: 6.1.1
