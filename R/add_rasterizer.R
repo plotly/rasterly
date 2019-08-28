@@ -7,31 +7,55 @@
 #' @param inherit Inherit attributes from \link{plot_ly()}
 #' @param on Reduction "on" which variable, it is a numerical vectors or expression and will be passed on `aes()`.
 #' @param size The size of pixel for each observation, a numerical vectors or expression and will be passed on `aes()`.
-#' @param scaling Scale layout matrix. 
+#' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
 #' @param ... Arguments (i.e., attributes) passed along to the trace type or `rasterizer`.
 #' @export
 #' 
 #' @examples 
 #' \dontrun{
 #'    library(rasterizer)
-#'    if(requireNamespace("plotly")) {
-#'      x <- rnorm(1e7)
-#'      y <- rnorm(1e7)
-#'      min_x <- min(x)
-#'      min_y <- min(y)
-#'      max_x <- max(x)
-#'      max_y <- max(y)
-#'      data.table::data.table(x = x, y = y) %>% 
-#'        plot_ly() %>% 
-#'        add_rasterizer(x = ~x, y = ~y,
-#'                       x_range = c(min_x, max_x), y_range = c(min_y, max_y))
+#'    if(requireNamespace("plotly") && requireNamespace("data.table")) {
+#'      # Load data
+#'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
+#'        data.table::fread(stringsAsFactors = FALSE)
+#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>% 
+#'        data.table::fread(stringsAsFactors = FALSE)
+#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>% 
+#'        data.table::fread(stringsAsFactors = FALSE)
+#'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+#'        data.table::rbindlist()
 #'        
+#'      #### quick start
+#'      plot_ly(data = ridesDf) %>% 
+#'        add_rasterizer(x = ~Lat, y = ~Lon)
+#'      
+#'      #### set artificial scaling function
+#'      zeroOneTransform <- function(z) {
+#'        minz <- min(z)
+#'        maxz <- max(z)
+#'        M <- matrix((z - minz)/(maxz - minz), nrow = dim(z)[1])
+#'        return(M)
+#'      }
+#'      plot_ly(data = ridesDf) %>% 
+#'        add_rasterizer(x = ~Lat, 
+#'                       y = ~Lon, 
+#'                       on = ~-Lat,
+#'                       reduction_func = "max",
+#'                       scaling = zeroOneTransform) %>%
+#'        plotly::layout(
+#'          xaxis = list(
+#'            title = "x"
+#'          ),
+#'          yaxis = list(
+#'            title = "y"
+#'          )
+#'        )
 #'    }
 #' }
 add_rasterizer <- function(p, x = NULL, y = NULL, z = NULL, ..., 
                            data = NULL, inherit = TRUE, 
                            on = NULL, size = NULL, 
-                           scaling = c("log", "to01", "origin")) {
+                           scaling = NULL) {
   if (inherit) {
     x <- x %||% p$x$attrs[[1]][["x"]]
     y <- y %||% p$x$attrs[[1]][["y"]]
@@ -39,93 +63,54 @@ add_rasterizer <- function(p, x = NULL, y = NULL, z = NULL, ...,
   }
 
   args <- list(...)
-  rasterizer_args <- union(methods::formalArgs(canvas), methods::formalArgs(aggregation_points))
+  rasterizer_args <- union(methods::formalArgs(rasterizer), methods::formalArgs(rasterize_points))
   args[rasterizer_args] <- NULL
   
   if (is.null(z)) {
     # produce z by rasterizer
-    
-    ### set names
-    mapping_names <- c("x", "y", "on", "size")
-    names(mapping_names) <- mapping_names
-    ### set scaling
-    scaling <- match.arg(scaling)
-    
+    ### set vars
     data <- data %||% p$x$visdat[[1]]()
     on <- on %||% p$x$attrs[[1]][["on"]]
     size <- size %||% p$x$attrs[[1]][["size"]] 
+    
+    ### set mappings
+    mapping_names <- c("x", "y", "on", "size")
+    names(mapping_names) <- mapping_names
     mapping <- aes()
+    expressions <- stats::setNames(
+      list(x, y, on, size),
+      mapping_names
+    )
 
-    # set x
-    if(rlang::is_expression(x)) {
-      x_parse <- rlang::expr_text(x) %>% 
-        sub("~", "", .) %>%
-        rlang::parse_expr()
-      mapping[[1]] <- rlang::quo(!!x_parse)
-    } else {
-      if(is.numeric(x)) {
-        data$x <- x 
-        mapping[[1]] <- rlang::quo(x)
-      } else stop("'x' is neither `quote` nor a numerical value", call. = FALSE)
-    }
-    
-    # set y
-    if(rlang::is_expression(y)) {
-      y_parse <- rlang::expr_text(y) %>% 
-        sub("~", "", .) %>%
-        rlang::parse_expr()
-      mapping[[2]] <- rlang::quo(!!y_parse)
-    } else {
-      if(is.numeric(y)) {
-        data$y <- y
-        mapping[[2]] <- rlang::quo(y)
-      } else stop("'y' is neither `quote` nor a numerical value", call. = FALSE)
-    }
-    
-    # set on
-    if(is.null(on)) {
-      mapping_names["on"] <- NA
-    } else {
-      if(rlang::is_expression(on)) {
-        on_parse <- rlang::expr_text(on) %>% 
-          sub("~", "", .) %>%
-          rlang::parse_expr()
-        mapping[[3]] <- rlang::quo(!!on_parse)
+    for(i in 1:length(mapping_names)) {
+      exp <- expressions[[i]]
+      
+      if(is.null(exp)) {
+        mapping_names[i] <- NA
       } else {
-        if(is.numeric(on)) {
-          data$on <- on
-          mapping[[3]] <- rlang::quo(on)
+        if(rlang::is_expression(exp)) {
+          the_parse <- rlang::expr_text(exp) %>% 
+            sub("~", "", .) %>%
+            rlang::parse_expr()
+          mapping[[i]] <- rlang::quo(!!the_parse)
+        } else if(is.numeric(exp)) {
+            data[[mapping_names[i]]] <- exp
+            mapping[[i]] <- rlang::quo(!!rlang::parse_expr(mapping_names[i]))
         } else stop("'on' is neither `quote` nor a numerical value", call. = FALSE)
       }
     }
-    
-    # set size
-    if(is.null(size)) {
-      mapping_names["size"] <- NA
-    } else {
-      if(rlang::is_expression(size)) {
-        size_parse <- rlang::expr_text(size) %>% 
-          sub("~", "", .) %>%
-          rlang::parse_expr()
-        mapping[[4]] <- rlang::quo(!!size_parse)
-      } else {
-        if(is.numeric(size)) {
-          data$size <- size
-          mapping[[4]] <- rlang::quo(size)
-        } else stop("'size' is neither `quote` nor a numerical value", call. = FALSE)
-      }
-    }
-    
+
     mapping <- Filter(Negate(is.null), mapping)
     names(mapping) <- stats::na.omit(mapping_names)
     
     data %>% 
-      canvas(mapping = mapping, 
-             show_raster = FALSE, 
-             ...) %>% 
-      aggregation_points() %>%
-      rasterizer() -> rastObj
+      rasterizer(mapping = mapping, 
+                 show_raster = FALSE, 
+                 ...) %>% 
+      rasterize_points() %>%
+      execute() -> rastObj
     remove(data)
+    data <- NULL
     
     if(sum(lengths(rastObj$agg)) > 1) 
       message("More than one aggregation matrix is detected")
@@ -136,14 +121,21 @@ add_rasterizer <- function(p, x = NULL, y = NULL, z = NULL, ...,
     x <- seq(rastObj$x_range[1], rastObj$x_range[2], length.out = dimZ[2])
     remove(rastObj)
 
-    switch(scaling, 
-           "log" = {
-             z <- matrix(log(z + 1), nrow = dimZ[1])
-           }, 
-           "to01" = {
-             z <- zeroOneTransform(z)
-           }, 
-           "origin" = NULL)
+    scaling <- scaling %||% {
+      message("The default scaling is 'log'.")
+      "log"
+    }
+    if(is.function(scaling)) {
+      z <- do.call(scaling, 
+                   list(z = z))
+    } else {
+      if(!is.character(scaling)) stop("'scaling' can be either 'function' or 'character'")
+      switch(scaling, 
+             "log" = {
+               z <- matrix(log(z + 1), nrow = dimZ[1])
+             }, 
+             "origin" = NULL)
+    }
   } else message("If z is provided, `add_heatmap` will be excuted")
   
   do.call(
@@ -156,7 +148,7 @@ add_rasterizer <- function(p, x = NULL, y = NULL, z = NULL, ...,
         x = x, 
         y = y,
         type = "heatmap",  
-        data = NULL, 
+        data = data, 
         inherit = inherit
       ),
       args
