@@ -5,8 +5,7 @@
 \title{Add "rasterizer" trace to a plotly visualization}
 \usage{
 add_rasterizer(p, x = NULL, y = NULL, z = NULL, ..., data = NULL,
-  inherit = TRUE, on = NULL, size = NULL, scaling = c("log",
-  "to01", "origin"))
+  inherit = TRUE, on = NULL, size = NULL, scaling = NULL)
 }
 \arguments{
 \item{x}{The x variable, numerical vectors or expression and will be passed on `aes()`.}
@@ -25,7 +24,7 @@ add_rasterizer(p, x = NULL, y = NULL, z = NULL, ..., data = NULL,
 
 \item{size}{The size of pixel for each observation, a numerical vectors or expression and will be passed on `aes()`.}
 
-\item{scaling}{Scale layout matrix.}
+\item{scaling}{It could be an artificial function or a scaling way ("log", "origin")}
 }
 \description{
 Add trace to a plotly visualization
@@ -33,18 +32,42 @@ Add trace to a plotly visualization
 \examples{
 \dontrun{
    library(rasterizer)
-   if(requireNamespace("plotly")) {
-     x <- rnorm(1e7)
-     y <- rnorm(1e7)
-     min_x <- min(x)
-     min_y <- min(y)
-     max_x <- max(x)
-     max_y <- max(y)
-     data.table::data.table(x = x, y = y) \%>\% 
-       plot_ly() \%>\% 
-       add_rasterizer(x = ~x, y = ~y,
-                      x_range = c(min_x, max_x), y_range = c(min_y, max_y))
+   if(requireNamespace("plotly") && requireNamespace("data.table")) {
+     # Load data
+     ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" \%>\%
+       data.table::fread(stringsAsFactors = FALSE)
+     ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" \%>\% 
+       data.table::fread(stringsAsFactors = FALSE)
+     ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  \%>\% 
+       data.table::fread(stringsAsFactors = FALSE)
+     ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) \%>\% 
+       data.table::rbindlist()
        
+     #### quick start
+     plot_ly(data = ridesDf) \%>\% 
+       add_rasterizer(x = ~Lat, y = ~Lon)
+     
+     #### set artificial scaling function
+     zeroOneTransform <- function(z) {
+       minz <- min(z)
+       maxz <- max(z)
+       M <- matrix((z - minz)/(maxz - minz), nrow = dim(z)[1])
+       return(M)
+     }
+     plot_ly(data = ridesDf) \%>\% 
+       add_rasterizer(x = ~Lat, 
+                      y = ~Lon, 
+                      on = ~-Lat,
+                      reduction_func = "max",
+                      scaling = zeroOneTransform) \%>\%
+       plotly::layout(
+         xaxis = list(
+           title = "x"
+         ),
+         yaxis = list(
+           title = "y"
+         )
+       )
    }
 }
 }
