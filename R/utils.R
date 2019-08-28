@@ -1,16 +1,16 @@
 #' @export
-is.canvas <- function(x) {
-  inherits(x, "canvas")
-}
-
-#' @export
 is.rasterizer <- function(x) {
   inherits(x, "rasterizer")
 }
 
 #' @export
-is.aggregation <- function(x) {
-  inherits(x, "aggregation")
+is.rasterize <- function(x) {
+  inherits(x, "rasterize")
+}
+
+#' @export
+is.rasterizeLayer <- function(x) {
+  inherits(x, "rasterizeLayer")
 }
 
 #' @export
@@ -51,10 +51,10 @@ get_cdf <- function(M, zeroIgnored = TRUE, ...) {
   return(cdf)
 }
 
-get_mapped_color <- function(colour_map = c('lightblue','darkblue'),
-                             span = 50) {
+get_mapped_colour <- function(colour_map = c('lightblue','darkblue'),
+                              span = 50) {
   
-  # get color rgb value
+  # get colour rgb value
   rgb_num <- get_rgb_num(colour_map)
   span <- max(span, length(colour_map))
   # use interpolation to extend colour_map
@@ -92,13 +92,4 @@ reduction_func_args <- function(func, aesthetics, ...) {
     )
   }
   args
-}
-
-zeroOneTransform <- function(z) {
-  
-  minz <- min(z)
-  maxz <- max(z)
-  M <- matrix((z - minz)/(maxz - minz), nrow = dim(z)[1])
-  
-  return(M)
 }

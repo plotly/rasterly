@@ -18,7 +18,7 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
     warning("`column` is deprecated, please use `on` instead")
     mapping_names[which(mapping_names == "column")] <- "on"
   }
-  
+
   if(!all(mapping_names %in% c("x", "y", "on", "colour", "size"))) {
     message("Only `x`, `y`, `on` `size` and `colour` can be passed in so far")
     message("More features are coming!")

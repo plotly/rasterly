@@ -33,7 +33,7 @@ get_colour_map <- function(envir, ...) {
   
   args <- list(...)
   names_args <- names(args)
-  col <- c("colour", "color", "color_map", "colour_map")
+  col <- c("colour", "colour", "colour_map", "colour_map")
   
   which_col_name_is_mapped <- which(names_args %in% col)
   matched_name_len <- length(which_col_name_is_mapped)
@@ -89,11 +89,11 @@ get_span <- function(envir, ...) {
   return(span)
 }
 
-get_colour_key <- function(colour_key, n, canvas_colour_key) {
+get_colour_key <- function(colour_key, n, rasterizer_colour_key) {
   
-  colour_key <- colour_key %||% canvas_colour_key
+  colour_key <- colour_key %||% rasterizer_colour_key
   
-  if(is.null(colour_key)) colour_key <- gg_color_hue(n)
+  if(is.null(colour_key)) colour_key <- gg_colour_hue(n)
   stopifnot(
     exprs = {
       length(colour_key) >= n
