@@ -5,20 +5,47 @@
 #' @param scaling Scale layout matrix. 
 #' @param ... Arguments to the layout object. For documentation, 
 #' see https://plot.ly/r/reference/#Layout_and_layout_style_objects
+#' 
+#' @importFrom plotly plot_ly add_heatmap layout raster2uri
 #' @export
 #' 
 #' @examples 
 #' \dontrun{
 #'    library(rasterizer)
-#'    if(requireNamespace("plotly")) {
-#'      x <- rnorm(1e7)
-#'      y <- rnorm(1e7)
-#'      category <- sample(1:5, 1e7, replace = TRUE)
-#'      data.frame(x = x, y = y, category = category) %>%
-#'        canvas(mapping = aes(x = x, y = y)) %>%
-#'        aggregation_points(layout = "weighted") %>%
-#'        rasterizer() %>% 
-#'        plotly.rasterizer()
+#'    if(requireNamespace("plotly") && requireNamespace("data.table") && requireNamespace("lubridate")) {
+#'      # Load data
+#'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
+#'        data.table::fread(stringsAsFactors = FALSE)
+#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>% 
+#'        data.table::fread(stringsAsFactors = FALSE)
+#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>% 
+#'        data.table::fread(stringsAsFactors = FALSE)
+#'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+#'        data.table::rbindlist()
+#'        
+#'      time <- lubridate::ymd_hms(ridesDf$`Date/Time`)
+#'      ridesDf <-  ridesDf[, 'Date/Time':=NULL][, list(Lat, 
+#'                                                      Lon,                                               
+#'                                                      hour = lubridate::hour(time),                                                
+#'                                                      month = lubridate::month(time),
+#'                                                      day = lubridate::day(time))]
+#'      
+#'      max_x <- max(ridesDf$Lat)
+#'      min_x <- min(ridesDf$Lat)
+#'      max_y <- max(ridesDf$Lon)
+#'      min_y <- min(ridesDf$Lon)
+#'      ridesDf %>% 
+#'        rasterizer(background = "black") %>%
+#'        rasterize_points(xlim = c(min_x, (min_x+max_x)/2), 
+#'                         ylim = c(min_y, max_y),
+#'                         mapping = aes(x = Lat, y = Lon),
+#'                         colour_map = fire) %>% 
+#'        rasterize_points(xlim = c((min_x+max_x)/2, max_x), 
+#'          ylim = c(min_y, max_y),
+#'          mapping = aes(x = Lat, y = Lon, colour = hour),
+#'          colour_key = hourColours) %>% 
+#'     execute() %>%
+#'     plotly.rasterizer(title = "New York Uber Rides")
 #'    }
 #' }
 plotly.rasterizer <- function(rastObj, as_heatmap = FALSE, 
@@ -51,10 +78,10 @@ plotly.rasterizer <- function(rastObj, as_heatmap = FALSE,
   } else {
     image <- rastObj$image
     if(is.null(image)) 
-      stop("No image is found. Consider set `show_raster = TRUE` in `canvas()`?", call. = FALSE)
+      stop("No image is found. Consider set `show_raster = TRUE` in `rasterizer()`?", call. = FALSE)
     
     var_names <- unlist(rastObj$variable_names)
-    
+
     p <- plotly::plot_ly(
       width = rastObj$plot_width,
       height = rastObj$plot_height
