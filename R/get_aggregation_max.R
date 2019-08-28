@@ -11,14 +11,14 @@ get_aggregation.max <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              aggregation__maxCpp(plot_width = plot_width, plot_height = plot_height,
-                                                  x_range = x_range, y_range = y_range,
-                                                  xlim = xlim, ylim = ylim,
-                                                  x = x,
-                                                  y = y,
-                                                  on = on,
-                                                  size = if(is_size) size else numeric(0),
-                                                  glyph = glyph)
+                              aggregation_maxCpp(plot_width = plot_width, plot_height = plot_height,
+                                                 x_range = x_range, y_range = y_range,
+                                                 xlim = xlim, ylim = ylim,
+                                                 x = x,
+                                                 y = y,
+                                                 on = on,
+                                                 size = if(is_size) size else numeric(0),
+                                                 glyph = glyph)
                             )
                           ),
                           by = if(is_colour) colour else NULL]
