@@ -40,13 +40,13 @@ remotes::install_github("https://github.com/plotly/rasterizer")
 
 `rasterizer` is built based on `datashader` http://datashader.org/getting_started/index.html in python. Both are designed by "rasterizing" large data set into images. In computation, `datashader` is faster so far but `rasterizer` is comparable; in usage, `rasterizer` provides more readable and flexible operation interface. 
 
-Each `rasterizer` object is composed of three part: `canvas()`, `aggregation_...()`(like `aggregation_points()`, ...) and `rasterizer()`. `canvas()` is used for setting canvas (image width, image height, ...) and other information passed through layers (if they are not specified in layers); `aggregation_...()`s are layers to be added; after piping `canvas()` and `aggregation_...()`s, code will not be fired until we call `rasterizer()`.
+Each `rasterizer` object is composed of three part: `rasterizer()`, `rasterize_...()`(like `rasterize_points()`, ...) and `execute()`. `rasterizer()` is used for initial setting rasterizer (image width, image height, ...) and other information passed through layers (if they are not specified in layers); `aggregation_...()`s are layers to be added; after piping `rasterizer()` and `aggregation_...()`s, code will not be fired until we call `execute()`.
 
 ```
 data %>%
-  canvas() %>% 
-  aggregation_points() %>% 
-  rasterizer() -> p
+  rasterizer() %>% 
+  rasterize_points() %>% 
+  execute() -> p
 ```
 
 Note that, "p" contains image raster and other useful info (like numeric aggregation matrix) to produce image but it does **not** provide any graphs. Package `rasterizer` replies on the third parties to display like package `grid` and `ggplot` for static graphs or `plotly` and `loon` for interactive graphs.
@@ -58,6 +58,7 @@ Note that, "p" contains image raster and other useful info (like numeric aggrega
 p %>%
   grid.rasterizer() # built based on `grid::grid.raster()`
 ```
+![grid.rasterizer()](man/figures/grid_rasterizer.png)
 
 * `ggplot`
 ```
@@ -72,15 +73,20 @@ ggplot(data, mapping) +
 plot_ly(data, x, y) %>%
  add_rasterizer()
 ```
+![add_rasterizer()](man/figures/add_rasterizer.gif)
 
 or
 
 ```
+# Note that it may be deprecated in the future.
 p %>% 
   plotly.rasterizer()
 ```
+![plotly.rasterizer()](man/figures/plotly_rasterizer.gif)
 
 * `loon`
 ```
 l_rasterizer(data, x, y) # not yet finished, coming soon!
 ```
+
+The code to produce these images can be found in 
