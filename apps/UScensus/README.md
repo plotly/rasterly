@@ -1,5 +1,4 @@
-# dashr-rasterizer
-# Rasterizer
+# US census dashR app
 
 This is a Dash app with large data visualization by package `rasterizer`. The data "USA census" can be downloaded through the instruction from `datashader` Github https://github.com/pyviz/datashader and the parquet files can be found in "../dash-datashader/datashader-examples/data/census2010.parq". 
 

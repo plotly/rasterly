@@ -88,5 +88,4 @@ p %>%
 ```
 l_rasterizer(data, x, y) # not yet finished, coming soon!
 ```
-
-The code to produce these images can be found in 
+Some apps can be found in https://github.com/plotly/rasterizer/tree/master/apps/
