@@ -1,7 +1,7 @@
 #' @export
 as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), span = 50,
-                                       zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
-                                       alpha = 255, layout = c("weighted", "cover")) {
+                                      zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
+                                      alpha = 255, layout = c("weighted", "cover")) {
   
   layout <- match.arg(layout)
   span <- max(span, length(colour))
@@ -15,7 +15,7 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
     id <- floor(cdf(x) * (span - 1))[which_is_not_zero] + 1
     
     col_index <- get_mapped_colour(colour_map = colour,
-                                  span = span)
+                                   span = span)
     
     red <- col_index$red[id]
     green <- col_index$green[id]
@@ -52,8 +52,8 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
 
 #' @export
 as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
-                                     zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
-                                     alpha = 255, layout = c("weighted", "cover")) {
+                                    zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
+                                    alpha = 255, layout = c("weighted", "cover")) {
   
   n <- length(x)
   if(missing(colour) || is.null(colour)) colour <- gg_colour_hue(n)
