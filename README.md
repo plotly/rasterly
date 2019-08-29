@@ -1,7 +1,9 @@
 # Rasterizer
+
 Display million data in seconds in R
 
 ## Load large data in R
+
 `rasterizer` is a R package to display large data set (million or billion) in seconds. 
 Here are a couple of ways to load large data in R with package `data.table` (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
