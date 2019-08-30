@@ -30,7 +30,7 @@
 #' x <- list(a = 1, b = "foo", b = 3)
 #' y <- list(b = 2, d = 4)
 #' x %<-% y
-#' y %<-% x # be careful, since 3 will cover on "foo" in x, then on 2 in y
+#' y %<-% x # be careful, since "3" will cover on "foo" in x, then on "2" in y
 #' 
 #' @export
 `%<-%` <- function(x, y) {
