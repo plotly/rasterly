@@ -1,3 +1,20 @@
+#' @title execute
+#' @description Execute a "rasterizer" object
+#' @param rastObj A rasterizer object. It should be a list of environments composed of a `rasterizer()` and 
+#' several `rasterize_...` layers
+#' 
+#' @note A rasterizer object will never be implemented until we call `execute()`
+#' 
+#' @examples 
+#' r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) %>% 
+#'        rasterizer(mapping = aes(x = x, y = y)) %>%
+#'        rasterize_points()
+#' str(r)
+#' # Error exists
+#' \dontrun{plot(r)}
+#' p <- execute(r)
+#' str(p)
+#' plot(p, title = "Random Generation")
 #' @export
 execute <- function(rastObj) {
   
