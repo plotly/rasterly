@@ -53,11 +53,12 @@ An environment wrapped by a list
 Set initials for rasterizer
 }
 \details{
-- In `rasterizer`, only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
-variable "on" represents the reduction function works "on" which column. 
-
-- `drop_data` can help save space, especially to extremly large dataset, 
-however, drop original data can cause layers fail to set new `aes()`.
+\itemize{
+ \item{}{In `rasterizer`, only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
+variable "on" represents the reduction function works "on" which column.}
+ \item{}{`drop_data` can help save space, especially to extremly large dataset, 
+however, drop original data can cause layers fail to set new `aes()`.}
+}
 }
 \note{
 Call `rasterizer()` alone do not generate anyting. It cooperates with `rasterize_...()` layers and `execute()` to

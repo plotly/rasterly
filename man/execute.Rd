@@ -19,7 +19,7 @@ A rasterizer object will never be implemented until we call `execute()`
 \examples{
 r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) \%>\% 
        rasterizer(mapping = aes(x = x, y = y)) \%>\%
-       rasterize_points()
+       rasterize_points(colour_map = fire)
 str(r)
 # Error exists
 \dontrun{plot(r)}

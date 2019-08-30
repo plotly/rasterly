@@ -28,11 +28,12 @@ merged on top of `rasterizer()` mapping.}
 
 \item{reduction_func}{A reduction operator function is used when aggregating datapoints
 into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first`, 
-`last`, `min` and `max` so far. More is coming.}
+`last`, `min` and `max` so far. Default is `sum` and more is coming.}
 
-\item{layout}{The way to layout multiple images. It is useful when data is catergorical("colour" is set in `aes()`).
-The default setting is "weighted", which means the final raster is the weighted combination of each categorical
-aggregation matrix. Also, we can "cover" each raster by the order of categories.}
+\item{layout}{The way to layout multiple images, default is `weighted`. 
+It is useful when data is catergorical("colour" is set in `aes()`). The default setting is "weighted", 
+which means the final raster is the weighted combination of each categorical aggregation matrix. 
+Also, we can "cover" each raster by the order of categories.}
 
 \item{glyph}{When increase the size, the pixels would be spreaded as a square (same speed on four directions) 
 or a circle (It is more like diamond? Will fix in the future)}
