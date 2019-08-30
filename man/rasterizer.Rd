@@ -6,17 +6,18 @@
 \usage{
 rasterizer(data = NULL, mapping = aes(), ..., plot_width = 600,
   plot_height = 600, x_range = NULL, y_range = NULL,
-  background = "#FFFFFF", colour_map = c("lightblue", "darkblue"),
-  colour_key = NULL, show_raster = TRUE, remove_data = FALSE,
+  background = "white", colour_map = c("lightblue", "darkblue"),
+  colour_key = NULL, show_raster = TRUE, drop_data = FALSE,
   variable_check = FALSE)
 }
 \arguments{
-\item{data}{Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.}
+\item{data}{Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
+Since "Rasterizer" is used for large dataset, "\link[data.table]{data.table}" is recommended.}
 
-\item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2`\link[aes]{aes}.
+\item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[aes]{aes}.
 See details.}
 
-\item{...}{Other arguments can be passed to layer.}
+\item{...}{Other arguments can be passed to layers.}
 
 \item{plot_width}{The width of image, must be positive integer. Higher value indicates higher resolution.}
 
@@ -28,55 +29,51 @@ can help to speed code}
 \item{y_range}{The range of y; It can be used to clip the image. Also, to large dataset, provided `y_range`
 can help to speed code}
 
-\item{background}{Background colour of this image. All layers share one background colour.}
+\item{background}{Background colour of this image.}
 
-\item{colour_map}{colour used to map in each pixel. The `colour_map` would be extended by linear interpolation
+\item{colour_map}{Colour used to map in each pixel. The `colour_map` would be extended by linear interpolation
 independently for RGB. The darkness of the colour depends on the aggregation matrix value.}
 
 \item{colour_key}{Used for categorical variable. In general, `colour_key` would be called when "colour"
 is set in `aes()`}
 
-\item{show_raster}{Logical value. Whether show raster or not}
+\item{show_raster}{Logical value. Whether show raster or not.}
 
-\item{remove_data}{Logical value. In general, data passed in has huge size which may take too many rooms. When data is 
-manipulated by given `aes()`, original data can be removed via function `remove()` by setting `remove_data = TRUE`. See details 
-for more information.}
+\item{drop_data}{Logical value. In general, data passed in has large size which may take too many rooms. When data is 
+manipulated by given `aes()`, original data can be dropped via function `remove()` by setting `drop_data = TRUE`. 
+See details for more information.}
 
-\item{variable_check}{Logical value. Drop unused columns. Setting `TRUE` can help to save more space by sacrificing speed.}
+\item{variable_check}{Logical value to drop unused columns. Setting `TRUE` can help to 
+save more space by sacrificing speed.}
+}
+\value{
+An environment wrapped by a list
 }
 \description{
 Set initials for rasterizer
 }
 \details{
-1. In `rasterizer`, only five arguments can be passed in `aes()`, "x", "y", "on", "colour" and "size".
+- In `rasterizer`, only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
 variable "on" represents the reduction function works "on" which column. 
-2. `remove_data` can help save space, however, drop original data can cause layers fail to set new `aes()`, 
-ex: rasterizer(data, aes(x,y), ..., remove_data = TRUE) %>% rasterize_points() %>% rasterize_points(mapping = aes(x,y,on))
-The second layer fail to set new `aes()` since the original data is missing, only manipulated dataframe is passed through.
+
+- `drop_data` can help save space, especially to extremly large dataset, 
+however, drop original data can cause layers fail to set new `aes()`.
+}
+\note{
+Call `rasterizer()` alone do not generate anyting. It cooperates with `rasterize_...()` layers and `execute()` to
+produce image rasters or aggregation matrices. More info could be found in 
+\href{https://github.com/plotly/rasterizer/blob/master/README.md}{README.md}
 }
 \examples{
-\dontrun{
-   library(rasterizer)
-   if(requireNamespace("grid") && requireNamespace("gridExtra")) {
-     x <- rnorm(1e7)
-     y <- rnorm(1e7)
-     category <- sample(1:5, 1e7, replace = TRUE)
-     data.frame(x = x, y = y, category = category) \%>\%
-       rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
-       rasterize_points(layout = "weighted") \%>\%
-       execute() -> ds1
-
-     data.frame(x = x, y = y, category = category) \%>\%
-       rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
-       rasterize_points(layout = "cover") \%>\%
-       execute() -> ds2
-
-     grid::grid.newpage()
-     gridExtra::grid.arrange(
-        grobs = list(grid::rasterGrob(ds1$image), grid::rasterGrob(ds2$image)),
-        ncol = 2,
-        top = "'weighted' layout versus 'cover' layout"
-     )
-   }
+r <- rasterizer(
+       data = data.frame(x = 1:1e4, y = runif(1e4)), 
+       mapping = aes(x = x, y = y)
+)
+str(r)
+envir <- r[[1]]
+get("aesthetics", envir = envir)
+get("y_range", envir = envir)
 }
+\seealso{
+\link{rasterize_points}, \link{execute}
 }

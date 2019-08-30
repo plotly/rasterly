@@ -6,19 +6,70 @@
 \usage{
 rasterize_points(rastObj, data = NULL, mapping = aes(), ...,
   xlim = NULL, ylim = NULL, max_size = NULL, reduction_func = NULL,
-  layout = NULL, glyph = NULL, group_by_data_table = NULL)
+  layout = NULL, glyph = NULL, group_by_data_table = NULL,
+  inherit.aes = TRUE)
 }
 \arguments{
-\item{rastObj}{A `rasterObj`.}
+\item{rastObj}{A "rasterizer" object.}
+
+\item{data}{Dataset to use for plot. If not provided (say `NULL`), data would be inherited by `rasterizer()`; else 
+input data could be a `data.frame` or some function with argument `x`.}
+
+\item{mapping}{Default list of aesthetic mappings to use for plot. If provided and `inherit.aes = TRUE`, it will be
+merged on top of `rasterizer()` mapping.}
+
+\item{...}{Arguments passed by `rasterizer()`}
+
+\item{xlim}{X limits in this layer}
+
+\item{ylim}{Y limits in this layer}
+
+\item{max_size}{When size is modifed, how many pixels an observation point will be spreaded.}
 
 \item{reduction_func}{A reduction operator function is used when aggregating datapoints
-into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first` and `last` so far.
-More is coming}
+into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first`, 
+`last`, `min` and `max` so far. More is coming.}
 
 \item{layout}{The way to layout multiple images. It is useful when data is catergorical("colour" is set in `aes()`).
-The default setting is "weighted", which means the final raster is the weighted combination of each category
-aggregation matrix. Also, we can "cover" each raster by the order of unique categories.}
+The default setting is "weighted", which means the final raster is the weighted combination of each categorical
+aggregation matrix. Also, we can "cover" each raster by the order of categories.}
+
+\item{glyph}{When increase the size, the pixels would be spreaded as a square (same speed on four directions) 
+or a circle (It is more like diamond? Will fix in the future)}
+
+\item{group_by_data_table}{Logical Value and defualt is `TRUE`. When set "colour" in `aes()`, 
+"group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
+is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.}
+}
+\value{
+A list of environments.
 }
 \description{
-points layer for `rasterizer`
+Points layer for "rasterizer".
+}
+\examples{
+\dontrun{
+   library(rasterizer)
+   if(requireNamespace("grid") && requireNamespace("gridExtra")) {
+     x <- rnorm(1e7)
+     y <- rnorm(1e7)
+     category <- sample(1:5, 1e7, replace = TRUE)
+     data.frame(x = x, y = y, category = category) \%>\%
+       rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
+       rasterize_points(layout = "weighted") \%>\%
+       execute() -> ds1
+
+     data.frame(x = x, y = y, category = category) \%>\%
+       rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
+       rasterize_points(layout = "cover") \%>\%
+       execute() -> ds2
+
+     grid::grid.newpage()
+     gridExtra::grid.arrange(
+        grobs = list(grid::rasterGrob(ds1$image), grid::rasterGrob(ds2$image)),
+        ncol = 2,
+        top = "'weighted' layout versus 'cover' layout"
+     )
+   }
+}
 }

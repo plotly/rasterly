@@ -16,9 +16,9 @@ add_rasterizer(p, x = NULL, y = NULL, z = NULL, ..., data = NULL,
 
 \item{...}{Arguments (i.e., attributes) passed along to the trace type or `rasterizer`.}
 
-\item{data}{A data frame (optional) or \link{crosstalk::SharedData} object.}
+\item{data}{A data frame (optional) or \link[crosstalk]{SharedData} object.}
 
-\item{inherit}{Inherit attributes from \link{plot_ly()}}
+\item{inherit}{Inherit attributes from \link[plotly]{plotly}}
 
 \item{on}{Reduction "on" which variable, it is a numerical vectors or expression and will be passed on `aes()`.}
 
@@ -44,9 +44,9 @@ Add trace to a plotly visualization
        data.table::rbindlist()
        
      #### quick start
-     plot_ly(data = ridesDf) \%>\% 
-       add_rasterizer(x = ~Lat, y = ~Lon)
-     
+     p <- plot_ly(data = ridesDf) \%>\% 
+            add_rasterizer(x = ~Lat, y = ~Lon)
+     p
      #### set artificial scaling function
      zeroOneTransform <- function(z) {
        minz <- min(z)
