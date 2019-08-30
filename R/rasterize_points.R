@@ -1,12 +1,53 @@
 #' @title rasterize_points
-#' @description points layer for `rasterizer`
-#' @param rastObj A `rasterObj`. 
+#' @description Points layer for "rasterizer".
+#' @param rastObj A "rasterizer" object. 
+#' @param data Dataset to use for plot. If not provided (say `NULL`), data would be inherited by `rasterizer()`; else 
+#' input data could be a `data.frame` or some function with argument `x`.
+#' @param mapping Default list of aesthetic mappings to use for plot. If provided and `inherit.aes = TRUE`, it will be
+#' merged on top of `rasterizer()` mapping.
+#' @param ... Arguments passed by `rasterizer()`
+#' @param xlim X limits in this layer
+#' @param ylim Y limits in this layer
+#' @param max_size When size is modifed, how many pixels an observation point will be spreaded.
 #' @param reduction_func A reduction operator function is used when aggregating datapoints
-#' into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first` and `last` so far.
-#' More is coming
-#' @param layout The way to layout multiple images. It is useful when data is catergorical("colour" is set in `aes()`).
-#' The default setting is "weighted", which means the final raster is the weighted combination of each category
-#' aggregation matrix. Also, we can "cover" each raster by the order of unique categories.
+#' into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first`, 
+#' `last`, `min` and `max` so far. Default is `sum` and more is coming.
+#' @param layout The way to layout multiple images, default is `weighted`. 
+#' It is useful when data is catergorical("colour" is set in `aes()`). The default setting is "weighted", 
+#' which means the final raster is the weighted combination of each categorical aggregation matrix. 
+#' Also, we can "cover" each raster by the order of categories.
+#' @param glyph When increase the size, the pixels would be spreaded as a square (same speed on four directions) 
+#' or a circle (It is more like diamond? Will fix in the future)
+#' @param group_by_data_table Logical Value and defualt is `TRUE`. When set "colour" in `aes()`, 
+#' "group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
+#' is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.
+#' 
+#' @return A list of environments.
+#' @examples
+#' \dontrun{
+#'    library(rasterizer)
+#'    if(requireNamespace("grid") && requireNamespace("gridExtra")) {
+#'      x <- rnorm(1e7)
+#'      y <- rnorm(1e7)
+#'      category <- sample(1:5, 1e7, replace = TRUE)
+#'      data.frame(x = x, y = y, category = category) %>%
+#'        rasterizer(mapping = aes(x = x, y = y, colour = category)) %>%
+#'        rasterize_points(layout = "weighted") %>%
+#'        execute() -> ds1
+#'
+#'      data.frame(x = x, y = y, category = category) %>%
+#'        rasterizer(mapping = aes(x = x, y = y, colour = category)) %>%
+#'        rasterize_points(layout = "cover") %>%
+#'        execute() -> ds2
+#'
+#'      grid::grid.newpage()
+#'      gridExtra::grid.arrange(
+#'         grobs = list(grid::rasterGrob(ds1$image), grid::rasterGrob(ds2$image)),
+#'         ncol = 2,
+#'         top = "'weighted' layout versus 'cover' layout"
+#'      )
+#'    }
+#' }
 
 #' @export
 rasterize_points <- function(rastObj,
@@ -19,7 +60,8 @@ rasterize_points <- function(rastObj,
                              reduction_func = NULL,
                              layout = NULL,
                              glyph = NULL,
-                             group_by_data_table = NULL) {
+                             group_by_data_table = NULL,
+                             inherit.aes = TRUE) {
   
   # argument check
   if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object", call. = FALSE)
@@ -52,9 +94,16 @@ rasterize_points <- function(rastObj,
   class(reduction_func) <- reduction_func
   
   if(!is.null(data)) {
+    
+    if(is.function(data)) data <- do.call(data, list(x = .get("data", envir = rastObj$rasterizer_env)))
+    
     # new input data in this layer
     if(rlang::is_empty(mapping)) {
       mapping <- .get("mapping", envir = rastObj$rasterizer_env)
+    } else {
+      if(inherit.aes)
+        # `%<-%` is a symbol to merge two lists from right to left
+        mapping <- ggplot2:::new_aes(.get("mapping", envir = rastObj$rasterizer_env) %<-% mapping)
     }
     aesthetics <- get_aesthetics(data, 
                                  mapping, 
@@ -86,6 +135,11 @@ rasterize_points <- function(rastObj,
       mapping <- rasterizer_env_mapping
       
     } else {
+
+      if(inherit.aes)
+        # `%<-%` is a symbol to merge two lists from right to left
+        # Should I use `new_aes()`?
+        mapping <- ggplot2:::new_aes(.get("mapping", envir = rastObj$rasterizer_env) %<-% mapping)
       
       tryCatch(
         expr = {
@@ -97,8 +151,8 @@ rasterize_points <- function(rastObj,
           start_time <- Sys.time()
           range <- get_range(x_range = xlim, 
                              y_range = ylim,
-                             x = aesthetics$x$value, 
-                             y = aesthetics$y$value)
+                             x = aesthetics$x, 
+                             y = aesthetics$y)
           xlim <- range$x_range
           ylim <- range$y_range
           end_time <- Sys.time()
