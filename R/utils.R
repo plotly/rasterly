@@ -26,15 +26,6 @@ aes <- ggplot2::aes
   return(m[[x]])
 }
 
-`%||%` <- function(x, y) {
-  if (is.null(x)) {
-    y
-  }
-  else {
-    x
-  }
-}
-
 get_cdf <- function(M, zeroIgnored = TRUE, ...) {
   
   if(missing(M)) stop("No matrix found")
@@ -70,26 +61,4 @@ remove_missing_matrix <- function(m, value = 0) {
   # replace all non-finite values with 0
   m[!is.finite(m)] <- value
   m
-}
-
-reduction_func_args <- function(func, aesthetics, ...) {
-  
-  args <- list(...)
-  args$colour <- aesthetics$colour$value
-  
-  if(func != "") {
-    tryCatch(
-      {
-        reduction_func <- get(func)
-        func_args <- methods::formalArgs(func)
-        args[Filter(function(name) name %in% func_args, names(args))]
-        
-      },
-      error = function(e) {
-        message(paste("unkwon function", func))
-        message("reduction function is replaced to `sum`")
-      }
-    )
-  }
-  args
 }
