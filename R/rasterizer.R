@@ -31,11 +31,13 @@
 #'
 #' @seealso \link{rasterize_points}, \link{execute}
 #' @details 
-#' - In `rasterizer`, only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
-#' variable "on" represents the reduction function works "on" which column. 
+#' \itemize{
+#'  \item{}{In `rasterizer`, only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
+#' variable "on" represents the reduction function works "on" which column.}
+#'  \item{}{`drop_data` can help save space, especially to extremly large dataset, 
+#' however, drop original data can cause layers fail to set new `aes()`.}
+#' }
 #' 
-#' - `drop_data` can help save space, especially to extremly large dataset, 
-#' however, drop original data can cause layers fail to set new `aes()`.
 #' 
 #'
 #' @useDynLib rasterizer
