@@ -12,7 +12,7 @@ get_aggregation.first <- function(plot_width, plot_height, aesthetics,
     display <- aesthetics[,
                           list(
                             display = list(
-                              aggregation__firstCpp(plot_width = plot_width, plot_height = plot_height,
+                              aggregation_firstCpp(plot_width = plot_width, plot_height = plot_height,
                                                     x_range = x_range, y_range = y_range,
                                                     xlim = xlim, ylim = ylim,
                                                     x = x,
