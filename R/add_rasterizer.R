@@ -3,8 +3,8 @@
 #' @param x The x variable, numerical vectors or expression and will be passed on `aes()`.
 #' @param y The y variable, numerical vectors or expression and will be passed on `aes()`.
 #' @param z A numeric matrix, if provided, `add_heatmap` will be called.
-#' @param data A data frame (optional) or \link{crosstalk::SharedData} object.
-#' @param inherit Inherit attributes from \link{plot_ly()}
+#' @param data A data frame (optional) or \link[crosstalk]{SharedData} object.
+#' @param inherit Inherit attributes from \link[plotly]{plotly}
 #' @param on Reduction "on" which variable, it is a numerical vectors or expression and will be passed on `aes()`.
 #' @param size The size of pixel for each observation, a numerical vectors or expression and will be passed on `aes()`.
 #' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
@@ -26,9 +26,9 @@
 #'        data.table::rbindlist()
 #'        
 #'      #### quick start
-#'      plot_ly(data = ridesDf) %>% 
-#'        add_rasterizer(x = ~Lat, y = ~Lon)
-#'      
+#'      p <- plot_ly(data = ridesDf) %>% 
+#'             add_rasterizer(x = ~Lat, y = ~Lon)
+#'      p
 #'      #### set artificial scaling function
 #'      zeroOneTransform <- function(z) {
 #'        minz <- min(z)
