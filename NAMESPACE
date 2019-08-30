@@ -2,7 +2,6 @@
 
 S3method(as.raster,rasterizeList)
 S3method(as.raster,rasterizeMatrix)
-S3method(plot,rasterizer)
 export("%<-%")
 export("%>%")
 export(add_rasterizer)
