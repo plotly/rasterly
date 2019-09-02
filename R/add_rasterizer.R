@@ -52,7 +52,8 @@
 #'        )
 #'    }
 #' }
-add_rasterizer <- function(p, x = NULL, y = NULL, z = NULL, ..., 
+add_rasterizer <- function(p, 
+                           x = NULL, y = NULL, z = NULL, ..., 
                            data = NULL, inherit = TRUE, 
                            on = NULL, size = NULL, 
                            scaling = NULL) {
@@ -108,7 +109,7 @@ add_rasterizer <- function(p, x = NULL, y = NULL, z = NULL, ...,
                  show_raster = FALSE, 
                  ...) %>% 
       rasterize_points() %>%
-      execute() -> rastObj
+      rasterizer_build() -> rastObj
     remove(data)
     data <- NULL
     
