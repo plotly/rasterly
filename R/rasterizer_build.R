@@ -1,22 +1,22 @@
-#' @title execute
-#' @description Execute a "rasterizer" object
+#' @title rasterizer_build
+#' @description Execute a "rasterizer" object and return the info to build image
 #' @param rastObj A rasterizer object. It should be a list of environments composed of a `rasterizer()` and 
 #' several `rasterize_...` layers
 #' 
-#' @note A rasterizer object will never be implemented until we call `execute()`
+#' @note A rasterizer object will never be implemented until we call `rasterizer_build()`
+#' 
+#' @seealso \link{rasterizer}, \link{rasterize_points}, \link{[.rasterizer}, \link{[<-.rasterizer}
 #' 
 #' @examples 
 #' r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) %>% 
 #'        rasterizer(mapping = aes(x = x, y = y)) %>%
 #'        rasterize_points(colour_map = fire)
 #' str(r)
-#' # Error exists
-#' \dontrun{plot(r)}
-#' p <- execute(r)
+#' p <- rasterizer_build(r)
 #' str(p)
-#' plot(p, title = "Random Generation")
 #' @export
-execute <- function(rastObj) {
+#' 
+rasterizer_build <- function(rastObj) {
   
   if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object", call. = FALSE)
   if(!is.rasterizeLayer(rastObj)) stop("No 'aggregation' layer", call. = FALSE)
@@ -25,7 +25,7 @@ execute <- function(rastObj) {
   rastObj[["rasterizer_env"]] <- NULL
   layer_env <- rastObj
   remove(rastObj)
-  
+
   plot_width <- .get("plot_width", envir = rasterizer_env)
   plot_height <- .get("plot_height", envir = rasterizer_env)
   x_range <- .get("x_range", envir = rasterizer_env)
@@ -88,7 +88,7 @@ execute <- function(rastObj) {
                   else if(len_agg == 1) {
                     # agg is a matrix
                     agg <- agg[[1]]
-                    class(agg) <- c("rasterizeMatrix", "rasterizer", "matrix")
+                    class(agg) <- c("rasterizeMatrix", "matrix")
                     colour <- get("colour_map", 
                                   envir = envir, 
                                   inherits = FALSE)
@@ -96,10 +96,10 @@ execute <- function(rastObj) {
                     # agg is a list
                     agg <- lapply(agg, 
                                   function(a) {
-                                    class(a) <- c("rasterizeMatrix", "rasterizer", "matrix")
+                                    class(a) <- c("rasterizeMatrix", "matrix")
                                     a
                                   })
-                    class(agg) <- c("rasterizeList", "rasterizer", "list")
+                    class(agg) <- c("rasterizeList", "list")
                     colour <- get_colour_key(
                       colour_key = get("colour_key", 
                                        envir = envir, 
@@ -110,7 +110,6 @@ execute <- function(rastObj) {
                                                   inherits = FALSE)
                     )
                   }
-                  
                   # show raster or not
                   if(show_raster) {
                     start_time <- Sys.time()

@@ -58,6 +58,9 @@ iris \%>\%
              plot_width = 20, 
              mapping = aes(x = Sepal.Width, y = Petal.Length, colour = Species)) \%>\% 
   rasterize_points() \%>\% 
-  execute() \%>\% 
+  rasterizer_build() \%>\% 
   grid.rasterizer()
+}
+\seealso{
+\code{\link{plot.rasterizer}}, \code{\link{plotly.rasterizer}}
 }

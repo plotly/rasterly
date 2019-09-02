@@ -57,20 +57,23 @@ Points layer for "rasterizer".
      category <- sample(1:5, 1e7, replace = TRUE)
      data.frame(x = x, y = y, category = category) \%>\%
        rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
-       rasterize_points(layout = "weighted") \%>\%
-       execute() -> ds1
-
+       rasterize_points(layout = "weighted") -> ds1
+     ds1
+     # layout with cover
      data.frame(x = x, y = y, category = category) \%>\%
        rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
-       rasterize_points(layout = "cover") \%>\%
-       execute() -> ds2
-
+       rasterize_points(layout = "cover") -> ds2
+     ds2
+     # display side by side
      grid::grid.newpage()
      gridExtra::grid.arrange(
-        grobs = list(grid::rasterGrob(ds1$image), grid::rasterGrob(ds2$image)),
+        grobs = list(rasterizerGrob(ds1), rasterizerGrob(ds2)),
         ncol = 2,
         top = "'weighted' layout versus 'cover' layout"
      )
    }
 }
+}
+\seealso{
+\link{rasterizer}, \link{rasterizer_build}, \link{[.rasterizer}, \link{[<-.rasterizer}
 }

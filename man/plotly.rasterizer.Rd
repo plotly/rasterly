@@ -4,15 +4,14 @@
 \alias{plotly.rasterizer}
 \title{`Rasterizer` to `plotly`}
 \usage{
-plotly.rasterizer(rastObj, as_heatmap = FALSE, scaling = c("log",
-  "to01", "origin"), ...)
+plotly.rasterizer(rastObj, as_heatmap = FALSE, scaling = NULL, ...)
 }
 \arguments{
 \item{rastObj}{A rasterizer object}
 
 \item{as_heatmap}{Draw `plotly` by adding heatmap layer. See \code{add_rasterizer}}
 
-\item{scaling}{Scale layout matrix.}
+\item{scaling}{It could be an artificial function or a scaling way ("log", "origin")}
 
 \item{...}{Arguments to the layout object. For documentation, 
 see https://plot.ly/r/reference/#Layout_and_layout_style_objects}
@@ -55,7 +54,7 @@ Display raster image via `plotly`
          ylim = c(min_y, max_y),
          mapping = aes(x = Lat, y = Lon, colour = hour),
          colour_key = hourColours) \%>\% 
-    execute() \%>\%
+    rasterize_build() \%>\%
     plotly.rasterizer(title = "New York Uber Rides")
    }
 }

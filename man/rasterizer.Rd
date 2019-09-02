@@ -54,27 +54,16 @@ Set initials for rasterizer
 }
 \details{
 \itemize{
- \item{}{In `rasterizer`, only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
+ \item{}{In package "rasterizer", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
 variable "on" represents the reduction function works "on" which column.}
  \item{}{`drop_data` can help save space, especially to extremly large dataset, 
 however, drop original data can cause layers fail to set new `aes()`.}
 }
 }
 \note{
-Call `rasterizer()` alone do not generate anyting. It cooperates with `rasterize_...()` layers and `execute()` to
-produce image rasters or aggregation matrices. More info could be found in 
-\href{https://github.com/plotly/rasterizer/blob/master/README.md}{README.md}
-}
-\examples{
-r <- rasterizer(
-       data = data.frame(x = 1:1e4, y = runif(1e4)), 
-       mapping = aes(x = x, y = y)
-)
-str(r)
-envir <- r[[1]]
-get("aesthetics", envir = envir)
-get("y_range", envir = envir)
+Call `rasterizer()` alone does not generate anyting. `rasterize_...()` layers need to be attached. 
+More info can be found in \href{https://github.com/plotly/rasterizer/blob/master/README.md}{README.md}
 }
 \seealso{
-\link{rasterize_points}, \link{execute}
+\link{rasterize_points}, \link{rasterizer_build}, \link{[.rasterizer}, \link{[<-.rasterizer}
 }

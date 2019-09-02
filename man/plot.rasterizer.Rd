@@ -25,7 +25,7 @@ mtcars \%>\%
              plot_width = 20, 
              mapping = aes(x = hp, y = mpg, colour = cyl)) \%>\% 
   rasterize_points() \%>\% 
-  execute() -> p
+  rasterizer_build() -> p
   plot(x = p)
 }
 \seealso{
