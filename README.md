@@ -41,26 +41,35 @@ remotes::install_github("https://github.com/plotly/rasterizer")
 
 ## Use `rasterizer` to display large data set
 
-`rasterizer` is built based on `datashader` http://datashader.org/getting_started/index.html in python. Both are designed by "rasterizing" large data set into images. In computation, `datashader` is faster so far but `rasterizer` is comparable; in usage, `rasterizer` provides more readable and flexible operation interface. 
+`rasterizer` is built based on `datashader` http://datashader.org/getting_started/index.html in python. Both are designed by "rasterizing" large data set into images. In computation, `datashader` is faster but `rasterizer` is comparable; in usage, `rasterizer` provides more readable and flexible operation interface.
 
-Each `rasterizer` object is composed of three part: `rasterizer()`, `rasterize_...()`(like `rasterize_points()`, ...) and `execute()`. `rasterizer()` is used for initial setting rasterizer (image width, image height, ...) and other information passed through layers (if they are not specified in layers); `aggregation_...()`s are layers to be added; after piping `rasterizer()` and `aggregation_...()`s, code will not be fired until we call `execute()`.
-
+#### Basic usage
 ```
 data %>%
   rasterizer() %>% 
-  rasterize_points() %>% 
-  execute() -> p
+  rasterize_points() -> p
 ```
 
-Note that, "p" contains image raster and other useful info (like numeric aggregation matrix) to produce image but it does **not** provide any graphs. Package `rasterizer` replies on the third parties to display like package `grid` and `ggplot` for static graphs or `plotly` and `loon` for interactive graphs.
+Note that, "p" is a list of environments. The display info can be accessed through
+```
+r <- rasterizer_build(p)
+str(r)
+```
+"r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs. Package `rasterizer` replies on the third parties to display like package `grid` and `ggplot` for static graphs or `plotly` and `loon` for interactive graphs.
 
 #### Static graph
 
 * `grid`
 ```
-p %>%
-  grid.rasterizer() # built based on `grid::grid.raster()`
+# same with print(p)
+p 
 ```
+Also, more control can be achieved via
+
+```
+grid.rasterizer(p, title = "My title", xlabel = "My xlabel", ylabel = "My ylabel")
+```
+check `help("grid.rasterizer")` or `help("plot.rasterizer")` for more info
 ![grid.rasterizer()](man/figures/grid_rasterizer.png)
 
 * `ggplot`
