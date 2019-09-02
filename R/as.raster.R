@@ -36,11 +36,11 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
       } else stop("Unknown `layout` way; `layout` can only be either `weighted` or `cover`")
     }
     
-    image[which_is_not_zero] <- grDevices::rgb(red = red,
-                                               green = green,
-                                               blue = blue,
+    image[which_is_not_zero] <- grDevices::rgb(red = red/255,
+                                               green = green/255,
+                                               blue = blue/255,
                                                alpha = alpha,
-                                               maxColorValue = 255)
+                                               maxColorValue = 1 + 1e-8)
   } else {
     # x is a zero matrix
     image <- rep(background, dimM[1] * dimM[2])
@@ -103,12 +103,12 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
       green[not_background] <- image_rgb_num$green
       blue[not_background] <- image_rgb_num$blue
     }
-    
-    colours <- grDevices::rgb(red = red,
-                              green = green,
-                              blue = blue,
+    # 
+    colours <- grDevices::rgb(red = red/255,
+                              green = green/255,
+                              blue = blue/255,
                               alpha = alpha,
-                              maxColorValue = 255)
+                              maxColorValue = 1 + 1e-8)
     
     colours[grepl("#000000", colours)] <- background
     
