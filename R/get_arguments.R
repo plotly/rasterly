@@ -54,16 +54,12 @@ get_alpha <- function(envir, ...) {
   
   args <- list(...)
   
-  alpha <- args$alpha %||% {
-    if(!is.null(.get("alpha", envir = envir))) {
-      .get("alpha", envir = envir)
-    } else 255
-  }
+  alpha <- args$alpha %||% .get("alpha", envir = envir) %||% 1
   
   stopifnot(
     exprs = {
       is.numeric(alpha)
-      alpha <= 255 && alpha >= 0
+      alpha <= 1 && alpha >= 0
     }
   )
   
@@ -74,11 +70,7 @@ get_span <- function(envir, ...) {
   
   args <- list(...)
   
-  span <- args$span %||% {
-    if(!is.null(.get("span", envir = envir))) {
-      .get("span", envir = envir)
-    } else 50
-  }
+  span <- args$span %||% .get("span", envir = envir) %||% 50
   
   stopifnot(
     exprs = {
@@ -91,9 +83,8 @@ get_span <- function(envir, ...) {
 
 get_colour_key <- function(colour_key, n, rasterizer_colour_key) {
   
-  colour_key <- colour_key %||% rasterizer_colour_key
+  colour_key <- colour_key %||% rasterizer_colour_key %||% gg_colour_hue(n)
   
-  if(is.null(colour_key)) colour_key <- gg_colour_hue(n)
   stopifnot(
     exprs = {
       length(colour_key) >= n
@@ -104,19 +95,15 @@ get_colour_key <- function(colour_key, n, rasterizer_colour_key) {
 
 get_max_size <- function(envir, max_size) {
   
-  max_size <- max_size %||% .get("max_size", envir = envir)
+  max_size <- max_size %||% .get("max_size", envir = envir) %||% 2
   
-  if(is.null(max_size) || is.na(max_size)) {
-    max_size <- 2 
-  } else {
-    if(!is.numeric(max_size)) stop("`max_size` is a numerical value", call. = FALSE)
-    if(length(max_size) > 1) warning("More than one `max_size` and only the first one will be used",
-                                     call. = FALSE)
-    max_size <- ceiling(max_size)[1]
-    if(max_size < 2) {
-      warning("`max_size` cannot be smaller than 2", call. = FALSE)
-      max_size <- 2
-    }
+  if(!is.numeric(max_size)) stop("`max_size` is a numerical value", call. = FALSE)
+  if(length(max_size) > 1) warning("More than one `max_size` and only the first one will be used",
+                                   call. = FALSE)
+  max_size <- ceiling(max_size)[1]
+  if(max_size < 2) {
+    warning("`max_size` cannot be smaller than 2", call. = FALSE)
+    max_size <- 2
   }
   
   return(max_size)
@@ -126,20 +113,16 @@ get_size <- function(envir, ...) {
   
   args <- list(...)
   
-  size <- args$size %||% .get("size", envir = envir)
+  size <- args$size %||% .get("size", envir = envir) %||% 1
   
-  if(is.null(size) || is.na(size)) {
-    size <- 1 
-  } else {
-    if(!is.numeric(size)) stop("`Size` must be integer", call. = FALSE)
-    if(length(size) > 1) {
-      warning("Only the first one will be used as size", call. = FALSE)
-      size <- size[1]
-    }
-    if(size < 1) {
-      warning("`Size` should be larger or equal to 1", call. = FALSE)
-      size <- 1
-    }
+  if(!is.numeric(size)) stop("`Size` must be integer", call. = FALSE)
+  if(length(size) > 1) {
+    warning("Only the first one will be used as size", call. = FALSE)
+    size <- size[1]
+  }
+  if(size < 1) {
+    warning("`Size` should be larger or equal to 1", call. = FALSE)
+    size <- 1
   }
   
   return(size)
@@ -162,16 +145,11 @@ get_variable_check <- function(envir, ...) {
 get_layout <- function(envir, ...) {
   
   args <- list(...)
+  layout <- args$layout %||% .get("layout", envir = envir) %||% "weighted"
   
-  layout <- args$layout %||%  .get("layout", envir = envir)
-  
-  if(is.null(layout) || is.na(layout)) {
-    layout <- "weighted" 
-  } else {
-    if(!layout %in% c("weighted", "cover")) {
-      warning("`layout` can only be 'weighted' or 'cover' so far", call. = FALSE)
-      layout <- "weighted"
-    }
+  if(!layout %in% c("weighted", "cover")) {
+    warning("`layout` can only be 'weighted' or 'cover' so far", call. = FALSE)
+    layout <- "weighted"
   }
   
   return(layout)
@@ -179,15 +157,11 @@ get_layout <- function(envir, ...) {
 
 get_glyph <- function(envir, glyph) {
   
-  glyph <- glyph %||% .get("glyph", envir = envir)
+  glyph <- glyph %||% .get("glyph", envir = envir) %||% "circle" 
   
-  if(is.null(glyph) || is.na(glyph)) {
-    glyph <- "circle" 
-  } else {
-    if(!glyph %in% c("circle", "square")) {
-      warning("`glyph` can only be 'circle' or 'square' so far", call. = FALSE)
-      glyph <- "circle"
-    }
+  if(!glyph %in% c("circle", "square")) {
+    warning("`glyph` can only be 'circle' or 'square' so far", call. = FALSE)
+    glyph <- "circle"
   }
   
   return(glyph)
@@ -195,15 +169,11 @@ get_glyph <- function(envir, glyph) {
 
 get_group_by_data_table <- function(envir, group_by_data_table) {
   
-  group_by_data_table <- group_by_data_table %||% .get("group_by_data_table", envir = envir)
+  group_by_data_table <- group_by_data_table %||% .get("group_by_data_table", envir = envir) %||% TRUE
   
-  if(is.null(group_by_data_table) || is.na(group_by_data_table)) {
+  if(!is.logical(group_by_data_table)) {
     group_by_data_table <- TRUE
-  } else {
-    if(!is.logical(group_by_data_table)) {
-      group_by_data_table <- TRUE
-      warning("`group_by_data_table` is logical", call. = FALSE)
-    }
+    warning("`group_by_data_table` is logical", call. = FALSE)
   }
   
   return(group_by_data_table)
