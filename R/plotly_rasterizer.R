@@ -2,7 +2,7 @@
 #' @description Display raster image via `plotly`
 #' @param rastObj A rasterizer object
 #' @param as_heatmap Draw `plotly` by adding heatmap layer. See \code{add_rasterizer}
-#' @param scaling Scale layout matrix. 
+#' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
 #' @param ... Arguments to the layout object. For documentation, 
 #' see https://plot.ly/r/reference/#Layout_and_layout_style_objects
 #' 
@@ -44,16 +44,21 @@
 #'          ylim = c(min_y, max_y),
 #'          mapping = aes(x = Lat, y = Lon, colour = hour),
 #'          colour_key = hourColours) %>% 
-#'     execute() %>%
+#'     rasterize_build() %>%
 #'     plotly.rasterizer(title = "New York Uber Rides")
 #'    }
 #' }
-plotly.rasterizer <- function(rastObj, as_heatmap = FALSE, 
-                              scaling = c("log", "to01", "origin"), 
+plotly.rasterizer <- function(rastObj, 
+                              as_heatmap = FALSE, 
+                              scaling = NULL, 
                               ...) {
   
-  if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object", call. = FALSE)
-  scaling <- match.arg(scaling)
+  if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object.", call. = FALSE)
+  if(is.rasterizeLayer(rastObj) && !is.rasterizer_build(rastObj)) {
+    # to a 'rasterizer_build' object
+    rastObj['show_raster', which = 1] <- !as_heatmap
+    rastObj <- rasterizer_build(rastObj)
+  }
   
   if(as_heatmap) {
     if(sum(lengths(rastObj$agg)) > 1) 
@@ -64,14 +69,21 @@ plotly.rasterizer <- function(rastObj, as_heatmap = FALSE,
     y <- seq(rastObj$y_range[1], rastObj$y_range[2], length.out = dimZ[1])
     x <- seq(rastObj$x_range[1], rastObj$x_range[2], length.out = dimZ[2])
     
-    switch(scaling, 
-           "log" = {
-             z <- matrix(log(z + 1), nrow = dimZ[1])
-           }, 
-           "to01" = {
-             z <- zeroOneTransform(z)
-           }, 
-           "origin" = NULL)
+    scaling <- scaling %||% {
+      message("The default scaling is 'log'.")
+      "log"
+    }
+    if(is.function(scaling)) {
+      z <- do.call(scaling, 
+                   list(z = z))
+    } else {
+      if(!is.character(scaling)) stop("'scaling' can be either 'function' or 'character'")
+      switch(scaling, 
+             "log" = {
+               z <- matrix(log(z + 1), nrow = dimZ[1])
+             }, 
+             "origin" = NULL)
+    }
     
     p <- plotly::plot_ly(x = x, y = y) %>% 
       plotly::add_heatmap(z = z)
