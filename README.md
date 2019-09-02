@@ -85,7 +85,7 @@ ggplot(data, mapping) +
 plot_ly(data, x, y) %>%
  add_rasterizer()
 ```
-![add_rasterizer()](man/figures/add_rasterizer.gif)
+![](man/figures/add_rasterizer.gif)
 
 or
 
@@ -94,7 +94,7 @@ or
 p %>% 
   plotly.rasterizer()
 ```
-![plotly.rasterizer()](man/figures/plotly_rasterizer.gif)
+![](man/figures/plotly_rasterizer.gif)
 
 * `loon`
 ```
