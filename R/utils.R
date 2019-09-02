@@ -4,8 +4,8 @@ is.rasterizer <- function(x) {
 }
 
 #' @export
-is.rasterize <- function(x) {
-  inherits(x, "rasterize")
+is.rasterizer_build <- function(x) {
+  inherits(x, "rasterizer_build")
 }
 
 #' @export
