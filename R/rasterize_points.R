@@ -22,6 +22,8 @@
 #' "group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
 #' is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.
 #' 
+#' @seealso \link{rasterizer}, \link{rasterizer_build}, \link{[.rasterizer}, \link{[<-.rasterizer}
+#' 
 #' @return A list of environments.
 #' @examples
 #' \dontrun{
@@ -32,17 +34,17 @@
 #'      category <- sample(1:5, 1e7, replace = TRUE)
 #'      data.frame(x = x, y = y, category = category) %>%
 #'        rasterizer(mapping = aes(x = x, y = y, colour = category)) %>%
-#'        rasterize_points(layout = "weighted") %>%
-#'        execute() -> ds1
-#'
+#'        rasterize_points(layout = "weighted") -> ds1
+#'      ds1
+#'      # layout with cover
 #'      data.frame(x = x, y = y, category = category) %>%
 #'        rasterizer(mapping = aes(x = x, y = y, colour = category)) %>%
-#'        rasterize_points(layout = "cover") %>%
-#'        execute() -> ds2
-#'
+#'        rasterize_points(layout = "cover") -> ds2
+#'      ds2
+#'      # display side by side
 #'      grid::grid.newpage()
 #'      gridExtra::grid.arrange(
-#'         grobs = list(grid::rasterGrob(ds1$image), grid::rasterGrob(ds2$image)),
+#'         grobs = list(rasterizerGrob(ds1), rasterizerGrob(ds2)),
 #'         ncol = 2,
 #'         top = "'weighted' layout versus 'cover' layout"
 #'      )
@@ -135,7 +137,7 @@ rasterize_points <- function(rastObj,
       mapping <- rasterizer_env_mapping
       
     } else {
-
+      
       if(inherit.aes)
         # `%<-%` is a symbol to merge two lists from right to left
         # Should I use `new_aes()`?
@@ -176,10 +178,12 @@ rasterize_points <- function(rastObj,
   colour_key <- args$colour_key
   remove(data)
   
-  e <- environment()
   rastObj <- c(
     rastObj, 
-    list(e)
+    setNames(
+      list(environment()),
+      paste0("rasterizerPoints", length(rastObj))
+    )
   )
   class(rastObj) <- c("rasterizePoints", "rasterizeLayer", "rasterizer")
   return(rastObj)

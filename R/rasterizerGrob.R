@@ -39,13 +39,14 @@
 #'   name = NULL, gp = grid::gpar(), vp = NULL)
 #' @export
 #' @import grid
+#' @seealso \code{\link{plot.rasterizer}}, \code{\link{plotly.rasterizer}}
 #' @examples 
 #' iris %>% 
 #'   rasterizer(plot_height = 20, 
 #'              plot_width = 20, 
 #'              mapping = aes(x = Sepal.Width, y = Petal.Length, colour = Species)) %>% 
 #'   rasterize_points() %>% 
-#'   execute() %>% 
+#'   rasterizer_build() %>% 
 #'   grid.rasterizer()
 
 grid.rasterizer <- function (rastObj, ..., interpolate = FALSE, 
@@ -68,13 +69,16 @@ grid.rasterizer <- function (rastObj, ..., interpolate = FALSE,
 rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
                            name = NULL, gp = grid::gpar(), vp = NULL) {
   
-  if(missing(rastObj) || !is.rasterize(rastObj)) 
-    stop("No 'rasterize' object. Forget to pass to `execute()`?", call. = FALSE)
-  if(is.rasterizeLayer(rastObj)) 
-    stop("'RasterizeLayer' is passed. Forget to pass to `execute()`?", call. = FALSE)
-  if(is.null(rastObj$image)) 
-    stop("No image is found. Set `show_raster = TRUE`", call. = FALSE)
-  
+  if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object.", call. = FALSE)
+  if(is.rasterizeLayer(rastObj) && !is.rasterizer_build(rastObj)) {
+    # to a 'rasterizer_build' object
+    rastObj['show_raster', which = 1] <- TRUE
+    rastObj <- rasterizer_build(rastObj)
+  }
+  if(is.null(rastObj$image)) {
+    message("No image is found. Set `show_raster = TRUE`", call. = FALSE)
+    return(grid::nullGrob(name = "rasterizer plot"))
+  }
   args <- list(...)
   margins <- args$margins %||% c(3.6, 4.1, 2.1, 1.1)
   bounding_box <- args$bounding_box %||% "white"
@@ -88,8 +92,9 @@ rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
   title_col <- args$title_col %||% "black"
   # label default settings
   var_names <- unlist(rastObj$variable_names)
-  xlabel <- args$xlabel %||% var_names["x"]
-  ylabel <- args$ylabel %||% var_names["y"]
+  xlabel <- args$xlabel %||% var_names[grepl("x", names(var_names))][1]
+  ylabel <- args$ylabel %||% var_names[grepl("y", names(var_names))][1]
+
   label_fontsize <- args$label_fontsize %||% 12
   label_fontfamily <- args$label_fontfamily %||% "serif"
   label_fontface <- args$label_fontface %||% "plain"
@@ -225,8 +230,9 @@ rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
 #'              plot_width = 20, 
 #'              mapping = aes(x = hp, y = mpg, colour = cyl)) %>% 
 #'   rasterize_points() %>% 
-#'   execute() -> p
+#'   rasterizer_build() -> p
 #'   plot(x = p)
+#' @export
 plot.rasterizer <- function (x, y = NULL, ...) {
   if (!is.null(y)) warning("argument y is ignored")
   grid::grid.newpage()
