@@ -1,0 +1,265 @@
+---
+title: "Introduction to rasterizer"
+author: "Zehao Xu"
+date: "`r Sys.Date()`"
+output:
+  html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Introduction to rasterizer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{grid}
+---
+  
+  
+```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
+library(rasterizer)
+library(data.table)
+library(lubridate)
+library(grid)
+library(plotly)
+```
+
+`Rasterizer` is a package to display large data (million or billion) which generally cannot be handled by `R` graphics systems. The idea of `rasterizer` comes from python library `datashader` http://datashader.org/getting_started/index.html. The speed of `rasterizer` is comparable with `datashader` and the code will be optimized in the future. However, `rasterizer` provides flexible operating interface, like `ggplot2` mapping system `aes()`, combining different elements into layers and etc
+
+## Data set
+
+The data set is highlights Uber trips taken in New York City from April 1 2014 to September 30 2014.
+
+```{r data}
+# Load data
+ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
+  data.table::fread(stringsAsFactors = FALSE)
+ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>% 
+  data.table::fread(stringsAsFactors = FALSE)
+ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>% 
+  data.table::fread(stringsAsFactors = FALSE)
+ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+  data.table::rbindlist()
+
+# get hour
+time <- lubridate::ymd_hms(ridesDf$`Date/Time`)
+ridesDf <-  ridesDf[, 'Date/Time':=NULL][, list(Lat, 
+                                                Lon,
+                                                hour = lubridate::hour(time), 
+                                                month = lubridate::month(time),
+                                                day = lubridate::day(time))]
+head(ridesDf)
+```
+
+This data set has 4533327 observations, containing "latitude", "longitude", "hour", "month" and "day". 
+
+## Basic
+
+It may take a couple of minutes by basic `graphics::plot()`. How about "rasterizing" the image?
+
+```{r basic, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+start_time <- Sys.time()
+p <- ridesDf %>% 
+  rasterizer(mapping = aes(x = Lat, y = Lon)) %>% 
+  rasterize_points()
+p
+end_time <- Sys.time()
+end_time - start_time
+```
+
+## "Rasterizer" Structure
+
+#### Subsetting
+
+`rasterizer()` is parent layer for initial settings, which includes `plot_height`, `plot_width` and other APIs for rasters; then, children layers such as `rasterize_points()` can be piped into. Note that, "p" is a list of environments.
+
+```{r list return}
+# A list of environments
+str(p)
+```
+
+The elements in "p" can be easily extracted or replaced by `[` and `[<-`
+
+```{r subsetting, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+p["background"]
+# background in `rasterizer_points()` layer is replaced
+p["background", which = 2] <- "black"
+p["background"]
+# colour_map in both `rasterizer()` and `rasterizer_points()` are replaced
+## fire is a colour vector with length 256
+## see `rasterizer::fire`
+p["colour_map", which = 1:2] <- fire
+p
+```
+
+  * `which` helps to define which layer to replace and the default setting is 1 (the parent layer `rasterizer()`).
+  * Available states can be extracted or replaced are listed here:
+    1. Aggregation: `data`, `mapping`, `plot_width`, `plot_height`, `range`, `x_range`, `y_range`, `xlim`, `ylim`, `aesthetics`, `reduction_func`, `glyph`, `max_size`, `group_by_data_table`, `drop_data`, `variable_check`
+    2. Display: `background`, `colour_map`, `colour_key`, `alpha`, `span`, `show_raster`, `layout`
+    
+#### Build rasterizer by `rasterizer_build()`
+
+Display info can be achieved via `rasterizer_build()`
+
+```{r rasterizer_build}
+build <- rasterizer_build(p)
+str(build)
+```
+
+It contains:
+
+  * agg: aggregation matrices, a list of numerical matrices
+  * image: a raster matrix (has the same dimension with aggregation matrices)
+  * lims: a list of x limits and y limits for each layer
+  * x_range: the range of x over all layers
+  * y_range: the range of y over all layers
+  * plot_height: plot height, aggregation matrix number of rows
+  * plot_width: plot width, aggregation matrix number of columns
+  * variable_names: variables names
+  * background: background colour
+  * colours: colour_map (colour used to map in each pixel) or colour_key (used for categorical variable. In general, 'colour_key' would be called when "colour" is set in `aes()`)
+
+## Display
+
+`Rasterizer` does not provide any display tools. It replies on the third graphics parties
+
+#### `grid` graphics
+
+```{r grid.raster, fig.width = 4, fig.height = 3}
+grid::grid.raster(build$image)
+```
+
+`grid.rasterizer()` is created based on `grid::grid.raster()` which gives labels, axis, fonts and etc to rich the display
+
+```{r, eval=FALSE}
+p # which is equivalent to
+print(p) # which is equivalent to
+grid.rasterizer(p) # which is equivalent to
+plot(p)
+```
+
+#### `plotly` graphics
+
+  + `plotly.rasterizer()`: `plotly.rasterizer` takes a "rasterizer" object and returns a "plotly" object
+    
+    ```{r plotly_rasterizer, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+    # plotly
+    ply <- p %>% plotly.rasterizer()
+    ply
+    ```
+
+  + `add_rasterizer()`: "Plotly" pipes `add_trace(...)` to layer up. "Rasterizer" builds `add_rasterizer()` from `add_heatmap()` to enable its functionality in "plotly"
+    
+    ```{r add_rasterizer, fig.width = 4, fig.height = 3}
+    plotly::plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
+      add_rasterizer()
+    ```
+
+## API
+
+#### Reduction function
+
+A reduction operator function is used when aggregating data points into a given pixel. 
+```{r}
+r <- rasterizer(data = ridesDf, 
+                mapping = aes(x = Lat, y = Lon))
+```
+
+  * `mean` reduction function:
+
+```{r reduction on mean, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+    reduction_func = "mean", # take the "mean" reduction function
+    background = "black",    # change background to "black"  from right to left (from dark to light)
+    colour_map = fire # set a different colour_map
+  )  
+```
+
+Reduction function `mean` averages the y column (default setting) for every datapoint that falls in that bin. We can also average on other directions, see "Set `on`" in Mapping system.
+
+  * `any` reduction function:
+  
+```{r reduction on any, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+    reduction_func = "any",  # take the "any" reduction function 
+    colour_map = c("white", "black")
+  )
+```
+
+Other reduction functions can be checked by `help("rasterize_points")`.
+
+#### Mapping system 
+
+  * Set `colour`
+
+```{r set colour, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+     mapping = aes(colour = hour),
+     colour_key = hourColours,
+     background = "black"
+  ) -> g
+g
+```
+
+Different colours represent different hours
+
+```{r legend, fig.width = 4, fig.height = 3}
+# A legend may be added in rasterizer in the furture
+plot(1:24, y = rep(1,24), col = hourColours, pch = 19, cex = 3)
+```
+
+The number of aggregation matrices is equivalent to the number of categories.
+
+```{r number of aggregation matrices}
+build_g <- rasterizer_build(g)
+# set "1" is because we just has one layer
+length(build_g$agg[[1]])
+```
+
+Colours in "image" in `build_g` is built based on weighted arithmetic mean (default) on aggregation matrices. Also, we can choose "cover" layout to display multiple aggregation matrices.
+
+```{r set colour cover, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+     mapping = aes(colour = hour),
+     colour_key = hourColours,
+     background = "black",
+     layout = "cover"
+  )
+```
+
+The afterwards raster matrix will cover on previous one.
+
+  * Set `on`
+  
+  `reduction_func` is implemented `on` which variable
+
+```{r set on, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+    reduction_func = "mean", # take the "mean" reduction function
+    mapping = aes(on = -Lat)
+  )  
+```
+
+  * Set `size`
+  
+  Proportional size on corresponding variable. `max_size` is the largest pixels shared on each observation.
+  
+```{r set size, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+    mapping = aes(size = month),
+    max_size = 4
+  )  
+```
+
+Currently, only `x`, `y`, `colour`, `on` and `size` can be set in mapping `aes()`.
+
+## About
+
+1. `rasterizer` is only for large data set. There are so many good packages in R to display normal size data, like `grDevices`, `grid`, `ggplot2` for static display and `plotly`, `loon` for interactive display 
+
+2. Package `rasterizer` is sloppy right now, welcome to report issues in https://github.com/plotly/rasterizer.
+
+3. Further job: build `geom_rasterizer()` for `ggplot2` and `l_rasterizer()` for `loon` 
