@@ -41,12 +41,12 @@ Note, make sure `NumPy` and `Pandas` are installed with latest version.
 remotes::install_github("https://github.com/plotly/rasterizer", ref = "master")
 ```
 
-#### Branch "dev" provides more functionalities
+#### Branch "dev" 
 
 ```
 remotes::install_github("https://github.com/plotly/rasterizer", ref = "dev")
 ```
-Note that all the documentations are built based on "dev" branch
+Note that "dev" branch provides other functionalities
 
 ## Use `rasterizer` to display large data set
 
@@ -81,7 +81,7 @@ Note that, "p" is a list of environments. The display info can be accessed throu
 r <- rasterizer_build(p)
 str(r)
 ```
-"r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs. Package `rasterizer` replies on the third parties to display like package `grid` and `ggplot` for static graphs or `plotly` and `loon` for interactive graphs.
+"r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs.
 
 #### Static graph
 
@@ -89,17 +89,6 @@ str(r)
 ```
 # same with plot(p)
 p 
-```
-Also, more control can be achieved via
-```
-grid.rasterizer(p, title = "Uber", xlabel = "Lat", ylabel = "Lon")
-```
-check `help("grid.rasterizer")` or `help("plot.rasterizer")` for more info
-
-* `ggplot`
-```
-ggplot(data, mapping) + 
-  geom_rasterizer() # not yet finished, coming soon!
 ```
 
 #### Interactive graph
@@ -110,20 +99,6 @@ plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
  add_rasterizer()
 ```
 ![](man/figures/add_rasterizer.gif)
-
-or
-
-```
-# Note that it may be deprecated in the future.
-p %>% 
-  plotly.rasterizer()
-```
-![](man/figures/plotly_rasterizer.gif)
-
-* `loon`
-```
-l_rasterizer(data, x, y) # not yet finished, coming soon!
-```
 
 ## Apps
 
