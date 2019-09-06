@@ -35,9 +35,18 @@ Note, make sure `NumPy` and `Pandas` are installed with latest version.
 
 `rasterizer` can be installed directly from github
 
+#### Branch "master" only provides `add_rasterizer()` 
+
 ```
-remotes::install_github("https://github.com/plotly/rasterizer")
+remotes::install_github("https://github.com/plotly/rasterizer", ref = "master")
 ```
+
+#### Branch "dev" provides more functionalities
+
+```
+remotes::install_github("https://github.com/plotly/rasterizer", ref = "dev")
+```
+Note that all the documentations are built based on "dev" branch
 
 ## Use `rasterizer` to display large data set
 
