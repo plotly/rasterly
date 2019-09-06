@@ -55,6 +55,14 @@ get_mapped_colour <- function(colour_map = c('lightblue','darkblue'),
   col_index
 }
 
+get_varnames <- function(var_names, dir) {
+  varnames <- switch(dir,
+                  "x" = var_names[grepl("x", names(var_names))][1],
+                  "y" = var_names[grepl("y", names(var_names))][1]
+  )
+  return(varnames)
+}
+
 
 remove_missing_matrix <- function(m, value = 0) {
   m[!rowSums(!is.finite(m)),]
