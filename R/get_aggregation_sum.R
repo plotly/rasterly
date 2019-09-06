@@ -12,7 +12,7 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
   is_colour <- !is.null(aesthetics$colour)
   
   L <- if(group_by_data_table) {
-
+    
     display <- aesthetics[,
                           list(
                             display = list(
@@ -58,5 +58,6 @@ get_aggregation.sum <- function(plot_width, plot_height, aesthetics,
       )
     }
   }
+  
   return(L)
 }
