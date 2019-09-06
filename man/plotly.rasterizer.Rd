@@ -4,7 +4,8 @@
 \alias{plotly.rasterizer}
 \title{`Rasterizer` to `plotly`}
 \usage{
-plotly.rasterizer(rastObj, as_heatmap = FALSE, scaling = NULL, ...)
+plotly.rasterizer(rastObj, as_heatmap = FALSE, scaling = NULL,
+  sizing = c("stretch", "fill", "contain"), ...)
 }
 \arguments{
 \item{rastObj}{A rasterizer object}
@@ -12,6 +13,8 @@ plotly.rasterizer(rastObj, as_heatmap = FALSE, scaling = NULL, ...)
 \item{as_heatmap}{Draw `plotly` by adding heatmap layer. See \code{add_rasterizer}}
 
 \item{scaling}{It could be an artificial function or a scaling way ("log", "origin")}
+
+\item{sizing}{Specifies which dimension of the image to constrain. One of "stretch" "fill", "contain"}
 
 \item{...}{Arguments to the layout object. For documentation, 
 see https://plot.ly/r/reference/#Layout_and_layout_style_objects}

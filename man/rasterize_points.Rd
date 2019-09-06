@@ -27,8 +27,8 @@ merged on top of `rasterizer()` mapping.}
 \item{max_size}{When size is modifed, how many pixels an observation point will be spreaded.}
 
 \item{reduction_func}{A reduction operator function is used when aggregating datapoints
-into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `first`, 
-`last`, `min` and `max` so far. Default is `sum` and more is coming.}
+into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `m2`, `first`, 
+`last`, `min` and `max` so far. Default is `sum`. See details.}
 
 \item{layout}{The way to layout multiple images, default is `weighted`. 
 It is useful when data is catergorical("colour" is set in `aes()`). The default setting is "weighted", 
@@ -47,6 +47,25 @@ A list of environments.
 }
 \description{
 Points layer for "rasterizer".
+}
+\details{
+Reduction functions
+\itemize{
+ \item{`sum`: If `on` is not provided in mapping `aes()`, it is the count of each bins; else it would be summation of 
+ `on` variable falling in that bin}
+ \item{`any`: If `on` is not provided in mapping `aes()`, it is the logical value if the bin is visited; else it would be 
+ any `on` variable falling in that bin}
+ \item{`mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default. 
+ Give the mean of `on` variable falling in that bin}
+ \item{`m2`: `on` must be provided in mapping `aes()`. Give the sum of mean squares of `on` variable falling in that bin}
+ \item{`var`: `on` must be provided in mapping `aes()`. Give the variance of `on` variable falling in that bin}
+ \item{`sd`: `on` must be provided in mapping `aes()`. Give the standard deviation of `on` variable falling in that bin}
+ \item{`first`: `on` must be provided in mapping `aes()`. Give the first `on` variable element falling in that bin}
+ \item{`last`: `on` must be provided in mapping `aes()`. Give the last `on` variable element falling in that bin}
+ \item{`min`: `on` must be provided in mapping `aes()`. Give the max `on` variable element falling in that bin}
+ \item{`max`: `on` must be provided in mapping `aes()`. Give the min `on` variable element falling in that bin}
+ 
+}
 }
 \examples{
 \dontrun{
