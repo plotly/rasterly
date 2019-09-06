@@ -35,12 +35,12 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
         NULL
       } else stop("Unknown `layout` way; `layout` can only be either `weighted` or `cover`")
     }
-    
-    image[which_is_not_zero] <- grDevices::rgb(red = red/255,
-                                               green = green/255,
-                                               blue = blue/255,
-                                               alpha = alpha,
-                                               maxColorValue = 1 + 1e-8)
+
+    image[which_is_not_zero] <- grDevices::rgb(red = red/255 + 1e-8,
+                                               green = green/255 + 1e-8,
+                                               blue = blue/255 + 1e-8,
+                                               alpha = alpha + 1e-8,
+                                               maxColorValue = 1 + 2e-8)
   } else {
     # x is a zero matrix
     image <- rep(background, dimM[1] * dimM[2])
@@ -69,7 +69,6 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
   if(layout == "weighted") {
     
     colour_key_rgb_num <- get_rgb_num(colour)
-    
     # weighted x
     summed_M <- Reduce('+', x)
     # used for divide
@@ -104,11 +103,11 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
       blue[not_background] <- image_rgb_num$blue
     }
     # 
-    colours <- grDevices::rgb(red = red/255,
-                              green = green/255,
-                              blue = blue/255,
-                              alpha = alpha,
-                              maxColorValue = 1 + 1e-8)
+    colours <- grDevices::rgb(red = red/255 + 1e-8,
+                              green = green/255 + 1e-8,
+                              blue = blue/255 + 1e-8,
+                              alpha = alpha + 1e-8,
+                              maxColorValue = 1 + 2e-8)
     
     colours[grepl("#000000", colours)] <- background
     
