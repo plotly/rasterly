@@ -44,11 +44,28 @@ remotes::install_github("https://github.com/plotly/rasterizer")
 `rasterizer` is built based on `datashader` http://datashader.org/getting_started/index.html in python. Both are designed by "rasterizing" large data set into images. In computation, `datashader` is faster but `rasterizer` is comparable; in usage, `rasterizer` provides more readable and flexible operation interface.
 
 #### Basic usage
+
+Data highlights Uber trips taken in New York City from April 1 2014 to September 30 2014 with 4533327 observations.
 ```
-data %>%
-  rasterizer() %>% 
+# Load data
+ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
+  data.table::fread(stringsAsFactors = FALSE)
+ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>% 
+  data.table::fread(stringsAsFactors = FALSE)
+ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>% 
+  data.table::fread(stringsAsFactors = FALSE)
+ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+  data.table::rbindlist()
+```
+
+Start `rasterizer`
+```
+ridesDf %>%
+  rasterizer(mapping = aes(x = Lat, y = Lon)) %>% 
   rasterize_points() -> p
+p
 ```
+![](man/figures/grid_rasterizer.png)
 
 Note that, "p" is a list of environments. The display info can be accessed through
 ```
@@ -61,16 +78,14 @@ str(r)
 
 * `grid`
 ```
-# same with print(p)
+# same with plot(p)
 p 
 ```
 Also, more control can be achieved via
-
 ```
-grid.rasterizer(p, title = "My title", xlabel = "My xlabel", ylabel = "My ylabel")
+grid.rasterizer(p, title = "Uber", xlabel = "Lat", ylabel = "Lon")
 ```
 check `help("grid.rasterizer")` or `help("plot.rasterizer")` for more info
-![grid.rasterizer()](man/figures/grid_rasterizer.png)
 
 * `ggplot`
 ```
@@ -82,7 +97,7 @@ ggplot(data, mapping) +
 
 * `plotly`
 ```
-plot_ly(data, x, y) %>%
+plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
  add_rasterizer()
 ```
 ![](man/figures/add_rasterizer.gif)
@@ -100,4 +115,7 @@ p %>%
 ```
 l_rasterizer(data, x, y) # not yet finished, coming soon!
 ```
-Some apps can be found in https://github.com/plotly/rasterizer/tree/master/apps/
+
+## Apps
+
+USA census app built by `dashR` can be found in https://github.com/plotly/rasterizer/tree/master/apps/UScensus
