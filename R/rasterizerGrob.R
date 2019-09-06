@@ -92,8 +92,8 @@ rasterizerGrob <- function(rastObj, ..., interpolate = FALSE,
   title_col <- args$title_col %||% "black"
   # label default settings
   var_names <- unlist(rastObj$variable_names)
-  xlabel <- args$xlabel %||% var_names[grepl("x", names(var_names))][1]
-  ylabel <- args$ylabel %||% var_names[grepl("y", names(var_names))][1]
+  xlabel <- args$xlabel %||% get_varnames(var_names, "x")
+  ylabel <- args$ylabel %||% get_varnames(var_names, "y")  
 
   label_fontsize <- args$label_fontsize %||% 12
   label_fontfamily <- args$label_fontfamily %||% "serif"
