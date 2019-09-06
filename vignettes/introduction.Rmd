@@ -12,7 +12,6 @@ vignette: >
   %\VignetteDepends{grid}
 ---
   
-  
 ```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
 library(rasterizer)
 library(data.table)
@@ -64,11 +63,11 @@ end_time <- Sys.time()
 end_time - start_time
 ```
 
-## "Rasterizer" Structure
+## `rasterizer` Structure
 
 #### Subsetting
 
-`rasterizer()` is parent layer for initial settings, which includes `plot_height`, `plot_width` and other APIs for rasters; then, children layers such as `rasterize_points()` can be piped into. Note that, "p" is a list of environments.
+`rasterizer()` is a parent layer for initial settings, which includes `plot_height`, `plot_width` and others for generating rasters; then, children layers such as `rasterize_points()` can be piped into. Note that, "p" is a list of environments.
 
 ```{r list return}
 # A list of environments
@@ -79,7 +78,7 @@ The elements in "p" can be easily extracted or replaced by `[` and `[<-`
 
 ```{r subsetting, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
 p["background"]
-# background in `rasterizer_points()` layer is replaced
+# background in children layer `rasterizer_points()` is replaced
 p["background", which = 2] <- "black"
 p["background"]
 # colour_map in both `rasterizer()` and `rasterizer_points()` are replaced
@@ -137,55 +136,39 @@ plot(p)
 
 #### `plotly` graphics
 
-  + `plotly.rasterizer()`: `plotly.rasterizer` takes a "rasterizer" object and returns a "plotly" object
-    
-    ```{r plotly_rasterizer, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
-    # plotly
-    ply <- p %>% plotly.rasterizer()
-    ply
-    ```
-
-  + `add_rasterizer()`: "Plotly" pipes `add_trace(...)` to layer up. "Rasterizer" builds `add_rasterizer()` from `add_heatmap()` to enable its functionality in "plotly"
+  + `add_rasterizer()`: "Plotly" pipes `add_trace(...)` to layer up. `rasterizer` builds `add_rasterizer()` from `add_heatmap()` to enable its functionality in "plotly"
     
     ```{r add_rasterizer, fig.width = 4, fig.height = 3}
     plotly::plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
-      add_rasterizer()
+      add_rasterizer() %>% 
+      layout(
+        title = "Uber drives",
+        x <- list(
+          title = "Lat"
+        ),
+        y <- list(
+          title = "Lon"
+        )
+      )
+    ```
+  
+  + `plotly.rasterizer()`: `plotly.rasterizer` takes a `rasterizer` object and returns a "plotly" object
+    
+    ```{r plotly_rasterizer, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+    # plotly
+    ply <- p %>% 
+      plotly.rasterizer(sizing = "contain")
+    ply
     ```
 
 ## API
 
-#### Reduction function
+`rasterizer` application programming interface
 
-A reduction operator function is used when aggregating data points into a given pixel. 
 ```{r}
 r <- rasterizer(data = ridesDf, 
                 mapping = aes(x = Lat, y = Lon))
 ```
-
-  * `mean` reduction function:
-
-```{r reduction on mean, fig.width = 4, fig.height = 3}
-r %>% 
-  rasterize_points(
-    reduction_func = "mean", # take the "mean" reduction function
-    background = "black",    # change background to "black"  from right to left (from dark to light)
-    colour_map = fire # set a different colour_map
-  )  
-```
-
-Reduction function `mean` averages the y column (default setting) for every datapoint that falls in that bin. We can also average on other directions, see "Set `on`" in Mapping system.
-
-  * `any` reduction function:
-  
-```{r reduction on any, fig.width = 4, fig.height = 3}
-r %>% 
-  rasterize_points(
-    reduction_func = "any",  # take the "any" reduction function 
-    colour_map = c("white", "black")
-  )
-```
-
-Other reduction functions can be checked by `help("rasterize_points")`.
 
 #### Mapping system 
 
@@ -244,7 +227,7 @@ r %>%
 
   * Set `size`
   
-  Proportional size on corresponding variable. `max_size` is the largest pixels shared on each observation.
+  Proportional size on corresponding variable. `max_size` is the largest bins shared by each observation.
   
 ```{r set size, fig.width = 4, fig.height = 3}
 r %>% 
@@ -255,6 +238,58 @@ r %>%
 ```
 
 Currently, only `x`, `y`, `colour`, `on` and `size` can be set in mapping `aes()`.
+
+#### Reduction function
+
+A reduction operator function is used when aggregating data points into a each bin. 
+
+  * `mean` reduction function:
+
+```{r reduction on mean, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+    reduction_func = "mean", # take the "mean" reduction function
+    background = "black",    # change background to "black"  from right to left (from dark to light)
+    colour_map = fire # set a different colour_map
+  )  
+```
+
+Reduction function `mean` averages the y column (default setting) for every datapoint that falls in that bin. We can also average on other directions, see "Set `on`" in Mapping system.
+
+  * `any` reduction function:
+  
+```{r reduction on any, fig.width = 4, fig.height = 3}
+r %>% 
+  rasterize_points(
+    reduction_func = "any",  # take the "any" reduction function 
+    colour_map = c("white", "black")
+  )
+```
+
+Availible reduction functions:
+
++ `sum`: If `on` is not provided in mapping `aes()`, it is the count of each bins; else it would be summation of 
+`on` variable falling in that bin.
+
++ `any`: If `on` is not provided in mapping `aes()`, it is the logical value if the bin is visited; else it would be 
+any `on` variable falling in that bin.
+
++ `mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default. 
+Give the mean of `on` variable falling in that bin.
+
++ `m2`: `on` must be provided in mapping `aes()`. Give the sum of mean squares of `on` variable falling in that bin.
+
++ `var`: `on` must be provided in mapping `aes()`. Give the variance of `on` variable falling in that bin.
+
++ `sd`: `on` must be provided in mapping `aes()`. Give the standard deviation of `on` variable falling in that bin.
+
++ `first`: `on` must be provided in mapping `aes()`. Give the first `on` variable element falling in that bin.
+
++ `last`: `on` must be provided in mapping `aes()`. Give the last `on` variable element falling in that bin.
+
++ `min`: `on` must be provided in mapping `aes()`. Give the max `on` variable element falling in that bin.
+
++ `max`: `on` must be provided in mapping `aes()`. Give the min `on` variable element falling in that bin.
 
 ## About
 
