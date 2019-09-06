@@ -78,7 +78,8 @@ rasterizer_build <- function(rastObj) {
                     xlim = xlim, ylim = ylim,
                     func = get("reduction_func", envir = envir, inherits = FALSE),
                     glyph = get("glyph", envir = envir, inherits = FALSE),
-                    group_by_data_table = get("group_by_data_table", envir = envir, inherits = FALSE)
+                    group_by_data_table = get("group_by_data_table", envir = envir, inherits = FALSE),
+                    cores = get("cores", envir = envir, inherits = FALSE)
                   )
                   end_time <- Sys.time()
                   print(paste("get_aggregation time:", end_time - start_time))
