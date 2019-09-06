@@ -3,6 +3,7 @@
 #' @param rastObj A rasterizer object
 #' @param as_heatmap Draw `plotly` by adding heatmap layer. See \code{add_rasterizer}
 #' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
+#' @param sizing Specifies which dimension of the image to constrain. One of "stretch" "fill", "contain"
 #' @param ... Arguments to the layout object. For documentation, 
 #' see https://plot.ly/r/reference/#Layout_and_layout_style_objects
 #' 
@@ -51,6 +52,7 @@
 plotly.rasterizer <- function(rastObj, 
                               as_heatmap = FALSE, 
                               scaling = NULL, 
+                              sizing = c("stretch", "fill", "contain"),
                               ...) {
   
   if(missing(rastObj) || !is.rasterizer(rastObj)) stop("No 'rasterizer' object.", call. = FALSE)
@@ -94,6 +96,8 @@ plotly.rasterizer <- function(rastObj,
     
     var_names <- unlist(rastObj$variable_names)
 
+    sizing <- match.arg(sizing)
+    
     p <- plotly::plot_ly(
       width = rastObj$plot_width,
       height = rastObj$plot_height
@@ -109,16 +113,16 @@ plotly.rasterizer <- function(rastObj,
           sizey = diff(rastObj$y_range),
           xanchor = "left", 
           yanchor = "bottom",
-          sizing = "stretch"
+          sizing = sizing
         ),
         ...,
         xaxis = list(
           range = rastObj$x_range,
-          title = var_names["x"]
+          title = get_varnames(var_names, "x")
         ),
         yaxis = list(
           range = rastObj$y_range,
-          title = var_names["y"]
+          title = get_varnames(var_names, "y")
         ),
         plot_bgcolor = rastObj$background
       )
