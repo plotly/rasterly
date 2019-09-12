@@ -39,13 +39,18 @@ Note, make sure `NumPy` and `Pandas` are installed with latest version.
 remotes::install_github("https://github.com/plotly/rasterizer", ref = "dev")
 ```
 
-## Use `rasterizer` to display large data set
+## Visualizing data with `rasterizer`
 
-`rasterizer` is built based on `datashader` http://datashader.org/getting_started/index.html in python. Both are designed by "rasterizing" large data set into images. In computation, `datashader` is faster but `rasterizer` is comparable; in usage, `rasterizer` provides more readable and flexible operation interface.
+`rasterizer` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics from large datasets. 
+
+In terms of performance, `datashader` is faster but `rasterizer` is comparable. `rasterizer` aims to provide a user-friendly interface to generate single channel heatmaps using the `plotly` package.
 
 #### Basic usage
 
 Data highlights Uber trips taken in New York City from April 1 2014 to September 30 2014 with 4533327 observations.
+
+To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
+
 ```
 # Load data
 ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
@@ -58,7 +63,7 @@ ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
   data.table::rbindlist()
 ```
 
-Start `rasterizer`
+Pass the data into `rasterizer`:
 ```
 ridesDf %>%
   rasterizer(mapping = aes(x = Lat, y = Lon)) %>% 
@@ -93,4 +98,4 @@ plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
 
 ## Apps
 
-USA census app built by `dashR` can be found in https://github.com/plotly/rasterizer/tree/master/apps/UScensus
+A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterizer/tree/master/apps/UScensus).
