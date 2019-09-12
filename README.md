@@ -1,11 +1,12 @@
-# Rasterizer
+# rasterizer
 
-Display million data in seconds in R
+Easily and rapidly visualize very large datasets with R and the plotly package.
 
 ## Load large data in R
 
-`rasterizer` is a R package to display large data set (million or billion) in seconds. 
-Here are a couple of ways to load large data in R with package `data.table` (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
+`rasterizer` is an R package to generate plots using very large datasets in seconds. 
+
+There are several ways to import very large datasets into R for use with `rasterizer`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
 * csv file:
 ```
@@ -14,7 +15,7 @@ data <- data.table::fread("yourpath/somefile.csv") # or a link
 ```
 
 * parquet file:
-Parquet files can provide efficient data compression to save much more space. Package `reticulate` (https://rstudio.github.io/reticulate/) offers "pandas" library (from Python) in R, which can help load parquet files.
+Parquet files can provide efficient data compression for large datasets. Package `reticulate` (https://rstudio.github.io/reticulate/) offers "pandas" library (from Python) in R, which can help load parquet files.
 ```
 library(data.table)
 library(reticulate)
