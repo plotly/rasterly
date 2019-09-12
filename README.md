@@ -2,7 +2,7 @@
 
 Easily and rapidly visualize very large datasets with R and the plotly package.
 
-## Load large data in R
+## Importing large datasets for use with rasterizer
 
 `rasterizer` is an R package to generate plots using very large datasets in seconds. 
 
