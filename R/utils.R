@@ -13,12 +13,6 @@ is.rasterizeLayer <- function(x) {
   inherits(x, "rasterizeLayer")
 }
 
-#' @export
-aes <- ggplot2::aes
-
-#' @export
-`%>%` <- magrittr::`%>%`
-
 .get <- function(x, envir = parent.frame(), inherits = FALSE) {
   
   m <- mget(x, envir = envir, ifnotfound = list(NULL),
