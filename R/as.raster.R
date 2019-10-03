@@ -2,25 +2,25 @@
 as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), span = 50,
                                       zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
                                       alpha = 255, layout = c("weighted", "cover")) {
-  
+
   layout <- match.arg(layout)
   span <- max(span, length(colour))
   # get dimension
   dimM <- dim(x)
   which_is_not_zero <- x != 0
-  
+
   if(length(which_is_not_zero) > 0) {
-    
+
     cdf <- get_cdf(M = x, zeroIgnored = TRUE, which_is_not_zero = which_is_not_zero)
     id <- floor(cdf(x) * (span - 1))[which_is_not_zero] + 1
-    
+
     col_index <- get_mapped_colour(colour_map = colour,
                                    span = span)
-    
+
     red <- col_index$red[id]
     green <- col_index$green[id]
     blue <- col_index$blue[id]
-    
+
     if(is.null(image)) {
       # build image
       image <- rep(background, dimM[1]*dimM[2])
@@ -33,7 +33,7 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
         blue <- (blue + colours$blue)/2
       } else if (layout == "cover") {
         NULL
-      } else stop("Unknown `layout` way; `layout` can only be either `weighted` or `cover`")
+      } else stop("Invalid `layout` value; `layout` can only be either `weighted` or `cover`")
     }
 
     image[which_is_not_zero] <- grDevices::rgb(red = red/255 + 1e-8,
@@ -45,7 +45,7 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
     # x is a zero matrix
     image <- rep(background, dimM[1] * dimM[2])
   }
-  
+
   image <- matrix(image, nrow = dimM[1])
   image[dimM[1]:1, ]
 }
@@ -54,7 +54,7 @@ as.raster.rasterizeMatrix <- function(x, colour = c('lightblue','darkblue'), spa
 as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
                                     zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
                                     alpha = 255, layout = c("weighted", "cover")) {
-  
+
   n <- length(x)
   if(missing(colour) || is.null(colour)) colour <- gg_colour_hue(n)
   stopifnot(
@@ -62,12 +62,12 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
       length(colour) >= n
     }
   )
-  
+
   layout <- match.arg(layout)
   dimM <- dim(x[[1]])
-  
+
   if(layout == "weighted") {
-    
+
     colour_key_rgb_num <- get_rgb_num(colour)
     # weighted x
     summed_M <- Reduce('+', x)
@@ -78,7 +78,7 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
                    function(i){
                      M <- x[[i]]
                      M <- M/summed_M
-                     
+
                      if(i == 1) {
                        red <<- colour_key_rgb_num$red[i] * M
                        green <<- colour_key_rgb_num$green[i] * M
@@ -89,7 +89,7 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
                        blue <<- blue + colour_key_rgb_num$blue[i] * M
                      }
                    })
-    
+
     if(is.null(image)) {
       # build image
       image <- rep(background, dimM[1]*dimM[2])
@@ -102,26 +102,26 @@ as.raster.rasterizeList <- function(x, colour = NULL, span = 50,
       green[not_background] <- image_rgb_num$green
       blue[not_background] <- image_rgb_num$blue
     }
-    # 
+    #
     colours <- grDevices::rgb(red = red/255 + 1e-8,
                               green = green/255 + 1e-8,
                               blue = blue/255 + 1e-8,
                               alpha = alpha + 1e-8,
                               maxColorValue = 1 + 2e-8)
-    
+
     colours[grepl("#000000", colours)] <- background
-    
+
     image <- matrix(colours, nrow = dimM[1])
     image[dimM[1]:1, ]
   } else if (layout == "cover") {
-    
+
     if(is.null(image)) {
       image <- matrix(rep(background, dimM[1]*dimM[2]), nrow = dimM[1])
     }
-    
+
     lapply(1:n,
            function(i){
-             image <<- as.raster(x = x[[i]], 
+             image <<- as.raster(x = x[[i]],
                                  colour = c(background, colour[i]),
                                  span = span,
                                  zeroIgnored = zeroIgnored,

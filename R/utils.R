@@ -1,16 +1,16 @@
 #' @export
-is.rasterizer <- function(x) {
-  inherits(x, "rasterizer")
+is.rasterly <- function(x) {
+  inherits(x, "rasterly")
 }
 
 #' @export
-is.rasterizer_build <- function(x) {
-  inherits(x, "rasterizer_build")
+is.rasterly_build <- function(x) {
+  inherits(x, "rasterly_build")
 }
 
 #' @export
 is.rasterizeLayer <- function(x) {
-  inherits(x, "rasterizeLayer")
+  inherits(x, "rasterlyLayer")
 }
 
 #' @export

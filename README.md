@@ -1,12 +1,12 @@
-# rasterizer
+# rasterly
 
 Easily and rapidly visualize very large datasets with R and the plotly package.
 
-## Importing large datasets for use with rasterizer
+## Importing large datasets for use with rasterly
 
-`rasterizer` is an R package to generate raster data for very large datasets; combined with Plotly.js and the plotly package, it enables analysts to generate interactive figures which are responsive enough to embed into web applications.
+`rasterly` is an R package to generate raster data for very large datasets; combined with Plotly.js and the plotly package, it enables analysts to generate interactive figures which are responsive enough to embed into web applications.
 
-There are several ways to import very large datasets into R for use with `rasterizer`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
+There are several ways to import very large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
 * csv file:
 ```
@@ -23,7 +23,7 @@ library(magrittr)
 pandas <- reticulate::import("pandas")
 read_parquet <- function(path, columns = NULL) {
   if (!is.null(columns)) columns <- as.list(columns)
-  path.expand(path) %>% 
+  path.expand(path) %>%
       normalizePath() %>%
       pandas$read_parquet(., columns = columns) %>%
       data.table::as.data.table(., stringsAsFactors = FALSE)
@@ -34,16 +34,16 @@ Note, make sure `NumPy` and `Pandas` are installed with latest version.
 
 ## Install
 
-`rasterizer` can be installed directly from github
+`rasterly` can be installed directly from github
 ```
-remotes::install_github("https://github.com/plotly/rasterizer", ref = "dev")
+remotes::install_github("https://github.com/plotly/rasterly", ref = "dev")
 ```
 
-## Visualizing data with `rasterizer`
+## Visualizing data with `rasterly`
 
-`rasterizer` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics from large datasets. 
+`rasterly` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics from large datasets.
 
-In terms of performance, `datashader` is faster but `rasterizer` is comparable. `rasterizer` aims to provide a user-friendly interface to generate single channel heatmaps using the `plotly` package.
+In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate single channel heatmaps using the `plotly` package.
 
 #### Basic usage
 
@@ -55,18 +55,18 @@ To illustrate the basic functionality provided by the package, we'll start by re
 # Load data
 ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
   data.table::fread(stringsAsFactors = FALSE)
-ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>% 
+ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>%
   data.table::fread(stringsAsFactors = FALSE)
-ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>% 
+ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>%
   data.table::fread(stringsAsFactors = FALSE)
-ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
   data.table::rbindlist()
 ```
 
-Pass the data into `rasterizer`:
+Pass the data into `rasterly`:
 ```
 ridesDf %>%
-  rasterizer(mapping = aes(x = Lat, y = Lon)) %>% 
+  rasterly(mapping = aes(x = Lat, y = Lon)) %>%
   rasterize_points() -> p
 p
 ```
@@ -74,7 +74,7 @@ p
 
 Note that, "p" is a list of environments. The display info can be accessed through
 ```
-r <- rasterizer_build(p)
+r <- rasterly_build(p)
 str(r)
 ```
 "r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs.
@@ -84,7 +84,7 @@ str(r)
 * `grid`
 ```
 # same with plot(p)
-p 
+p
 ```
 
 #### Interactive graph
@@ -92,10 +92,10 @@ p
 * `plotly`
 ```
 plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
- add_rasterizer()
+ add_rasterly()
 ```
 ![](man/figures/add_rasterizer.gif)
 
 ## Apps
 
-A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterizer/tree/master/apps/UScensus).
+A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).

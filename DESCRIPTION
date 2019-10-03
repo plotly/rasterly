@@ -1,11 +1,12 @@
-Package: rasterizer
+Package: rasterly
 Type: Package
-Title: Rasterizer
+Title: Modern heat map visualizations for large data using Plotly.js 
 Version: 0.1.0
 Authors@R: c(person(given = "Zehao", family = "Xu", 
                     email = "z267xu@uwaterloo.ca", 
                     role = c("aut", "cre", "ths")),
-             person(given = "Ryan", family = "Kyle", 
+             person(given = "Ryan Patrick", family = "Kyle",
+                    comment = c(ORCID = "0000-0001-5829-9867"), 
                     email = "ryan@plot.ly", 
                     role = "ctb")
              )
@@ -31,4 +32,5 @@ Suggests:
     loon,
     purrr
 LazyData: true
+ByteCompile: true
 RoxygenNote: 6.1.1

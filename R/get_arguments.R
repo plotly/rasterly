@@ -81,9 +81,9 @@ get_span <- function(envir, ...) {
   return(span)
 }
 
-get_colour_key <- function(colour_key, n, rasterizer_colour_key) {
+get_colour_key <- function(colour_key, n, rasterly_colour_key) {
   
-  colour_key <- colour_key %||% rasterizer_colour_key %||% gg_colour_hue(n)
+  colour_key <- colour_key %||% rasterly_colour_key %||% gg_colour_hue(n)
   
   stopifnot(
     exprs = {
