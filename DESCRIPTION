@@ -22,13 +22,13 @@ Depends:
 Imports:
     data.table,
     rlang,
+    plotly,
     ggplot2
 Suggests:
     magrittr,
     grid,
     stats,
     compiler,
-    plotly,
     loon,
     purrr
 LazyData: true
