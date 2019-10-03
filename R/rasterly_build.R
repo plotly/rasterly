@@ -1,7 +1,7 @@
 #' @title rasterly_build
 #' @description Execute a "rasterly" object and return the info to build image
 #' @param rastObj A rasterly object. It should be a list of environments composed of a `rasterly()` and
-#' several `rasterize_...` layers
+#' several `rasterly_...` layers
 #'
 #' @note A rasterly object will never be implemented until we call `rasterly_build()`
 #'
