@@ -2,58 +2,58 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 agg_sumCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_sumCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_sumCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 agg_anyCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_anyCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_anyCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 agg_meanCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_meanCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_meanCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 agg_firstCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_firstCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_firstCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 agg_lastCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_lastCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_lastCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 agg_maxCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_maxCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_maxCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 agg_minCpp <- function(L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_agg_minCpp', PACKAGE = 'rasterizer', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_agg_minCpp', PACKAGE = 'rasterly', L, levels, category, plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_sumCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_sumCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_sumCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_anyCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_anyCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_anyCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_meanCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_meanCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_meanCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_firstCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_firstCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_firstCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_lastCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_lastCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_lastCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_maxCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_maxCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_maxCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
 aggregation_minCpp <- function(plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph) {
-    .Call('_rasterizer_aggregation_minCpp', PACKAGE = 'rasterizer', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
+    .Call('_rasterly_aggregation_minCpp', PACKAGE = 'rasterly', plot_width, plot_height, x_range, y_range, xlim, ylim, x, y, on, size, glyph)
 }
 
