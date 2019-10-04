@@ -2,11 +2,11 @@
     "args" : [
         "-IE:/Rstudio/resources/libclang/builtin-headers/5.0.2",
         "-IE:/Rstudio/resources/libclang/builtin-headers/libc++/5.0.2",
-        "-IE:/R-3.6.0/library/Rcpp/include",
-        "-IE:/R-3.6.0/include",
+        "-IE:/R-3.6.1/library/Rcpp/include",
+        "-IE:/R-3.6.1/include",
         "-DNDEBUG"
     ],
-    "hash" : "1565275492",
+    "hash" : "1567029867",
     "is_cpp" : true,
     "pch" : "Rcpp"
 }

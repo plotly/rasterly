@@ -1,6 +1,5 @@
 get_range <- function(x_range, y_range, x, y) {
   
-  
   x_range <- x_range %||% c(min(x), max(x))
   if(length(x_range) != 2 || !is.numeric(x_range)) stop("x_range should be a length 2 numerical vector")
   if(x_range[1] > x_range[2]) x_range <- sort(x_range)

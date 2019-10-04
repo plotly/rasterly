@@ -10,6 +10,8 @@
 #' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
 #' @param ... Arguments (i.e., attributes) passed along to the trace type or `rasterizer`.
 #' @export
+#' @importFrom methods formalArgs
+#' @importFrom plotly add_trace_classed 
 #' 
 #' @examples 
 #' \dontrun{

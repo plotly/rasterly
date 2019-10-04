@@ -113,7 +113,7 @@ rasterize_points <- function(rastObj,
   }
   # for S3 method
   class(reduction_func) <- reduction_func
-  
+
   if(!is.null(data)) {
     
     if(is.function(data)) data <- do.call(data, list(x = .get("data", envir = rastObj$rasterizer_env)))
@@ -147,7 +147,7 @@ rasterize_points <- function(rastObj,
     ## a new mapping system?
     aesthetics <- NULL
     rasterizer_env_mapping <- .get("mapping", envir = rastObj$rasterizer_env)
-    
+
     if(identical(mapping, rasterizer_env_mapping) || rlang::is_empty(mapping)) {
       # This is encouraged, aesthetics is inherited from rasterizer enviroment
       if(is.null(xlim)) xlim <- .get("x_range", envir = rastObj$rasterizer_env)

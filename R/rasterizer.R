@@ -42,7 +42,7 @@
 #' @import rlang
 #' @importFrom grDevices rgb col2rgb hcl extendrange
 #' @importFrom magrittr '%>%'
-#' @importFrom stats ecdf approx setNames
+#' @importFrom stats ecdf approx setNames na.omit
 #' @importFrom ggplot2 aes
 #' @importFrom data.table data.table
 #' @importFrom compiler cmpfun
@@ -95,7 +95,7 @@ rasterizer <- function(data = NULL,
     aesthetics <- get_aesthetics(data, mapping, variable_check, ...)
     end_time <- Sys.time()
     print(paste("get aesthetics time:", end_time - start_time))
-    
+
     start_time <- Sys.time()
     range <- get_range(x_range = x_range, 
                        y_range = y_range,

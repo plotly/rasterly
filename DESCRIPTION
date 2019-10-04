@@ -14,6 +14,7 @@ Description: Modern heat map visualizations for large data using Plotly.js
 LinkingTo: Rcpp
 License: MIT
 Encoding: UTF-8
+ByteCompile: true
 Depends:
     R (>= 3.4.0),
     methods,
