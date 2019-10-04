@@ -47,7 +47,7 @@ test_that("example works", {
              y_range = c(min_y, max_y),
              colour_key = colours,
              reduction_func = "any") %>%
-    rasterize_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterize_points(colour_map = fire, group_by_data_table = TRUE) %>%
     rasterizer_build() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
   
@@ -64,7 +64,7 @@ test_that("example works", {
   expect_equal(is.rasterizer(ds), TRUE)
   
   ########### "mean" ##############
-  # reduction function is any and group_by_data_table is TRUE
+  # reduction function is mean and group_by_data_table is TRUE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -72,11 +72,11 @@ test_that("example works", {
              y_range = c(min_y, max_y),
              colour_key = colours,
              reduction_func = "mean") %>%
-    rasterize_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterize_points(colour_map = fire, group_by_data_table = TRUE) %>%
     rasterizer_build() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
   
-  # reduction function is any and group_by_data_table is FALSE
+  # reduction function is mean and group_by_data_table is FALSE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -89,6 +89,7 @@ test_that("example works", {
   expect_equal(is.rasterizer(ds), TRUE)
   
   ########### "first" ##############
+  # reduction function is first and group_by_data_table is TRUE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -96,11 +97,11 @@ test_that("example works", {
              y_range = c(min_y, max_y),
              colour_key = colours,
              reduction_func = "first") %>%
-    rasterize_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterize_points(colour_map = fire, group_by_data_table = TRUE) %>%
     rasterizer_build() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
   
-  # reduction function is any and group_by_data_table is FALSE
+  # reduction function is first and group_by_data_table is FALSE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -113,6 +114,7 @@ test_that("example works", {
   expect_equal(is.rasterizer(ds), TRUE)
   
   ########### "last" ##############
+  # reduction function is last and group_by_data_table is TRUE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -120,11 +122,11 @@ test_that("example works", {
              y_range = c(min_y, max_y),
              colour_key = colours,
              reduction_func = "last") %>%
-    rasterize_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterize_points(colour_map = fire, group_by_data_table = TRUE) %>%
     rasterizer_build() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
   
-  # reduction function is any and group_by_data_table is FALSE
+  # reduction function is last and group_by_data_table is FALSE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -137,6 +139,7 @@ test_that("example works", {
   expect_equal(is.rasterizer(ds), TRUE)
   
   ########### "m2" ##############
+  # reduction function is m2 and group_by_data_table is TRUE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -144,11 +147,11 @@ test_that("example works", {
              y_range = c(min_y, max_y),
              colour_key = colours,
              reduction_func = "m2") %>%
-    rasterize_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterize_points(colour_map = fire, group_by_data_table = TRUE) %>%
     rasterizer_build() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
   
-  # reduction function is any and group_by_data_table is FALSE
+  # reduction function is m2 and group_by_data_table is FALSE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -161,6 +164,7 @@ test_that("example works", {
   expect_equal(is.rasterizer(ds), TRUE)
   
   ########### "max" ##############
+  # reduction function is max and group_by_data_table is TRUE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
@@ -168,11 +172,11 @@ test_that("example works", {
              y_range = c(min_y, max_y),
              colour_key = colours,
              reduction_func = "max") %>%
-    rasterize_points(colour_map = fire, group_by_data_table = FALSE) %>%
+    rasterize_points(colour_map = fire, group_by_data_table = TRUE) %>%
     rasterizer_build() -> ds
   expect_equal(is.rasterizer(ds), TRUE)
   
-  # reduction function is any and group_by_data_table is FALSE
+  # reduction function is max and group_by_data_table is FALSE
   rasterizer(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
