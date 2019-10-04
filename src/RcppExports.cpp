@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // agg_sumCpp
 List agg_sumCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_sumCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_sumCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,7 @@ END_RCPP
 }
 // agg_anyCpp
 List agg_anyCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_anyCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_anyCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -55,7 +55,7 @@ END_RCPP
 }
 // agg_meanCpp
 List agg_meanCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_meanCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_meanCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -79,7 +79,7 @@ END_RCPP
 }
 // agg_firstCpp
 List agg_firstCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_firstCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_firstCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -103,7 +103,7 @@ END_RCPP
 }
 // agg_lastCpp
 List agg_lastCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_lastCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_lastCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -127,7 +127,7 @@ END_RCPP
 }
 // agg_maxCpp
 List agg_maxCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_maxCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_maxCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -151,7 +151,7 @@ END_RCPP
 }
 // agg_minCpp
 List agg_minCpp(ListOf<NumericMatrix> L, CharacterVector levels, CharacterVector category, int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_agg_minCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_agg_minCpp(SEXP LSEXP, SEXP levelsSEXP, SEXP categorySEXP, SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -175,7 +175,7 @@ END_RCPP
 }
 // aggregation_sumCpp
 NumericMatrix aggregation_sumCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_sumCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_sumCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -196,7 +196,7 @@ END_RCPP
 }
 // aggregation_anyCpp
 NumericMatrix aggregation_anyCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_anyCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_anyCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -217,7 +217,7 @@ END_RCPP
 }
 // aggregation_meanCpp
 NumericMatrix aggregation_meanCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_meanCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_meanCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -238,7 +238,7 @@ END_RCPP
 }
 // aggregation_firstCpp
 NumericMatrix aggregation_firstCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_firstCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_firstCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -259,7 +259,7 @@ END_RCPP
 }
 // aggregation_lastCpp
 NumericMatrix aggregation_lastCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_lastCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_lastCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -280,7 +280,7 @@ END_RCPP
 }
 // aggregation_maxCpp
 NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_maxCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_maxCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -301,7 +301,7 @@ END_RCPP
 }
 // aggregation_minCpp
 NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height, NumericVector& x_range, NumericVector& y_range, NumericVector& xlim, NumericVector& ylim, NumericVector& x, NumericVector& y, NumericVector& on, NumericVector& size, CharacterVector& glyph);
-RcppExport SEXP _rasterizer_aggregation_minCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
+RcppExport SEXP _rasterly_aggregation_minCpp(SEXP plot_widthSEXP, SEXP plot_heightSEXP, SEXP x_rangeSEXP, SEXP y_rangeSEXP, SEXP xlimSEXP, SEXP ylimSEXP, SEXP xSEXP, SEXP ySEXP, SEXP onSEXP, SEXP sizeSEXP, SEXP glyphSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
