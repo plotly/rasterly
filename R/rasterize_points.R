@@ -204,6 +204,6 @@ rasterize_points <- function(rastObj,
       paste0("rasterlyPoints", length(rastObj))
     )
   )
-  class(rastObj) <- c("rasterizePoints", "rasterizeLayer", "rasterly")
+  class(rastObj) <- c("rasterlyPoints", "rasterlyLayer", "rasterly")
   invisible(return(rastObj))
 }
