@@ -4,7 +4,7 @@
 using namespace Rcpp;
 
 // for new R-devel
-void R_init_rasterizer(DllInfo* info) {
+void R_init_rasterly(DllInfo* info) {
   R_registerRoutines(info, NULL, NULL, NULL, NULL);
   R_useDynamicSymbols(info, TRUE);
 }
@@ -406,11 +406,11 @@ NumericMatrix aggregation_maxCpp(int& plot_width, int& plot_height,
   double ymax = y_range[1];
 
   NumericMatrix R(plot_height, plot_width);
-  
+
   // make on is larger than zero;
   double min_on = min(on);
   on = on - min_on + 1e-8;
-  
+
   bool is_size = true;
   if(size.size() == 0) is_size = false;
 
@@ -480,7 +480,7 @@ NumericMatrix aggregation_minCpp(int& plot_width, int& plot_height,
 
   bool is_size = true;
   if(size.size() == 0) is_size = false;
-  
+
   // make on is smaller than zero;
   double max_on = max(on);
   on = on - max_on - 1e-8;

@@ -10,15 +10,15 @@ rasterize_points(rastObj, data = NULL, mapping = aes(), ...,
   inherit.aes = TRUE)
 }
 \arguments{
-\item{rastObj}{A "rasterizer" object.}
+\item{rastObj}{A "rasterly" object.}
 
-\item{data}{Dataset to use for plot. If not provided (say `NULL`), data would be inherited by `rasterizer()`; else 
+\item{data}{Dataset to use for plot. If not provided (say `NULL`), data would be inherited by `rasterly()`; else 
 input data could be a `data.frame` or some function with argument `x`.}
 
 \item{mapping}{Default list of aesthetic mappings to use for plot. If provided and `inherit.aes = TRUE`, it will be
-merged on top of `rasterizer()` mapping.}
+merged on top of `rasterly()` mapping.}
 
-\item{...}{Arguments passed by `rasterizer()`}
+\item{...}{Arguments passed by `rasterly()`}
 
 \item{xlim}{X limits in this layer}
 
@@ -46,7 +46,7 @@ is faster, however, if the dataset is extremely large, the speed is not as stabl
 A list of environments.
 }
 \description{
-Points layer for "rasterizer".
+Points layer for "rasterly".
 }
 \details{
 Reduction functions
@@ -69,24 +69,24 @@ Reduction functions
 }
 \examples{
 \dontrun{
-   library(rasterizer)
+   library(rasterly)
    if(requireNamespace("grid") && requireNamespace("gridExtra")) {
      x <- rnorm(1e7)
      y <- rnorm(1e7)
      category <- sample(1:5, 1e7, replace = TRUE)
      data.frame(x = x, y = y, category = category) \%>\%
-       rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
+       rasterly(mapping = aes(x = x, y = y, colour = category)) \%>\%
        rasterize_points(layout = "weighted") -> ds1
      ds1
      # layout with cover
      data.frame(x = x, y = y, category = category) \%>\%
-       rasterizer(mapping = aes(x = x, y = y, colour = category)) \%>\%
+       rasterly(mapping = aes(x = x, y = y, colour = category)) \%>\%
        rasterize_points(layout = "cover") -> ds2
      ds2
      # display side by side
      grid::grid.newpage()
      gridExtra::grid.arrange(
-        grobs = list(rasterizerGrob(ds1), rasterizerGrob(ds2)),
+        grobs = list(rasterlyGrob(ds1), rasterlyGrob(ds2)),
         ncol = 2,
         top = "'weighted' layout versus 'cover' layout"
      )
@@ -94,5 +94,5 @@ Reduction functions
 }
 }
 \seealso{
-\link{rasterizer}, \link{rasterizer_build}, \link{[.rasterizer}, \link{[<-.rasterizer}
+\link{rasterly}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 }

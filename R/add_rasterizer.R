@@ -1,35 +1,33 @@
-#' @title Add "rasterizer" trace to a plotly visualization
-#' @description Add trace to a plotly visualization
-#' @param x The x variable, numerical vectors or expression and will be passed on `aes()`.
-#' @param y The y variable, numerical vectors or expression and will be passed on `aes()`.
-#' @param z A numeric matrix, if provided, `add_heatmap` will be called.
-#' @param data A data frame (optional) or \link[crosstalk]{SharedData} object.
-#' @param inherit Inherit attributes from \link[plotly]{plotly}
-#' @param on Reduction "on" which variable, it is a numerical vectors or expression and will be passed on `aes()`.
-#' @param size The size of pixel for each observation, a numerical vectors or expression and will be passed on `aes()`.
-#' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
-#' @param ... Arguments (i.e., attributes) passed along to the trace type or `rasterizer`.
+#' @title Add "rasterly" trace to a Plotly visualization
+#' @description Add trace to a Plotly visualization
+#' @param x Numeric vector or expression. The x variable, to be passed on to `aes()`.
+#' @param y Numeric or expression. The y variable, to be passed on to `aes()`.
+#' @param z Numeric. A numeric matrix (optional), to be processed with `add_heatmap`.
+#' @param data A \link[data.frame]{data.frame} or \link[crosstalk]{SharedData} object (optional).
+#' @param inherit Logical. Inherit attributes from \link[plotly]{plotly}?
+#' @param on Numeric vector or expression. Provides the data on which to reduce, to be passed on to `aes()`.
+#' @param size Numeric vector or expression. Pixel size for each observation, to be passed on to `aes()`.
+#' @param scaling Character string or function. The scaling method to be used for the trace.
+#' @param ... Arguments (i.e., attributes) passed along to the trace type or `rasterly`.
 #' @export
-#' @importFrom methods formalArgs
-#' @importFrom plotly add_trace_classed 
-#' 
-#' @examples 
+#'
+#' @examples
 #' \dontrun{
-#'    library(rasterizer)
+#'    library(rasterly)
 #'    if(requireNamespace("plotly") && requireNamespace("data.table")) {
 #'      # Load data
 #'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
 #'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>% 
+#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>%
 #'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>% 
+#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>%
 #'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+#'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
 #'        data.table::rbindlist()
-#'        
+#'
 #'      #### quick start
-#'      p <- plot_ly(data = ridesDf) %>% 
-#'             add_rasterizer(x = ~Lat, y = ~Lon)
+#'      p <- plot_ly(data = ridesDf) %>%
+#'             add_rasterly(x = ~Lat, y = ~Lon)
 #'      p
 #'      #### set artificial scaling function
 #'      zeroOneTransform <- function(z) {
@@ -38,9 +36,9 @@
 #'        M <- matrix((z - minz)/(maxz - minz), nrow = dim(z)[1])
 #'        return(M)
 #'      }
-#'      plot_ly(data = ridesDf) %>% 
-#'        add_rasterizer(x = ~Lat, 
-#'                       y = ~Lon, 
+#'      plot_ly(data = ridesDf) %>%
+#'        add_rasterly(x = ~Lat,
+#'                       y = ~Lon,
 #'                       on = ~-Lat,
 #'                       reduction_func = "max",
 #'                       scaling = zeroOneTransform) %>%
@@ -54,10 +52,10 @@
 #'        )
 #'    }
 #' }
-add_rasterizer <- function(p, 
-                           x = NULL, y = NULL, z = NULL, ..., 
-                           data = NULL, inherit = TRUE, 
-                           on = NULL, size = NULL, 
+add_rasterly <- function(p,
+                           x = NULL, y = NULL, z = NULL, ...,
+                           data = NULL, inherit = TRUE,
+                           on = NULL, size = NULL,
                            scaling = NULL) {
   if (inherit) {
     x <- x %||% p$x$attrs[[1]][["x"]]
@@ -66,16 +64,16 @@ add_rasterizer <- function(p,
   }
 
   args <- list(...)
-  rasterizer_args <- union(methods::formalArgs(rasterizer), methods::formalArgs(rasterize_points))
-  args[rasterizer_args] <- NULL
-  
+  rasterly_args <- union(methods::formalArgs(rasterly), methods::formalArgs(rasterize_points))
+  args[rasterly_args] <- NULL
+
   if (is.null(z)) {
-    # produce z by rasterizer
+    # produce z by rasterly
     ### set vars
     data <- data %||% p$x$visdat[[1]]()
     on <- on %||% p$x$attrs[[1]][["on"]]
-    size <- size %||% p$x$attrs[[1]][["size"]] 
-    
+    size <- size %||% p$x$attrs[[1]][["size"]]
+
     ### set mappings
     mapping_names <- c("x", "y", "on", "size")
     names(mapping_names) <- mapping_names
@@ -87,12 +85,12 @@ add_rasterizer <- function(p,
 
     for(i in 1:length(mapping_names)) {
       exp <- expressions[[i]]
-      
+
       if(is.null(exp)) {
         mapping_names[i] <- NA
       } else {
         if(rlang::is_expression(exp)) {
-          the_parse <- rlang::expr_text(exp) %>% 
+          the_parse <- rlang::expr_text(exp) %>%
             sub("~", "", .) %>%
             rlang::parse_expr()
           mapping[[i]] <- rlang::quo(!!the_parse)
@@ -105,19 +103,19 @@ add_rasterizer <- function(p,
 
     mapping <- Filter(Negate(is.null), mapping)
     names(mapping) <- stats::na.omit(mapping_names)
-    
-    data %>% 
-      rasterizer(mapping = mapping, 
-                 show_raster = FALSE, 
-                 ...) %>% 
+
+    data %>%
+      rasterly(mapping = mapping,
+                 show_raster = FALSE,
+                 ...) %>%
       rasterize_points() %>%
-      rasterizer_build() -> rastObj
+      rasterly_build() -> rastObj
     remove(data)
     data <- NULL
-    
-    if(sum(lengths(rastObj$agg)) > 1) 
+
+    if(sum(lengths(rastObj$agg)) > 1)
       message("More than one aggregation matrix is detected")
-    
+
     z <- rastObj$agg[[1]][[1]]
     dimZ <- dim(z)
     y <- seq(rastObj$y_range[1], rastObj$y_range[2], length.out = dimZ[1])
@@ -129,29 +127,29 @@ add_rasterizer <- function(p,
       "log"
     }
     if(is.function(scaling)) {
-      z <- do.call(scaling, 
+      z <- do.call(scaling,
                    list(z = z))
     } else {
-      if(!is.character(scaling)) stop("'scaling' can be either 'function' or 'character'")
-      switch(scaling, 
+      if(!is.character(scaling)) stop("'scaling' must either be an R function or a character string.")
+      switch(scaling,
              "log" = {
                z <- matrix(log(z + 1), nrow = dimZ[1])
-             }, 
+             },
              "origin" = NULL)
     }
-  } else message("If z is provided, `add_heatmap` will be excuted")
-  
+  } else message("If z is provided, `plotly::add_heatmap` will be called.")
+
   do.call(
     plotly:::add_trace_classed,
     c(
       list(
-        p = p, 
-        class = "plotly_heatmap", 
-        z = z, 
-        x = x, 
+        p = p,
+        class = "plotly_heatmap",
+        z = z,
+        x = x,
         y = y,
-        type = "heatmap",  
-        data = data, 
+        type = "heatmap",
+        data = data,
         inherit = inherit
       ),
       args

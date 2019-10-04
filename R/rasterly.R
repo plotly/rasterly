@@ -1,7 +1,7 @@
-#' @title Rasterizer
-#' @description Set initials for rasterizer
+#' @title Rasterly
+#' @description Set initials for rasterly
 #' @param data Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
-#' Since "Rasterizer" is used for large dataset, "\link[data.table]{data.table}" is recommended.
+#' Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.
 #' @param mapping Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[aes]{aes}.
 #' See details.
 #' @param ... Other arguments can be passed to layers.
@@ -25,19 +25,19 @@
 #' 
 #' @return An environment wrapped by a list
 #' 
-#' @note Call `rasterizer()` alone does not generate anyting. `rasterize_...()` layers need to be attached. 
-#' More info can be found in \href{https://github.com/plotly/rasterizer/blob/master/README.md}{README.md}
+#' @note Call `rasterly()` alone does not generate anyting. `rasterize_...()` layers need to be attached. 
+#' More info can be found in \href{https://github.com/plotly/rasterly/blob/master/README.md}{README.md}
 #'
-#' @seealso \link{rasterize_points}, \link{rasterizer_build}, \link{[.rasterizer}, \link{[<-.rasterizer}
+#' @seealso \link{rasterize_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' @details 
 #' \itemize{
-#'  \item{}{In package "rasterizer", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
+#'  \item{}{In package "rasterly", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
 #' variable "on" represents the reduction function works "on" which column.}
 #'  \item{}{`drop_data` can help save space, especially to extremly large dataset, 
 #' however, drop original data can cause layers fail to set new `aes()`.}
 #' }
 #'
-#' @useDynLib rasterizer
+#' @useDynLib rasterly
 #' @import Rcpp
 #' @import rlang
 #' @importFrom grDevices rgb col2rgb hcl extendrange
@@ -48,7 +48,7 @@
 #' @importFrom compiler cmpfun
 
 #' @export
-rasterizer <- function(data = NULL,
+rasterly <- function(data = NULL,
                        mapping = aes(),
                        ...,
                        plot_width = 600, plot_height = 600,
@@ -112,7 +112,7 @@ rasterizer <- function(data = NULL,
     }
   }
   
-  # make sure all arguments exist in `rasterizer` environment
+  # make sure all arguments exist in `rasterly` environment
   args <- list(...)
   reduction_func <- args$reduction_func
   layout <- args$layout
@@ -121,9 +121,9 @@ rasterizer <- function(data = NULL,
   
   p <- structure(
     list(
-      rasterizer_env = environment()
+      rasterly_env = environment()
     ),
-    class = c("rasterizer")
+    class = c("rasterly")
   )
   return(p)
   invisible()
