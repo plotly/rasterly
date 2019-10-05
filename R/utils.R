@@ -1,24 +1,3 @@
-#' @export
-is.rasterly <- function(x) {
-  inherits(x, "rasterly")
-}
-
-#' @export
-is.rasterly_build <- function(x) {
-  inherits(x, "rasterly_build")
-}
-
-#' @export
-is.rasterizeLayer <- function(x) {
-  inherits(x, "rasterlyLayer")
-}
-
-#' @export
-aes <- ggplot2::aes
-
-#' @export
-`%>%` <- magrittr::`%>%`
-
 .get <- function(x, envir = parent.frame(), inherits = FALSE) {
   
   m <- mget(x, envir = envir, ifnotfound = list(NULL),
@@ -70,3 +49,9 @@ remove_missing_matrix <- function(m, value = 0) {
   m[!is.finite(m)] <- value
   m
 }
+
+# jump R CMD check
+# Suggestion from https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+# The reason to set globleVar instead of define x, y, ... is because
+# the cost of extraction values from large data is very heavy
+if(getRversion() >= "3.1.0")  utils::globalVariables(c("..mapping_names", "size", "x", "y", "on", "colour"))

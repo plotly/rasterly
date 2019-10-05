@@ -15,7 +15,7 @@ x \%<-\% y
 a list
 }
 \description{
-Merge two objects from right to left
+Merge two objects from right to left.
 }
 \examples{
 # two lists

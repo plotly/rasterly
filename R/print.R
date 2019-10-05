@@ -1,14 +1,14 @@
 #' @export
-print.rasterly <- function(rastObj) {
+print.rasterly <- function(x, ...) {
   
-  if(is.rasterizeLayer(rastObj) && !is.rasterly_build(rastObj)) rastObj <- rasterly_build(rastObj)
+  if(is.rasterizeLayer(x) && !is.rasterly_build(x)) x <- rasterly_build(x)
   
   grid::grid.newpage()
   
-  if(is.null(rastObj$image)) {
+  if(is.null(x$image)) {
     message("No image is found")
     invisible(grid::grid.draw(grid::grob()))
   } else {
-    invisible(grid::grid.raster(rastObj$image))
+    invisible(grid::grid.raster(x$image))
   }
 }

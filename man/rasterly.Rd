@@ -14,7 +14,7 @@ rasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
 \item{data}{Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
 Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.}
 
-\item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[aes]{aes}.
+\item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 See details.}
 
 \item{...}{Other arguments can be passed to layers.}
@@ -50,7 +50,7 @@ save more space by sacrificing speed.}
 An environment wrapped by a list
 }
 \description{
-Set initials for rasterly
+Set initials for rasterly.
 }
 \details{
 \itemize{

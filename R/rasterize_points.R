@@ -21,6 +21,8 @@
 #' @param group_by_data_table Logical Value and defualt is `TRUE`. When set "colour" in `aes()`, 
 #' "group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
 #' is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.
+#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather than combining with them. 
+#' See \code{\link{layer}}
 #' 
 #' @seealso \link{rasterly}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' 
@@ -113,7 +115,7 @@ rasterize_points <- function(rastObj,
   }
   # for S3 method
   class(reduction_func) <- reduction_func
-  
+
   if(!is.null(data)) {
     
     if(is.function(data)) data <- do.call(data, list(x = .get("data", envir = rastObj$rasterly_env)))
@@ -124,7 +126,7 @@ rasterize_points <- function(rastObj,
     } else {
       if(inherit.aes)
         # `%<-%` is a symbol to merge two lists from right to left
-        mapping <- ggplot2:::new_aes(.get("mapping", envir = rastObj$rasterly_env) %<-% mapping)
+        mapping <- new_aes(.get("mapping", envir = rastObj$rasterly_env) %<-% mapping)
     }
     aesthetics <- get_aesthetics(data, 
                                  mapping, 
@@ -159,8 +161,7 @@ rasterize_points <- function(rastObj,
       
       if(inherit.aes)
         # `%<-%` is a symbol to merge two lists from right to left
-        # Should I use `new_aes()`?
-        mapping <- ggplot2:::new_aes(.get("mapping", envir = rastObj$rasterly_env) %<-% mapping)
+        mapping <- new_aes(.get("mapping", envir = rastObj$rasterly_env) %<-% mapping)
       
       tryCatch(
         expr = {

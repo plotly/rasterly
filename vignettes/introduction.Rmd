@@ -79,16 +79,16 @@ The elements in "p" can be easily extracted or replaced by `[` and `[<-`
 ```{r subsetting, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
 p["background"]
 # background in children layer `rasterly_points()` is replaced
-p["background", which = 2] <- "black"
+p["background", level = 2] <- "black"
 p["background"]
 # colour_map in both `rasterly()` and `rasterly_points()` are replaced
 ## fire is a colour vector with length 256
 ## see `rasterly::fire`
-p["colour_map", which = 1:2] <- fire
+p["colour_map", level = 1:2] <- fire
 p
 ```
 
-  * `which` helps to define which layer to replace and the default setting is 1 (the parent layer `rasterly()`).
+  * `level` helps to define which layer to replace and the default setting is 1 (the parent layer `rasterly()`).
   * Available states can be extracted or replaced are listed here:
     1. Aggregation: `data`, `mapping`, `plot_width`, `plot_height`, `range`, `x_range`, `y_range`, `xlim`, `ylim`, `aesthetics`, `reduction_func`, `glyph`, `max_size`, `group_by_data_table`, `drop_data`, `variable_check`
     2. Display: `background`, `colour_map`, `colour_key`, `alpha`, `span`, `show_raster`, `layout`
@@ -121,7 +121,7 @@ It contains:
 
 #### `grid` graphics
 
-```{r grid.raster, fig.width = 4, fig.height = 3}
+```{r grid.raster, fig.width = 4, fig.height = 3, eval=FALSE}
 grid::grid.raster(build$image)
 ```
 
@@ -138,7 +138,7 @@ plot(p)
 
   + `add_rasterly()`: "Plotly" pipes `add_trace(...)` to layer up. `rasterly` builds `add_rasterly()` from `add_heatmap()` to enable its functionality in "plotly"
     
-    ```{r add_rasterly, fig.width = 4, fig.height = 3}
+    ```{r add_rasterly, fig.width = 4, fig.height = 3, eval=FALSE}
     plotly::plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
       add_rasterly() %>% 
       layout(
@@ -154,7 +154,7 @@ plot(p)
   
   + `plotly.rasterly()`: `plotly.rasterly` takes a `rasterly` object and returns a "plotly" object
     
-    ```{r plotly_rasterly, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+    ```{r plotly_rasterly, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3, eval=FALSE}
     # plotly
     ply <- p %>% 
       plotly.rasterly(sizing = "contain")
@@ -167,7 +167,7 @@ plot(p)
 
 ```{r}
 r <- rasterly(data = ridesDf, 
-                mapping = aes(x = Lat, y = Lon))
+              mapping = aes(x = Lat, y = Lon))
 ```
 
 #### Mapping system 
@@ -201,7 +201,7 @@ length(build_g$agg[[1]])
 
 Colours in "image" in `build_g` is built based on weighted arithmetic mean (default) on aggregation matrices. Also, we can choose "cover" layout to display multiple aggregation matrices.
 
-```{r set colour cover, fig.width = 4, fig.height = 3}
+```{r set colour cover, fig.width = 4, fig.height = 3, eval=FALSE, eval=FALSE}
 r %>% 
   rasterize_points(
      mapping = aes(colour = hour),
@@ -217,7 +217,7 @@ The afterwards raster matrix will cover on previous one.
   
   `reduction_func` is implemented `on` which variable
 
-```{r set on, fig.width = 4, fig.height = 3}
+```{r set on, fig.width = 4, fig.height = 3, eval=FALSE}
 r %>% 
   rasterize_points(
     reduction_func = "mean", # take the "mean" reduction function
@@ -229,7 +229,7 @@ r %>%
   
   Proportional size on corresponding variable. `max_size` is the largest bins shared by each observation.
   
-```{r set size, fig.width = 4, fig.height = 3}
+```{r set size, fig.width = 4, fig.height = 3, eval=FALSE}
 r %>% 
   rasterize_points(
     mapping = aes(size = month),
@@ -245,7 +245,7 @@ A reduction operator function is used when aggregating data points into a each b
 
   * `mean` reduction function:
 
-```{r reduction on mean, fig.width = 4, fig.height = 3}
+```{r reduction on mean, fig.width = 4, fig.height = 3, eval=FALSE}
 r %>% 
   rasterize_points(
     reduction_func = "mean", # take the "mean" reduction function
@@ -258,7 +258,7 @@ Reduction function `mean` averages the y column (default setting) for every data
 
   * `any` reduction function:
   
-```{r reduction on any, fig.width = 4, fig.height = 3}
+```{r reduction on any, fig.width = 4, fig.height = 3, eval=FALSE}
 r %>% 
   rasterize_points(
     reduction_func = "any",  # take the "any" reduction function 

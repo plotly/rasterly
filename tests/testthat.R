@@ -1,5 +1,4 @@
 
 library(testthat)
-library(rasterizer)
+library(rasterly)
 
-# test_check("loon.ggplot")

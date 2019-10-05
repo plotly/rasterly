@@ -1,4 +1,5 @@
 # rasterly
+[![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
 
 Easily and rapidly visualize very large datasets with R and the plotly package.
 
