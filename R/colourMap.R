@@ -1,3 +1,7 @@
+#' @title Color map
+#' @description A vector of colors. 
+#' Used in setting argument `colour_map` or `colour_key` in \code{rasterly} or \code{rasterly} layers.
+#' They may be deprecated in the future. 
 #' @export
 fire <-
   c('#000000',
@@ -258,6 +262,7 @@ fire <-
     '#ffffff')
 
 #' @export
+#' @rdname fire
 viridis <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095D","#460B5E","#460C60","#470E61","#470F62","#471164"
              ,"#471265","#471466","#481568","#481669","#48186A","#48196C","#481A6D","#481C6E","#481D6F","#481E70","#482071","#482173"
              ,"#482274","#482475","#482576","#482677","#482778","#472979","#472A79","#472B7A","#472C7B","#472E7C","#462F7D","#46307E"
@@ -282,6 +287,7 @@ viridis <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095
              ,"#F7E61F","#F9E721","#FBE723","#FEE724")
 
 #' @export
+#' @rdname fire
 hourColours <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00","#3FFF00",
                  "#00FF00","#00FF3F","#00FF7F","#00FFBF","#00FFFF","#00BFFF","#007FFF","#003FFF",
                  "#0000FF","#3F00FF","#7F00FF","#BF00FF","#FF00FF","#FF00BF","#FF007F","#FF003F")

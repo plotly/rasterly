@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^doc$
+^Meta$
+.gitignore
+.travis.yml
+_pkgdown.yml

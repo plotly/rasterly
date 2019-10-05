@@ -2,7 +2,7 @@ context("test examples")
 library(data.table)
 library(magrittr)
 library(grid)
-library(rasterizer)
+library(rasterly)
 
 data <- data.table::data.table(x = rnorm(1e5), y = rnorm(1e5), z = sample(1:5, 1e5, replace = TRUE))
 min_x <- min(data$x)

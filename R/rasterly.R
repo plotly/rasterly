@@ -1,8 +1,8 @@
 #' @title Rasterly
-#' @description Set initials for rasterly
+#' @description Set initials for rasterly.
 #' @param data Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
 #' Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.
-#' @param mapping Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[aes]{aes}.
+#' @param mapping Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 #' See details.
 #' @param ... Other arguments can be passed to layers.
 #' @param plot_width The width of image, must be positive integer. Higher value indicates higher resolution.
@@ -40,7 +40,8 @@
 #' @useDynLib rasterly
 #' @import Rcpp
 #' @import rlang
-#' @importFrom grDevices rgb col2rgb hcl extendrange
+#' @import methods
+#' @importFrom grDevices rgb col2rgb hcl extendrange as.raster
 #' @importFrom magrittr '%>%'
 #' @importFrom stats ecdf approx setNames na.omit
 #' @importFrom ggplot2 aes
@@ -49,16 +50,16 @@
 
 #' @export
 rasterly <- function(data = NULL,
-                       mapping = aes(),
-                       ...,
-                       plot_width = 600, plot_height = 600,
-                       x_range = NULL, y_range = NULL,
-                       background = "white",
-                       colour_map = c('lightblue','darkblue'),
-                       colour_key = NULL,
-                       show_raster = TRUE,
-                       drop_data = FALSE,
-                       variable_check = FALSE) {
+                     mapping = aes(),
+                     ...,
+                     plot_width = 600, plot_height = 600,
+                     x_range = NULL, y_range = NULL,
+                     background = "white",
+                     colour_map = c('lightblue','darkblue'),
+                     colour_key = NULL,
+                     show_raster = TRUE,
+                     drop_data = FALSE,
+                     variable_check = FALSE) {
   # argument check
   if(!missing(mapping) && !inherits(mapping, "uneval")) {
     stop("Mapping should be created with `aes()`.", call. = FALSE)
@@ -95,7 +96,7 @@ rasterly <- function(data = NULL,
     aesthetics <- get_aesthetics(data, mapping, variable_check, ...)
     end_time <- Sys.time()
     print(paste("get aesthetics time:", end_time - start_time))
-
+    
     start_time <- Sys.time()
     range <- get_range(x_range = x_range, 
                        y_range = y_range,

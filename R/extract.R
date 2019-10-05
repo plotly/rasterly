@@ -12,11 +12,6 @@
 #'  "show_raster", "layout"}
 #' }
 #'
-#' @usage
-#' x[name]
-#'
-#' x[name] <- value
-#'
 #' @examples
 #' library(rasterly)
 #' r <- rasterly(
@@ -36,7 +31,7 @@
 #' r["mapping"]
 #'
 #' # reassign all mapping systems
-#' r["mapping", which = 1:length(r)] <- aes(x = x, y = y)
+#' r["mapping", level = 1:length(r)] <- aes(x = x, y = y)
 #' r["mapping"]
 #' @export
 `[.rasterly` <- function(x, name) {
@@ -54,13 +49,18 @@
 }
 
 #' @inherit [.rasterly
-#' @param level Numeric. Specifies level of `rasterly` object to modify; default is 1 for the parent layer (`rasterly()`).
-#' @usage
-#' x[name]
-#'
-#' x[name] <- value
+#' @param ... (missing) or NULL. See \code{help('[<-')}
+#' @param value values to replace; typically an array-like R object of a similar class as x.
+#' 
+#' @details 
+#' Set \code{level} in \code{...}. \code{level} is numeric used for specifing level of `rasterly` object to modify; 
+#' default is 1 for the parent layer (`rasterly()`).
+#' 
 #' @export
-`[<-.rasterly` <- function(x, name, value, level = 1) {
+`[<-.rasterly` <- function(x, name, ..., value) {
+  
+  args <- list(...)
+  level <- args$level %||% 1
 
   # x is executed
   if(is.rasterly_build(x)) {

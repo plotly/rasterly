@@ -1,0 +1,21 @@
+home:
+  strip_header: true
+
+navbar:
+  type: default
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/plotly/rasterly
+
+development:
+  mode: release
+
+
+reference:
+  - title: Functions
+    desc:  Functions for changing ggplot structures into loon
+    contents:
+    - add_rasterly
+    - rasterly
+    - rasterly_build
+    - rasterize_points

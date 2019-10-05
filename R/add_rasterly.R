@@ -1,9 +1,10 @@
 #' @title Add "rasterly" trace to a Plotly visualization
-#' @description Add trace to a Plotly visualization
+#' @description Add trace to a Plotly visualization.
+#' @param p A \code{plotly} object
 #' @param x Numeric vector or expression. The x variable, to be passed on to `aes()`.
 #' @param y Numeric or expression. The y variable, to be passed on to `aes()`.
 #' @param z Numeric. A numeric matrix (optional), to be processed with `add_heatmap`.
-#' @param data A \link[data.frame]{data.frame} or \link[crosstalk]{SharedData} object (optional).
+#' @param data A data.frame or \link[crosstalk]{SharedData} object (optional).
 #' @param inherit Logical. Inherit attributes from \link[plotly]{plotly}?
 #' @param on Numeric vector or expression. Provides the data on which to reduce, to be passed on to `aes()`.
 #' @param size Numeric vector or expression. Pixel size for each observation, to be passed on to `aes()`.
@@ -16,11 +17,14 @@
 #'    library(rasterly)
 #'    if(requireNamespace("plotly") && requireNamespace("data.table")) {
 #'      # Load data
-#'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
+#'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/
+#'      master/uber-rides-data1.csv" %>%
 #'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>%
+#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/
+#'      master/uber-rides-data2.csv" %>%
 #'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"  %>%
+#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/
+#'      master/uber-rides-data3.csv"  %>%
 #'        data.table::fread(stringsAsFactors = FALSE)
 #'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
 #'        data.table::rbindlist()
@@ -53,10 +57,10 @@
 #'    }
 #' }
 add_rasterly <- function(p,
-                           x = NULL, y = NULL, z = NULL, ...,
-                           data = NULL, inherit = TRUE,
-                           on = NULL, size = NULL,
-                           scaling = NULL) {
+                         x = NULL, y = NULL, z = NULL, ...,
+                         data = NULL, inherit = TRUE,
+                         on = NULL, size = NULL,
+                         scaling = NULL) {
   if (inherit) {
     x <- x %||% p$x$attrs[[1]][["x"]]
     y <- y %||% p$x$attrs[[1]][["y"]]
@@ -90,8 +94,7 @@ add_rasterly <- function(p,
         mapping_names[i] <- NA
       } else {
         if(rlang::is_expression(exp)) {
-          the_parse <- rlang::expr_text(exp) %>%
-            sub("~", "", .) %>%
+          the_parse <-  sub("~", "", rlang::expr_text(exp)) %>%
             rlang::parse_expr()
           mapping[[i]] <- rlang::quo(!!the_parse)
         } else if(is.numeric(exp)) {
@@ -140,7 +143,7 @@ add_rasterly <- function(p,
   } else message("If z is provided, `plotly::add_heatmap` will be called.")
 
   do.call(
-    plotly:::add_trace_classed,
+    add_trace_classed,
     c(
       list(
         p = p,

@@ -1,5 +1,5 @@
 #' @title Merge operator
-#' @description Merge two objects from right to left
+#' @description Merge two objects from right to left.
 #' @usage x \%<-\% y
 #' 
 #' @return a list

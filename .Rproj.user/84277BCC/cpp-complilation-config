@@ -6,7 +6,7 @@
         "-IE:/R-3.6.1/include",
         "-DNDEBUG"
     ],
-    "hash" : "1570229491",
+    "hash" : "1570237835",
     "is_cpp" : true,
     "pch" : "Rcpp"
 }

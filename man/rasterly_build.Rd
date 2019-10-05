@@ -11,7 +11,7 @@ rasterly_build(rastObj)
 several `rasterly_...` layers}
 }
 \description{
-Execute a "rasterly" object and return the info to build image
+Execute a "rasterly" object and return the info to build image.
 }
 \note{
 A rasterly object will never be implemented until we call `rasterly_build()`

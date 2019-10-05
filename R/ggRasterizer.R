@@ -1,4 +1,4 @@
-ggRasterizer <- function(data = NULL,
+ggRasterly <- function(data = NULL,
                          mapping = aes(),
                          ...,
                          plot_width = 600, plot_height = 600,
@@ -10,7 +10,7 @@ ggRasterizer <- function(data = NULL,
                          drop_data = FALSE,
                          variable_check = FALSE) {
   
-  rastObj <- rasterizer(data = data,
+  rastObj <- rasterly(data = data,
                         mapping = mapping,
                         ...,
                         plot_width = plot_width, 
@@ -24,7 +24,7 @@ ggRasterizer <- function(data = NULL,
                         drop_data = drop_data,
                         variable_check = variable_check) %>% 
     rasterize_points() %>% 
-    rasterizer_build()
+    rasterly_build()
   
   ggObj <- ggplot2::ggplot(
     data = data.frame(x = seq(rastObj$x_range[1], rastObj$x_range[2], length.out = rastObj$plot_width),

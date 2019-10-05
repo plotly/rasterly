@@ -41,6 +41,9 @@ or a circle (It is more like diamond? Will fix in the future)}
 \item{group_by_data_table}{Logical Value and defualt is `TRUE`. When set "colour" in `aes()`, 
 "group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
 is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.}
+
+\item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics, rather than combining with them. 
+See \code{\link{layer}}}
 }
 \value{
 A list of environments.
