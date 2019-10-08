@@ -10,7 +10,7 @@
 #' @examples
 #' r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) %>%
 #'        rasterly(mapping = aes(x = x, y = y)) %>%
-#'        rasterize_points(colour_map = fire)
+#'        rasterize_points(color_map = fire)
 #' str(r)
 #' p <- rasterly_build(r)
 #' str(p)
@@ -54,7 +54,7 @@ rasterly_build <- function(rastObj) {
   # if show_raster is TRUE
   image <- NULL
   bg <- c()
-  colours <- list()
+  colors <- list()
   agg <- lapply(layer_env,
                 function(envir) {
                   # "aggregation" is a list of matrices modified by some specific reduction function
@@ -90,7 +90,7 @@ rasterly_build <- function(rastObj) {
                     # agg is a matrix
                     agg <- agg[[1]]
                     class(agg) <- c("rasterizeMatrix", "matrix")
-                    colour <- get("colour_map",
+                    color <- get("color_map",
                                   envir = envir,
                                   inherits = FALSE)
                   } else {
@@ -101,12 +101,12 @@ rasterly_build <- function(rastObj) {
                                     a
                                   })
                     class(agg) <- c("rasterizeList", "list")
-                    colour <- get_colour_key(
-                      colour_key = get("colour_key",
+                    color <- get_color_key(
+                      color_key = get("color_key",
                                        envir = envir,
                                        inherits = FALSE),
                       n = len_agg,
-                      rasterly_colour_key = get("colour_key",
+                      rasterly_color_key = get("color_key",
                                                   envir = rasterly_env,
                                                   inherits = FALSE)
                     )
@@ -116,9 +116,9 @@ rasterly_build <- function(rastObj) {
                     start_time <- Sys.time()
                     background <- get("background", envir = envir, inherits = FALSE)
                     bg <<- c(bg, background)
-                    colours <<- c(colours, list(colour))
+                    colors <<- c(colors, list(color))
                     image <<- as.raster(x = agg,
-                                        colour = colour,
+                                        color = color,
                                         span = get("span", envir = envir, inherits = FALSE),
                                         zeroIgnored = TRUE,
                                         image = image,
@@ -145,7 +145,7 @@ rasterly_build <- function(rastObj) {
       plot_width = plot_width,
       variable_names = variable_names,
       background = bg,
-      colours = colours
+      colors = colors
     ),
     class = c("rasterize", "rasterly")
   )

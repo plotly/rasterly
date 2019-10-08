@@ -1,6 +1,6 @@
 #' @title Color map
 #' @description A vector of colors. 
-#' Used in setting argument `colour_map` or `colour_key` in \code{rasterly} or \code{rasterly} layers.
+#' Used in setting argument `color_map` or `color_key` in \code{rasterly} or \code{rasterly} layers.
 #' They may be deprecated in the future. 
 #' @export
 fire <-

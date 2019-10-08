@@ -31,14 +31,14 @@ into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, 
 `last`, `min` and `max` so far. Default is `sum`. See details.}
 
 \item{layout}{The way to layout multiple images, default is `weighted`. 
-It is useful when data is catergorical("colour" is set in `aes()`). The default setting is "weighted", 
+It is useful when data is catergorical("color" is set in `aes()`). The default setting is "weighted", 
 which means the final raster is the weighted combination of each categorical aggregation matrix. 
 Also, we can "cover" each raster by the order of categories.}
 
 \item{glyph}{When increase the size, the pixels would be spreaded as a square (same speed on four directions) 
 or a circle (It is more like diamond? Will fix in the future)}
 
-\item{group_by_data_table}{Logical Value and defualt is `TRUE`. When set "colour" in `aes()`, 
+\item{group_by_data_table}{Logical Value and defualt is `TRUE`. When set "color" in `aes()`, 
 "group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
 is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.}
 
@@ -78,12 +78,12 @@ Reduction functions
      y <- rnorm(1e7)
      category <- sample(1:5, 1e7, replace = TRUE)
      data.frame(x = x, y = y, category = category) \%>\%
-       rasterly(mapping = aes(x = x, y = y, colour = category)) \%>\%
+       rasterly(mapping = aes(x = x, y = y, color = category)) \%>\%
        rasterize_points(layout = "weighted") -> ds1
      ds1
      # layout with cover
      data.frame(x = x, y = y, category = category) \%>\%
-       rasterly(mapping = aes(x = x, y = y, colour = category)) \%>\%
+       rasterly(mapping = aes(x = x, y = y, color = category)) \%>\%
        rasterize_points(layout = "cover") -> ds2
      ds2
      # display side by side

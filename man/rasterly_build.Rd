@@ -19,7 +19,7 @@ A rasterly object will never be implemented until we call `rasterly_build()`
 \examples{
 r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) \%>\%
        rasterly(mapping = aes(x = x, y = y)) \%>\%
-       rasterize_points(colour_map = fire)
+       rasterize_points(color_map = fire)
 str(r)
 p <- rasterly_build(r)
 str(p)

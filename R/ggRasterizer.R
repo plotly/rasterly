@@ -4,8 +4,8 @@ ggRasterly <- function(data = NULL,
                          plot_width = 600, plot_height = 600,
                          x_range = NULL, y_range = NULL,
                          background = "white",
-                         colour_map = c('lightblue','darkblue'),
-                         colour_key = NULL,
+                         color_map = c('lightblue','darkblue'),
+                         color_key = NULL,
                          show_raster = TRUE,
                          drop_data = FALSE,
                          variable_check = FALSE) {
@@ -18,8 +18,8 @@ ggRasterly <- function(data = NULL,
                         x_range = x_range, 
                         y_range = y_range,
                         background = background,
-                        colour_map = colour_map,
-                        colour_key = colour_key,
+                        color_map = color_map,
+                        color_key = color_key,
                         show_raster = show_raster,
                         drop_data = drop_data,
                         variable_check = variable_check) %>% 
@@ -43,7 +43,7 @@ ggRasterly <- function(data = NULL,
                           x_minor = pretty[[1]]$x_minor, # multiple facets?
                           y_minor = pretty[[1]]$y_minor, # multiple facets?
                           panel_background = theme$panel.background$fill %||% "grey92",
-                          panel_line = theme$panel.grid$colour %||% "white",
+                          panel_line = theme$panel.grid$color %||% "white",
                           background = rastObj$background)
   
   

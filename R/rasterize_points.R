@@ -57,12 +57,12 @@
 #'      y <- rnorm(1e7)
 #'      category <- sample(1:5, 1e7, replace = TRUE)
 #'      data.frame(x = x, y = y, category = category) %>%
-#'        rasterly(mapping = aes(x = x, y = y, colour = category)) %>%
+#'        rasterly(mapping = aes(x = x, y = y, color = category)) %>%
 #'        rasterize_points(layout = "weighted") -> ds1
 #'      ds1
 #'      # layout with cover
 #'      data.frame(x = x, y = y, category = category) %>%
-#'        rasterly(mapping = aes(x = x, y = y, colour = category)) %>%
+#'        rasterly(mapping = aes(x = x, y = y, color = category)) %>%
 #'        rasterize_points(layout = "cover") -> ds2
 #'      ds2
 #'      # display side by side
@@ -97,7 +97,7 @@ rasterize_points <- function(rastObj,
     }
   
   background <-  get_background(envir = rastObj$rasterly_env, ...)
-  colour_map <- get_colour_map(envir = rastObj$rasterly_env, ...)
+  color_map <- get_color_map(envir = rastObj$rasterly_env, ...)
   alpha <- get_alpha(envir = rastObj$rasterly_env, ...)
   span <- get_span(envir = rastObj$rasterly_env, ...)
   layout <- get_layout(envir = rastObj$rasterly_env, layout = layout)
@@ -198,7 +198,7 @@ rasterize_points <- function(rastObj,
   )
   
   args <- list(...)
-  colour_key <- args$colour_key
+  color_key <- args$color_key
   remove(data)
   
   rastObj <- c(

@@ -1,5 +1,5 @@
-get_rgb_num <- function(colour) {
-  rgb_num <- grDevices::col2rgb(colour)
+get_rgb_num <- function(color) {
+  rgb_num <- grDevices::col2rgb(color)
   list(
     red = rgb_num['red', ],
     green = rgb_num['green', ],
@@ -18,7 +18,7 @@ interpolation <- function(..., span = NULL) {
 
 }
 
-gg_colour_hue <- function(n) {
+gg_color_hue <- function(n) {
   hues <- seq(15, 375, length = n + 1)
   grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
 }

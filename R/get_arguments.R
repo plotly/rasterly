@@ -23,23 +23,23 @@ get_background <- function(envir, ...) {
   
   background <- args$background %||% .get("background", envir = envir)
   
-  if(is.null(background)) stop("No background colour", call. = FALSE)
+  if(is.null(background)) stop("No background color", call. = FALSE)
   
   return(background)
 }
 
-get_colour_map <- function(envir, ...) {
+get_color_map <- function(envir, ...) {
   
   args <- list(...)
   names_args <- names(args)
-  col <- c("colour", "colour", "colour_map", "colour_map")
+  col <- c("color", "color", "color_map", "color_map")
   
   which_col_name_is_mapped <- which(names_args %in% col)
   matched_name_len <- length(which_col_name_is_mapped)
   
   if(matched_name_len == 0) {
     
-    return(.get("colour_map", envir = envir))
+    return(.get("color_map", envir = envir))
     
   } else if(matched_name_len > 1) {
     
@@ -80,16 +80,16 @@ get_span <- function(envir, ...) {
   return(span)
 }
 
-get_colour_key <- function(colour_key, n, rasterly_colour_key) {
+get_color_key <- function(color_key, n, rasterly_color_key) {
   
-  colour_key <- colour_key %||% rasterly_colour_key %||% gg_colour_hue(n)
+  color_key <- color_key %||% rasterly_color_key %||% gg_color_hue(n)
   
   stopifnot(
     exprs = {
-      length(colour_key) >= n
+      length(color_key) >= n
     }
   )
-  return(colour_key)
+  return(color_key)
 }
 
 get_max_size <- function(envir, max_size) {

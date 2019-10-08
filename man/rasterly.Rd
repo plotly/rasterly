@@ -6,8 +6,8 @@
 \usage{
 rasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
   plot_height = 600, x_range = NULL, y_range = NULL,
-  background = "white", colour_map = c("lightblue", "darkblue"),
-  colour_key = NULL, show_raster = TRUE, drop_data = FALSE,
+  background = "white", color_map = c("lightblue", "darkblue"),
+  color_key = NULL, show_raster = TRUE, drop_data = FALSE,
   variable_check = FALSE)
 }
 \arguments{
@@ -29,12 +29,12 @@ can help to speed code}
 \item{y_range}{The range of y; It can be used to clip the image. Also, to large dataset, provided `y_range`
 can help to speed code}
 
-\item{background}{Background colour of this image.}
+\item{background}{Background color of this image.}
 
-\item{colour_map}{Colour used to map in each pixel. The `colour_map` would be extended by linear interpolation
-independently for RGB. The darkness of the colour depends on the aggregation matrix value.}
+\item{color_map}{Colour used to map in each pixel. The `color_map` would be extended by linear interpolation
+independently for RGB. The darkness of the color depends on the aggregation matrix value.}
 
-\item{colour_key}{Used for categorical variable. In general, `colour_key` would be called when "colour"
+\item{color_key}{Used for categorical variable. In general, `color_key` would be called when "color"
 is set in `aes()`}
 
 \item{show_raster}{Logical value. Whether show raster or not.}
@@ -54,7 +54,7 @@ Set initials for rasterly.
 }
 \details{
 \itemize{
- \item{}{In package "rasterly", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
+ \item{}{In package "rasterly", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "color" and "size".
 variable "on" represents the reduction function works "on" which column.}
  \item{}{`drop_data` can help save space, especially to extremly large dataset, 
 however, drop original data can cause layers fail to set new `aes()`.}

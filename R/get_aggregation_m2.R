@@ -4,7 +4,7 @@ get_aggregation.m2 <- function(plot_width, plot_height, aesthetics,
   
   if(is.null(aesthetics$on)) stop("No `on` argument. Which variable is used for sum of square differences from the mean?")
   is_size <- !is.null(aesthetics$size)
-  is_colour <- !is.null(aesthetics$colour)
+  is_color <- !is.null(aesthetics$color)
   
   aesthetics$on <- (aesthetics$on - mean(aesthetics$on))^2
   get_aggregation.sum(plot_width = plot_width,

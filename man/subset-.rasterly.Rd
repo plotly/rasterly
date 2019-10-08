@@ -30,14 +30,14 @@ r <- rasterly(
 ) \%>\%
   rasterize_points(xlim = c(1, 5000)) \%>\%
   rasterize_points(
-    mapping = aes(x = x, y = y, colour = category),
+    mapping = aes(x = x, y = y, color = category),
     xlim = c(5001, 1e4)
   )
 r["mapping"]
 r["xlim"]
 
 # reassign parent `rasterly()` mapping
-r["mapping"] <- aes(x = x, y = y, colour = category)
+r["mapping"] <- aes(x = x, y = y, color = category)
 r["mapping"]
 
 # reassign all mapping systems

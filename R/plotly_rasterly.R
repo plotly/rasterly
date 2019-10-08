@@ -45,11 +45,11 @@
 #'        rasterize_points(xlim = c(min_x, (min_x+max_x)/2), 
 #'                         ylim = c(min_y, max_y),
 #'                         mapping = aes(x = Lat, y = Lon),
-#'                         colour_map = fire) %>% 
+#'                         color_map = fire) %>% 
 #'        rasterize_points(xlim = c((min_x+max_x)/2, max_x), 
 #'          ylim = c(min_y, max_y),
-#'          mapping = aes(x = Lat, y = Lon, colour = hour),
-#'          colour_key = hourColours) %>% 
+#'          mapping = aes(x = Lat, y = Lon, color = hour),
+#'          color_key = hourColours) %>% 
 #'     rasterize_build() %>%
 #'     plotly.rasterly(title = "New York Uber Rides")
 #'    }

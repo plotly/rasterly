@@ -19,8 +19,8 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
     mapping_names[which(mapping_names == "column")] <- "on"
   }
 
-  if(!all(mapping_names %in% c("x", "y", "on", "colour", "size"))) {
-    message("Only `x`, `y`, `on` `size` and `colour` parameters are currently accepted.")
+  if(!all(mapping_names %in% c("x", "y", "on", "color", "size"))) {
+    message("Only `x`, `y`, `on` `size` and `color` parameters are currently accepted.")
     message("Additional aesthetics will be supported in the next release.")
   }
 
@@ -97,7 +97,7 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
 #                              value <- as.numeric(as.factor(value))
 #                            }
 #                        },
-#                        "colour" = {
+#                        "color" = {
 #                          if(is.character(value)) {
 #                            value <- as.factor(value)
 #                          }
