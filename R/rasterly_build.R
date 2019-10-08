@@ -1,16 +1,16 @@
 #' @title rasterly_build
-#' @description Execute a "rasterly" object and return the info to build image.
+#' @description Produce a rasterly object and return the raster information required to produce an image
 #' @param rastObj A rasterly object. It should be a list of environments composed of a `rasterly()` and
-#' several `rasterly_...` layers
+#' several `rasterly_...` layers.
 #'
-#' @note A rasterly object will never be implemented until we call `rasterly_build()`
+#' @note A rasterly object will never be produced until `rasterly_build()` is called.
 #'
 #' @seealso \link{rasterly}, \link{rasterize_points}, \link{[.rasterly}, \link{[<-.rasterly}
 #'
 #' @examples
 #' r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) %>%
 #'        rasterly(mapping = aes(x = x, y = y)) %>%
-#'        rasterize_points(colour_map = fire)
+#'        rasterize_points(color_map = fire)
 #' str(r)
 #' p <- rasterly_build(r)
 #' str(p)
@@ -18,8 +18,8 @@
 #'
 rasterly_build <- function(rastObj) {
 
-  if(missing(rastObj) || !is.rasterly(rastObj)) stop("No 'rasterly' object", call. = FALSE)
-  if(!is.rasterizeLayer(rastObj)) stop("No 'aggregation' layer", call. = FALSE)
+  if(missing(rastObj) || !is.rasterly(rastObj)) stop("No 'rasterly' object provided.", call. = FALSE)
+  if(!is.rasterizeLayer(rastObj)) stop("No 'aggregation' layer available.", call. = FALSE)
 
   rasterly_env <- rastObj[["rasterly_env"]]
   rastObj[["rasterly_env"]] <- NULL
@@ -54,7 +54,7 @@ rasterly_build <- function(rastObj) {
   # if show_raster is TRUE
   image <- NULL
   bg <- c()
-  colours <- list()
+  colors <- list()
   agg <- lapply(layer_env,
                 function(envir) {
                   # "aggregation" is a list of matrices modified by some specific reduction function
@@ -69,7 +69,6 @@ rasterly_build <- function(rastObj) {
                                                             envir = rasterly_env,
                                                             inherits = FALSE)
 
-                  start_time <- Sys.time()
                   agg <- get_aggregation(
                     plot_width = plot_width,
                     plot_height = plot_height,
@@ -81,8 +80,6 @@ rasterly_build <- function(rastObj) {
                     group_by_data_table = get("group_by_data_table", envir = envir, inherits = FALSE),
                     cores = get("cores", envir = envir, inherits = FALSE)
                   )
-                  end_time <- Sys.time()
-                  print(paste("get_aggregation time:", end_time - start_time))
 
                   len_agg <- length(agg)
                   if(len_agg == 0) stop("No aggregation matrices are found", call. = FALSE)
@@ -90,7 +87,7 @@ rasterly_build <- function(rastObj) {
                     # agg is a matrix
                     agg <- agg[[1]]
                     class(agg) <- c("rasterizeMatrix", "matrix")
-                    colour <- get("colour_map",
+                    color <- get("color_map",
                                   envir = envir,
                                   inherits = FALSE)
                   } else {
@@ -101,32 +98,29 @@ rasterly_build <- function(rastObj) {
                                     a
                                   })
                     class(agg) <- c("rasterizeList", "list")
-                    colour <- get_colour_key(
-                      colour_key = get("colour_key",
+                    color <- get_color_key(
+                      color_key = get("color_key",
                                        envir = envir,
                                        inherits = FALSE),
                       n = len_agg,
-                      rasterly_colour_key = get("colour_key",
+                      rasterly_color_key = get("color_key",
                                                   envir = rasterly_env,
                                                   inherits = FALSE)
                     )
                   }
                   # show raster or not
                   if(show_raster) {
-                    start_time <- Sys.time()
                     background <- get("background", envir = envir, inherits = FALSE)
                     bg <<- c(bg, background)
-                    colours <<- c(colours, list(colour))
+                    colors <<- c(colors, list(color))
                     image <<- as.raster(x = agg,
-                                        colour = colour,
+                                        color = color,
                                         span = get("span", envir = envir, inherits = FALSE),
                                         zeroIgnored = TRUE,
                                         image = image,
                                         background = background,
                                         alpha = get("alpha", envir = envir, inherits = FALSE),
                                         layout = get("layout", envir = envir, inherits = FALSE))
-                    end_time <- Sys.time()
-                    print(paste("get raster time:", end_time - start_time))
                   }
 
                   if(inherits(agg, "rasterizeMatrix")) agg <- list(agg)
@@ -145,7 +139,7 @@ rasterly_build <- function(rastObj) {
       plot_width = plot_width,
       variable_names = variable_names,
       background = bg,
-      colours = colours
+      colors = colors
     ),
     class = c("rasterize", "rasterly")
   )

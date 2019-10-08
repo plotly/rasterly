@@ -1,6 +1,6 @@
 get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE, ...) {
 
-  if(is.null(data)) stop("The 'data' aesthetic cannot be NULL; please supply valid data.")
+  if(is.null(data)) stop("The 'data' aesthetic cannot be NULL; please supply a valid dataset.")
   if(!is.data.frame(data)) stop(paste(deparse(substitute(data)), "is not a data frame."), call. = FALSE)
   if(!data.table::is.data.table(data)) data <- data.table::as.data.table(data)
 
@@ -15,12 +15,12 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
     stop("y is missing", call. = FALSE)
 
   if("column" %in% mapping_names) {
-    warning("`column` is deprecated, please use `on` instead")
+    warning("`column` is deprecated, please use `on` instead.")
     mapping_names[which(mapping_names == "column")] <- "on"
   }
 
-  if(!all(mapping_names %in% c("x", "y", "on", "colour", "size"))) {
-    message("Only `x`, `y`, `on` `size` and `colour` parameters are currently accepted.")
+  if(!all(mapping_names %in% c("x", "y", "on", "color", "size"))) {
+    message("Only `x`, `y`, `on` `size` and `color` parameters are currently accepted.")
     message("Additional aesthetics will be supported in the next release.")
   }
 
@@ -97,7 +97,7 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
 #                              value <- as.numeric(as.factor(value))
 #                            }
 #                        },
-#                        "colour" = {
+#                        "color" = {
 #                          if(is.character(value)) {
 #                            value <- as.factor(value)
 #                          }

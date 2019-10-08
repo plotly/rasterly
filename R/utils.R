@@ -7,7 +7,7 @@
 
 get_cdf <- function(M, zeroIgnored = TRUE, ...) {
   
-  if(missing(M)) stop("No matrix found")
+  if(missing(M)) stop("No matrix found; get_cdf requires a valid matrix M is passed.")
   args <- list(...)
   
   cdf <- if(zeroIgnored) {
@@ -21,13 +21,13 @@ get_cdf <- function(M, zeroIgnored = TRUE, ...) {
   return(cdf)
 }
 
-get_mapped_colour <- function(colour_map = c('lightblue','darkblue'),
+get_mapped_color <- function(color_map = c('lightblue','darkblue'),
                               span = 50) {
   
-  # get colour rgb value
-  rgb_num <- get_rgb_num(colour_map)
-  span <- max(span, length(colour_map))
-  # use interpolation to extend colour_map
+  # get color rgb value
+  rgb_num <- get_rgb_num(color_map)
+  span <- max(span, length(color_map))
+  # use interpolation to extend color_map
   col_index <- interpolation(red = rgb_num$red, green = rgb_num$green, blue = rgb_num$blue,
                              span = span)
   
@@ -50,8 +50,8 @@ remove_missing_matrix <- function(m, value = 0) {
   m
 }
 
-# jump R CMD check
+# Pass R CMD check --as-cran
 # Suggestion from https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
-# The reason to set globleVar instead of define x, y, ... is because
+# The reason to set globalVariables instead of define x, y, ... is because
 # the cost of extraction values from large data is very heavy
-if(getRversion() >= "3.1.0")  utils::globalVariables(c("..mapping_names", "size", "x", "y", "on", "colour"))
+if(getRversion() >= "3.1.0")  utils::globalVariables(c("..mapping_names", "size", "x", "y", "on", "color"))

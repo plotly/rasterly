@@ -2,9 +2,9 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
                                  x_range, y_range, xlim, ylim, 
                                  func, glyph, group_by_data_table, ...) {
   
-  if(is.null(aesthetics$on)) stop("No `on` argument. Which variable is the last value encountered?")
+  if(is.null(aesthetics$on)) stop("No `on` argument was provided. Which variable should be used to specify the last value encountered for aggregation?")
   is_size <- !is.null(aesthetics$size)
-  is_colour <- !is.null(aesthetics$colour)
+  is_color <- !is.null(aesthetics$color)
   
   L <- if(group_by_data_table) {
     
@@ -21,17 +21,17 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
                                                   glyph = glyph)
                             )
                           ),
-                          by = if(is_colour) colour else NULL]
+                          by = if(is_color) color else NULL]
     remove(aesthetics)
     display$display
   } else {
     
-    if(is_colour) {
-      levels <- unique(aesthetics$colour)
+    if(is_color) {
+      levels <- unique(aesthetics$color)
       # agg_sumCpp return a list
       agg_lastCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
                   levels = levels,
-                  category = aesthetics$colour,
+                  category = aesthetics$color,
                   plot_width = plot_width, plot_height = plot_height,
                   x_range = x_range, y_range = y_range,
                   xlim = xlim, ylim = ylim,

@@ -1,48 +1,52 @@
 #' @title rasterize_points
 #' @description Points layer for "rasterly".
 #' @param rastObj A "rasterly" object. 
-#' @param data Dataset to use for plot. If not provided (say `NULL`), data would be inherited by `rasterly()`; else 
-#' input data could be a `data.frame` or some function with argument `x`.
+#' @param data A `data.frame` or `function` with an argument `x`, specifying the dataset to use for plotting. If `data` 
+#' is `NULL`, the `data` argument provided to `rasterly()` may be passed through.
 #' @param mapping Default list of aesthetic mappings to use for plot. If provided and `inherit.aes = TRUE`, it will be
-#' merged on top of `rasterly()` mapping.
-#' @param ... Arguments passed by `rasterly()`
-#' @param xlim X limits in this layer
-#' @param ylim Y limits in this layer
-#' @param max_size When size is modifed, how many pixels an observation point will be spreaded.
-#' @param reduction_func A reduction operator function is used when aggregating datapoints
-#' into a given pixel. The supported reduction operators are `sum`, `any`, `mean`, `m2`, `first`, 
-#' `last`, `min` and `max` so far. Default is `sum`. See details.
-#' @param layout The way to layout multiple images, default is `weighted`. 
-#' It is useful when data is catergorical("colour" is set in `aes()`). The default setting is "weighted", 
-#' which means the final raster is the weighted combination of each categorical aggregation matrix. 
-#' Also, we can "cover" each raster by the order of categories.
-#' @param glyph When increase the size, the pixels would be spreaded as a square (same speed on four directions) 
-#' or a circle (It is more like diamond? Will fix in the future)
-#' @param group_by_data_table Logical Value and defualt is `TRUE`. When set "colour" in `aes()`, 
-#' "group by" data set by "data.table" (`TRUE`) or a Rcpp loop (`FALSE`). In general, set `group_by_data_table = TRUE` 
-#' is faster, however, if the dataset is extremely large, the speed is not as stable as a Rcpp loop.
-#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather than combining with them. 
-#' See \code{\link{layer}}
+#' stacked on top of the mappings passed to `rasterly()`.
+#' @param ... Pass-through arguments provided by `rasterly()`.
+#' @param xlim Vector of type numeric. X limits in this layer.
+#' @param ylim Vector of type numeric. Y limits in this layer.
+#' @param max_size Numeric. When size changes, the upper bound of the number of pixels over which to spread a single observation.
+#' @param reduction_func Function. A reduction function is used to aggregate data points into their pixel representations. Currently
+#' supported reduction operators are `sum`, `any`, `mean`, `m2`, `first`, `last`, `min` and `max`. Default is `sum`. See details.
+#' @param layout Character. The method used to generate layouts for multiple images. The default is `weighted`. Useful for categorical
+#' data (i.e. "color" is provided via `aes()`). `weighted` specifies that the final raster should be a weighted combination of each
+#' (categorical) aggregation matrix.
+#' @param glyph Character. Currently, only "circle" and "square" are supported; as the `size` of the pixels increases, how should they
+#' spread out -- should the pattern be circular or square? Other glyphs may be added in the future.
+#' @param group_by_data_table Logical. Default is `TRUE`; when "color" is provided via `aes()`, the "group by" operation may be
+#' perfromed within `data.table` or natively within `rasterly`. Generally, `group_by_data_table = TRUE` is faster, but for very
+#' large datasets grouping within `rasterly` may offer better performance.
 #' 
 #' @seealso \link{rasterly}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' 
 #' @details
 #' Reduction functions
 #' \itemize{
-#'  \item{`sum`: If `on` is not provided in mapping `aes()`, it is the count of each bins; else it would be summation of 
-#'  `on` variable falling in that bin}
-#'  \item{`any`: If `on` is not provided in mapping `aes()`, it is the logical value if the bin is visited; else it would be 
-#'  any `on` variable falling in that bin}
-#'  \item{`mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default. 
-#'  Give the mean of `on` variable falling in that bin}
-#'  \item{`m2`: `on` must be provided in mapping `aes()`. Give the sum of mean squares of `on` variable falling in that bin}
-#'  \item{`var`: `on` must be provided in mapping `aes()`. Give the variance of `on` variable falling in that bin}
-#'  \item{`sd`: `on` must be provided in mapping `aes()`. Give the standard deviation of `on` variable falling in that bin}
-#'  \item{`first`: `on` must be provided in mapping `aes()`. Give the first `on` variable element falling in that bin}
-#'  \item{`last`: `on` must be provided in mapping `aes()`. Give the last `on` variable element falling in that bin}
-#'  \item{`min`: `on` must be provided in mapping `aes()`. Give the max `on` variable element falling in that bin}
-#'  \item{`max`: `on` must be provided in mapping `aes()`. Give the min `on` variable element falling in that bin}
-#'  
+#'  \item{`sum`: If `on` is not provided within `aes()`, the default is to take the sum within each bin. 
+#'  When `on` is specified, the function reduces by taking the sum of all elements within the variable 
+#'  named in `on`.}
+#'  \item{`any`: When `on` is provided within `aes()`, the `any` reduction function specifies whether any 
+#'  elements in `on` should be mapped to each bin.}
+#'  \item{`mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default.
+#'  When `on` is given, the `mean` reduction function takes the mean of all elements within the variable
+#'  specified by `on`.}
+#'  \item{`m2`: Requires that `on` is specified within `aes()`. The `m2` function computes the sum of
+#'  square differences from the mean of all elements in the variable specified by `on`.}
+#'  \item{`var`: Requires that `on` is specified within `aes()`. The `var` function computes the variance 
+#'  over all elements in the vector specified by `on`.}
+#'  \item{`sd`: Requires that `on` is specified within `aes()`. The `sd` function computes the standard 
+#'  deviation over all elements in the vector specified by `on`.}
+#'  \item{`first`: Requires that `on` is specified within `aes()`. The `first` function returns the first 
+#'  element in the vector specified by `on`.}
+#'  \item{`last`: Requires that `on` is specified within `aes()`. The `last` function returns the last
+#'  element in the vector specified by `on`.}
+#'  \item{`min`: Requires that `on` is specified within `aes()`. The `min` function returns the minimum
+#'  value in the vector specified by `on`.}
+#'  \item{`max`: Requires that `on` is specified within `aes()`. The `min` function returns the maximum 
+#'  value in the vector specified by `on`.}
 #' }
 #' 
 #' @return A list of environments.
@@ -54,12 +58,12 @@
 #'      y <- rnorm(1e7)
 #'      category <- sample(1:5, 1e7, replace = TRUE)
 #'      data.frame(x = x, y = y, category = category) %>%
-#'        rasterly(mapping = aes(x = x, y = y, colour = category)) %>%
+#'        rasterly(mapping = aes(x = x, y = y, color = category)) %>%
 #'        rasterize_points(layout = "weighted") -> ds1
 #'      ds1
 #'      # layout with cover
 #'      data.frame(x = x, y = y, category = category) %>%
-#'        rasterly(mapping = aes(x = x, y = y, colour = category)) %>%
+#'        rasterly(mapping = aes(x = x, y = y, color = category)) %>%
 #'        rasterize_points(layout = "cover") -> ds2
 #'      ds2
 #'      # display side by side
@@ -94,7 +98,7 @@ rasterize_points <- function(rastObj,
     }
   
   background <-  get_background(envir = rastObj$rasterly_env, ...)
-  colour_map <- get_colour_map(envir = rastObj$rasterly_env, ...)
+  color_map <- get_color_map(envir = rastObj$rasterly_env, ...)
   alpha <- get_alpha(envir = rastObj$rasterly_env, ...)
   span <- get_span(envir = rastObj$rasterly_env, ...)
   layout <- get_layout(envir = rastObj$rasterly_env, layout = layout)
@@ -108,7 +112,7 @@ rasterize_points <- function(rastObj,
   } else {
     if(is.character(reduction_func)) reduction_func
     else if(is.function(reduction_func)) deparse(substitute(reduction_func))
-    else stop("unknown `reduction_func` type", call. = FALSE)
+    else stop("The reduction function passed is unknown; please verify that the value of reduction_func is valid.", call. = FALSE)
   }
   if(reduction_func == "") {
     reduction_func <- "sum"
@@ -134,15 +138,12 @@ rasterize_points <- function(rastObj,
                                  max_size = get_max_size(envir = rastObj$rasterly_env, max_size = max_size), 
                                  abs_size = get_size(envir = rastObj$rasterly_env, ...))
     
-    start_time <- Sys.time()
     range <- get_range(x_range = xlim, 
                        y_range = ylim,
                        x = aesthetics$x, 
                        y = aesthetics$y)
     xlim <- range$x_range
     ylim <- range$y_range
-    end_time <- Sys.time()
-    print(paste("get range time:", end_time - start_time))
     
   } else {
     # data come from 'rasterly'
@@ -170,19 +171,16 @@ rasterize_points <- function(rastObj,
                                        max_size = get_max_size(envir = rastObj$rasterly_env, max_size = max_size), 
                                        abs_size = get_size(envir = rastObj$rasterly_env, ...))
           
-          start_time <- Sys.time()
           range <- get_range(x_range = xlim, 
                              y_range = ylim,
                              x = aesthetics$x, 
                              y = aesthetics$y)
           xlim <- range$x_range
           ylim <- range$y_range
-          end_time <- Sys.time()
-          print(paste("get range time:", end_time - start_time))
         },
         error = function(e) {
-          message("data is missing; consider to set `remove_data = FALSE` or ")
-          message("set mapping aesthetics in `rasterly` environment")
+          message("data is missing; consider setting `remove_data = FALSE` or ")
+          message("provide mapping aesthetics in `rasterly` environment")
         }
       )
     }
@@ -195,7 +193,7 @@ rasterize_points <- function(rastObj,
   )
   
   args <- list(...)
-  colour_key <- args$colour_key
+  color_key <- args$color_key
   remove(data)
   
   rastObj <- c(

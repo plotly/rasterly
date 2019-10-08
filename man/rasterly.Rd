@@ -2,66 +2,67 @@
 % Please edit documentation in R/rasterly.R
 \name{rasterly}
 \alias{rasterly}
-\title{Rasterly}
+\title{rasterly}
 \usage{
 rasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
   plot_height = 600, x_range = NULL, y_range = NULL,
-  background = "white", colour_map = c("lightblue", "darkblue"),
-  colour_key = NULL, show_raster = TRUE, drop_data = FALSE,
+  background = "white", color_map = c("lightblue", "darkblue"),
+  color_key = NULL, show_raster = TRUE, drop_data = FALSE,
   variable_check = FALSE)
 }
 \arguments{
-\item{data}{Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
-Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.}
+\item{data}{Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.
+For best performance, particularly when processing large datasets, use of \link[data.table]{data.table} is recommended.}
 
 \item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 See details.}
 
-\item{...}{Other arguments can be passed to layers.}
+\item{...}{Other arguments which will be passed through to layers.}
 
-\item{plot_width}{The width of image, must be positive integer. Higher value indicates higher resolution.}
+\item{plot_width}{Integer. The width of the image to plot; must be a positive integer. A higher value indicates a higher resolution.}
 
-\item{plot_height}{The height of image, must be positive integer. Higher value indicates higher resolution.}
+\item{plot_height}{Integer. The height of the image to plot; must be a positive integer. A higher value indicates a higher resolution.}
 
-\item{x_range}{The range of x; It can be used to clip the image. Also, to large dataset, provided `x_range`
-can help to speed code}
+\item{x_range}{Vector of type numeric. The range of `x`; it can be used to clip the image. For larger datasets, providing `x_range`
+may result in improved performance.}
 
-\item{y_range}{The range of y; It can be used to clip the image. Also, to large dataset, provided `y_range`
-can help to speed code}
+\item{y_range}{Vector of type numeric. The range of `y`; it can be used to clip the image. For larger datasets, providing `y_range`
+may result in improved performance.}
 
-\item{background}{Background colour of this image.}
+\item{background}{Character. The background color of the image to plot.}
 
-\item{colour_map}{Colour used to map in each pixel. The `colour_map` would be extended by linear interpolation
-independently for RGB. The darkness of the colour depends on the aggregation matrix value.}
+\item{color_map}{Vector of type character. Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
+independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.}
 
-\item{colour_key}{Used for categorical variable. In general, `colour_key` would be called when "colour"
-is set in `aes()`}
+\item{color_key}{Vector of type character. The `color_key` is used for categorical variables; it is passed when the `color` aesthetic
+is provided.}
 
-\item{show_raster}{Logical value. Whether show raster or not.}
+\item{show_raster}{Logical. Should the raster be displayed?}
 
-\item{drop_data}{Logical value. In general, data passed in has large size which may take too many rooms. When data is 
-manipulated by given `aes()`, original data can be dropped via function `remove()` by setting `drop_data = TRUE`. 
-See details for more information.}
+\item{drop_data}{Logical. When working with large datasets, drops the original data once processed according to the provided
+`aes()` parameters, using the `remove()` function. See details for additional information.}
 
-\item{variable_check}{Logical value to drop unused columns. Setting `TRUE` can help to 
-save more space by sacrificing speed.}
+\item{variable_check}{Logical. If `TRUE`, drops unused columns to save memory; may result in reduced performance.}
 }
 \value{
 An environment wrapped by a list
 }
 \description{
-Set initials for rasterly.
+Create a rasterly object, to which aggregation layers may be added. This function is the first step in the process
+of generating raster image data using the `rasterly` package.
 }
 \details{
 \itemize{
- \item{}{In package "rasterly", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "colour" and "size".
-variable "on" represents the reduction function works "on" which column.}
- \item{}{`drop_data` can help save space, especially to extremly large dataset, 
-however, drop original data can cause layers fail to set new `aes()`.}
+ \item{}{The rasterly package currently supports five aesthetics via `aes()`: "x", "y", "on", "color", and "size".
+ The "on" aesthetic specifies the variable upon which the reduction function should be applied to generate the raster data.
+ }
+ \item{}{`drop_data` can help save space, particularly when large datasets are used. However, dropping the original dataset
+ may result in errors when attempting to set or update `aes()` parameters within rasterly layers.
+}
 }
 }
 \note{
-Call `rasterly()` alone does not generate anyting. `rasterize_...()` layers need to be attached. 
+Calling `rasterly()` without providing `rasterly_...()` layers has no effect.
 More info can be found in \href{https://github.com/plotly/rasterly/blob/master/README.md}{README.md}
 }
 \seealso{

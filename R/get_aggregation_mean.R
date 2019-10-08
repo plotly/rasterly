@@ -4,7 +4,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
   
   is_on <- !is.null(aesthetics$on)
   is_size <- !is.null(aesthetics$size)
-  is_colour <- !is.null(aesthetics$colour)
+  is_color <- !is.null(aesthetics$color)
   
   if(!is_on) {
     # default setting
@@ -52,18 +52,18 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
                               }
                             )
                           ),
-                          by = if(is_colour) colour else NULL]
+                          by = if(is_color) color else NULL]
     display$display
   } else {
     
-    if(is_colour) {
+    if(is_color) {
       
-      levels <- unique(aesthetics$colour)
+      levels <- unique(aesthetics$color)
       
       if(identical(aesthetics$on, aesthetics$y) || identical(aesthetics$on, aesthetics$x)) {
         agg_meanCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
                     levels = levels,
-                    category = aesthetics$colour,
+                    category = aesthetics$color,
                     plot_width = plot_width, plot_height = plot_height,
                     x_range = x_range, y_range = y_range,
                     xlim = xlim, ylim = ylim,
@@ -75,7 +75,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
       } else {
         sum_matrix_list <- agg_sumCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
                                       levels = levels,
-                                      category = aesthetics$colour,
+                                      category = aesthetics$color,
                                       plot_width = plot_width, plot_height = plot_height,
                                       x_range = x_range, y_range = y_range,
                                       xlim = xlim, ylim = ylim,
@@ -86,7 +86,7 @@ get_aggregation.mean <- function(plot_width, plot_height, aesthetics,
                                       glyph = glyph)
         count_matrix_list <- agg_sumCpp(L = lapply(1:length(levels), function(i) matrix(0, nrow = plot_height, ncol = plot_width)),
                                         levels = levels,
-                                        category = aesthetics$colour,
+                                        category = aesthetics$color,
                                         plot_width = plot_width, plot_height = plot_height,
                                         x_range = x_range, y_range = y_range,
                                         xlim = xlim, ylim = ylim,

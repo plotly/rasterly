@@ -20,7 +20,7 @@ Available names:
  \item{Aggregation: }{"data", "mapping", "plot_width", "plot_height", "range", "x_range",
 "y_range", "xlim", "ylim", "aesthetics", "reduction_func", "glyph",
 "max_size", "group_by_data_table", "drop_data", "variable_check"}
- \item{Display: }{"background", "colour_map", "colour_key", "alpha", "span",
+ \item{Display: }{"background", "color_map", "color_key", "alpha", "span",
  "show_raster", "layout"}
 }
 }
@@ -32,14 +32,14 @@ r <- rasterly(
 ) \%>\%
   rasterize_points(xlim = c(1, 5000)) \%>\%
   rasterize_points(
-    mapping = aes(x = x, y = y, colour = category),
+    mapping = aes(x = x, y = y, color = category),
     xlim = c(5001, 1e4)
   )
 r["mapping"]
 r["xlim"]
 
 # reassign parent `rasterly()` mapping
-r["mapping"] <- aes(x = x, y = y, colour = category)
+r["mapping"] <- aes(x = x, y = y, color = category)
 r["mapping"]
 
 # reassign all mapping systems
