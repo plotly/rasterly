@@ -16,28 +16,23 @@ data <- data.table::fread("yourpath/somefile.csv") # or a link
 ```
 
 * parquet file:
-Parquet files can provide efficient data compression for large datasets. Package `reticulate` (https://rstudio.github.io/reticulate/) offers "pandas" library (from Python) in R, which can help load parquet files.
+Parquet files can provide efficient data compression for large datasets. There are a few options in R for importing Parquet data. One of these is the [`arrow`](https://cran.r-project.org/web/packages/arrow/index.html) package, now available on CRAN.
+
+The package must build Apache Arrow first, so it may take a few minutes to install the first time around.
+
 ```
-library(data.table)
-library(reticulate)
-library(magrittr)
-pandas <- reticulate::import("pandas")
-read_parquet <- function(path, columns = NULL) {
-  if (!is.null(columns)) columns <- as.list(columns)
-  path.expand(path) %>%
-      normalizePath() %>%
-      pandas$read_parquet(., columns = columns) %>%
-      data.table::as.data.table(., stringsAsFactors = FALSE)
-}
-data <- read_parquet("yourpath/somefile.parquet")
+library(arrow)
+parquet_data <- read_parquet("somefile.parquet")
+# returns a data.frame if SparkR not loaded, otherwise it will be a tibble
+# workaround if SparkR must be loaded also:
+# parquet_data <- base::as.data.frame(parquet_data)
 ```
-Note, make sure `NumPy` and `Pandas` are installed with latest version.
 
 ## Install
 
 `rasterly` can be installed directly from github
 ```
-remotes::install_github("https://github.com/plotly/rasterly", ref = "dev")
+remotes::install_github("https://github.com/plotly/rasterly")
 ```
 
 ## Visualizing data with `rasterly`
