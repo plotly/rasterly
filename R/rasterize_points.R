@@ -19,6 +19,7 @@
 #' @param group_by_data_table Logical. Default is `TRUE`; when "color" is provided via `aes()`, the "group by" operation may be
 #' perfromed within `data.table` or natively within `rasterly`. Generally, `group_by_data_table = TRUE` is faster, but for very
 #' large datasets grouping within `rasterly` may offer better performance.
+#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather than combining with them.
 #' 
 #' @seealso \link{rasterly}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' 
@@ -92,10 +93,7 @@ rasterize_points <- function(rastObj,
   
   # argument check
   if(missing(rastObj) || !is.rasterly(rastObj)) stop("No 'rasterly' object", call. = FALSE)
-  if(!is.rasterly(rastObj))
-    if (!missing(mapping) && !inherits(mapping, "uneval")) {
-      stop("Mapping should be created with `aes()`.", call. = FALSE)
-    }
+  mapping <- rename_mapping(mapping)
   
   background <-  get_background(envir = rastObj$rasterly_env, ...)
   color_map <- get_color_map(envir = rastObj$rasterly_env, ...)
