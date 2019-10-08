@@ -2,7 +2,7 @@
 % Please edit documentation in R/rasterly.R
 \name{rasterly}
 \alias{rasterly}
-\title{Rasterly}
+\title{rasterly}
 \usage{
 rasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
   plot_height = 600, x_range = NULL, y_range = NULL,
@@ -11,8 +11,8 @@ rasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
   variable_check = FALSE)
 }
 \arguments{
-\item{data}{Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
-Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.}
+\item{data}{Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.
+For best performance, particularly when processing large datasets, use of \link[data.table]{data.table} is recommended.}
 
 \item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 See details.}
@@ -48,7 +48,18 @@ is provided.}
 An environment wrapped by a list
 }
 \description{
-Set initials for rasterly.
+Create a rasterly object, to which aggregation layers may be added. This function is the first step in the process
+of generating raster image data using the `rasterly` package.
+}
+\details{
+\itemize{
+ \item{}{The rasterly package currently supports five aesthetics via `aes()`: "x", "y", "on", "color", and "size".
+ The "on" aesthetic specifies the variable upon which the reduction function should be applied to generate the raster data.
+ }
+ \item{}{`drop_data` can help save space, particularly when large datasets are used. However, dropping the original dataset
+ may result in errors when attempting to set or update `aes()` parameters within rasterly layers.
+}
+}
 }
 \note{
 Calling `rasterly()` without providing `rasterly_...()` layers has no effect.

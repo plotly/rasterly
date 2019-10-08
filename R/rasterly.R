@@ -1,7 +1,8 @@
-#' @title Rasterly
-#' @description Set initials for rasterly.
-#' @param data Dataset to use for plot. If not provided, data must be supplied in each layer of the plot.
-#' Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.
+#' @title rasterly
+#' @description Create a rasterly object, to which aggregation layers may be added. This function is the first step in the process
+#' of generating raster image data using the `rasterly` package.
+#' @param data Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.
+#' For best performance, particularly when processing large datasets, use of \link[data.table]{data.table} is recommended.
 #' @param mapping Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 #' See details.
 #' @param ... Other arguments which will be passed through to layers.
@@ -29,10 +30,12 @@
 #' @seealso \link{rasterize_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' @details 
 #' \itemize{
-#'  \item{}{The rasterly package current supports five aesthetics via `aes()`: "x", "y", "on", "color", and "size".
+#'  \item{}{The rasterly package currently supports five aesthetics via `aes()`: "x", "y", "on", "color", and "size".
 #'  The "on" aesthetic specifies the variable upon which the reduction function should be applied to generate the raster data.
+#'  }
 #'  \item{}{`drop_data` can help save space, particularly when large datasets are used. However, dropping the original dataset
 #'  may result in errors when attempting to set or update `aes()` parameters within rasterly layers.
+#' }
 #' }
 #'
 #' @useDynLib rasterly

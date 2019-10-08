@@ -1,7 +1,7 @@
-#' @title Color map
-#' @description A vector of colors. 
+#' @title fire
+#' @description Hex codes for the "fire" color map.
 #' Used in setting argument `color_map` or `color_key` in \code{rasterly} or \code{rasterly} layers.
-#' They may be deprecated in the future. 
+#' These may be deprecated in the future. 
 #' @export
 fire <-
   c('#000000',
@@ -261,6 +261,8 @@ fire <-
     '#fffeee',
     '#ffffff')
 
+#' @title viridis
+#' @description Hex codes for the "viridis" color map.
 #' @export
 #' @rdname fire
 viridis <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095D","#460B5E","#460C60","#470E61","#470F62","#471164"
@@ -286,8 +288,10 @@ viridis <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095
              ,"#D8E319","#DBE318","#DDE318","#E0E418","#E2E418","#E5E418","#E8E519","#EAE519","#EDE51A","#EFE61B","#F2E61C","#F4E61E"
              ,"#F7E61F","#F9E721","#FBE723","#FEE724")
 
+#' @title hourColors
+#' @description Hex codes for a palette with 24 colors, one for each hour of the day.
 #' @export
 #' @rdname fire
-hourColours <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00","#3FFF00",
+hourColors <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00","#3FFF00",
                  "#00FF00","#00FF3F","#00FF7F","#00FFBF","#00FFFF","#00BFFF","#007FFF","#003FFF",
                  "#0000FF","#3F00FF","#7F00FF","#BF00FF","#FF00FF","#FF00BF","#FF007F","#FF003F")
