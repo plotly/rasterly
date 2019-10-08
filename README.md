@@ -23,12 +23,12 @@ The package must build Apache Arrow first, so it may take a few minutes to insta
 ```
 library(arrow)
 parquet_data <- read_parquet("somefile.parquet")
-# returns a data.frame if SparkR not loaded, otherwise it will be a tibble
-# workaround if SparkR must be loaded also:
+# returns a data.frame if sparklyr is not loaded, otherwise it will be a tibble
+# to obtain an ordinary data.frame, some slight postprocessing may be required
 # parquet_data <- base::as.data.frame(parquet_data)
 ```
 
-## Install
+## Installing the package
 
 `rasterly` can be installed directly from github
 ```
@@ -37,13 +37,13 @@ remotes::install_github("https://github.com/plotly/rasterly")
 
 ## Visualizing data with `rasterly`
 
-`rasterly` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics from large datasets.
+`rasterly` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics for even very large datasets.
 
 In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate raster data for use with the `plotly` package; it cannot be used for plotting or rendering figures on its own.
 
 #### Basic usage
 
-To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
+To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations, and is several gigabytes in size.
 
 ```
 # Load data
@@ -71,17 +71,9 @@ Note that, "p" is a list of environments. The display info can be accessed throu
 r <- rasterly_build(p)
 str(r)
 ```
-"r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs.
+"r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
 
-#### Static graph
-
-* `grid`
-```
-# same with plot(p)
-p
-```
-
-#### Interactive graph
+#### Producing an interactive graph with the plotly package
 
 * `plotly`
 ```
@@ -90,6 +82,6 @@ plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
 ```
 ![](man/figures/add_rasterizer.gif)
 
-## Apps
+## Example use in an interactive web application
 
 A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
