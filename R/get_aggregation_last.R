@@ -2,7 +2,7 @@ get_aggregation.last <- function(plot_width, plot_height, aesthetics,
                                  x_range, y_range, xlim, ylim, 
                                  func, glyph, group_by_data_table, ...) {
   
-  if(is.null(aesthetics$on)) stop("No `on` argument. Which variable is the last value encountered?")
+  if(is.null(aesthetics$on)) stop("No `on` argument was provided. Which variable should be used to specify the last value encountered for aggregation?")
   is_size <- !is.null(aesthetics$size)
   is_color <- !is.null(aesthetics$color)
   

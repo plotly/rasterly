@@ -4,37 +4,35 @@
 #' Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is recommended.
 #' @param mapping Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 #' See details.
-#' @param ... Other arguments can be passed to layers.
-#' @param plot_width The width of image, must be positive integer. Higher value indicates higher resolution.
-#' @param plot_height The height of image, must be positive integer. Higher value indicates higher resolution.
-#' @param x_range The range of x; It can be used to clip the image. Also, to large dataset, provided `x_range`
-#' can help to speed code
-#' @param y_range The range of y; It can be used to clip the image. Also, to large dataset, provided `y_range`
-#' can help to speed code
-#' @param background Background color of this image.
-#' @param color_map Colour used to map in each pixel. The `color_map` would be extended by linear interpolation
-#' independently for RGB. The darkness of the color depends on the aggregation matrix value.
-#' @param color_key Used for categorical variable. In general, `color_key` would be called when "color"
-#' is set in `aes()`
-#' @param show_raster Logical value. Whether show raster or not.
-#' @param drop_data Logical value. In general, data passed in has large size which may take too many rooms. When data is 
-#' manipulated by given `aes()`, original data can be dropped via function `remove()` by setting `drop_data = TRUE`. 
-#' See details for more information.
-#' @param variable_check Logical value to drop unused columns. Setting `TRUE` can help to 
-#' save more space by sacrificing speed.
+#' @param ... Other arguments which will be passed through to layers.
+#' @param plot_width Integer. The width of the image to plot; must be a positive integer. A higher value indicates a higher resolution.
+#' @param plot_height Integer. The height of the image to plot; must be a positive integer. A higher value indicates a higher resolution.
+#' @param x_range Vector of type numeric. The range of `x`; it can be used to clip the image. For larger datasets, providing `x_range`
+#' may result in improved performance.
+#' @param y_range Vector of type numeric. The range of `y`; it can be used to clip the image. For larger datasets, providing `y_range`
+#' may result in improved performance.
+#' @param background Character. The background color of the image to plot.
+#' @param color_map Vector of type character. Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
+#' independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.
+#' @param color_key Vector of type character. The `color_key` is used for categorical variables; it is passed when the `color` aesthetic
+#' is provided.
+#' @param show_raster Logical. Should the raster be displayed?
+#' @param drop_data Logical. When working with large datasets, drops the original data once processed according to the provided
+#' `aes()` parameters, using the `remove()` function. See details for additional information.
+#' @param variable_check Logical. If `TRUE`, drops unused columns to save memory; may result in reduced performance.
 #' 
 #' @return An environment wrapped by a list
 #' 
-#' @note Call `rasterly()` alone does not generate anyting. `rasterize_...()` layers need to be attached. 
+#' @note Calling `rasterly()` without providing `rasterly_...()` layers has no effect.
 #' More info can be found in \href{https://github.com/plotly/rasterly/blob/master/README.md}{README.md}
 #'
 #' @seealso \link{rasterize_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' @details 
 #' \itemize{
-#'  \item{}{In package "rasterly", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "color" and "size".
-#' variable "on" represents the reduction function works "on" which column.}
-#'  \item{}{`drop_data` can help save space, especially to extremly large dataset, 
-#' however, drop original data can cause layers fail to set new `aes()`.}
+#'  \item{}{The rasterly package current supports five aesthetics via `aes()`: "x", "y", "on", "color", and "size".
+#'  The "on" aesthetic specifies the variable upon which the reduction function should be applied to generate the raster data.
+#'  \item{}{`drop_data` can help save space, particularly when large datasets are used. However, dropping the original dataset
+#'  may result in errors when attempting to set or update `aes()` parameters within rasterly layers.
 #' }
 #'
 #' @useDynLib rasterly
@@ -91,25 +89,17 @@ rasterly <- function(data = NULL,
   }
   
   if(!is.null(data) && !rlang::is_empty(mapping)) {
-    
-    start_time <- Sys.time()
     aesthetics <- get_aesthetics(data, mapping, variable_check, ...)
-    end_time <- Sys.time()
-    print(paste("get aesthetics time:", end_time - start_time))
-    
-    start_time <- Sys.time()
     range <- get_range(x_range = x_range, 
                        y_range = y_range,
                        x = aesthetics$x, 
                        y = aesthetics$y)
     x_range <- range$x_range
     y_range <- range$y_range
-    end_time <- Sys.time()
-    print(paste("get range time:", end_time - start_time))
     
     if(drop_data) {
       remove(data)
-      message("The layer with new mapping aesthetics may do not work")
+      message("drop_data is TRUE; removing the source dataset. Attempts to pass new aes() parameters to layers may generate an error.")
     }
   }
   
@@ -126,6 +116,5 @@ rasterly <- function(data = NULL,
     ),
     class = c("rasterly")
   )
-  return(p)
-  invisible()
+  invisible(return(p))
 }

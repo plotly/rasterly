@@ -1,12 +1,13 @@
 #' @title rasterize_points
 #' @description Points layer for "rasterly".
 #' @param rastObj A "rasterly" object. 
-#' @param data A `data.frame` or `function`` with an argument `x`. Dataset to use for plotting. If `data` is `NULL`, the `data` argument provided to `rasterly()` may be passed through.
+#' @param data A `data.frame` or `function` with an argument `x`, specifying the dataset to use for plotting. If `data` 
+#' is `NULL`, the `data` argument provided to `rasterly()` may be passed through.
 #' @param mapping Default list of aesthetic mappings to use for plot. If provided and `inherit.aes = TRUE`, it will be
 #' stacked on top of the mappings passed to `rasterly()`.
 #' @param ... Pass-through arguments provided by `rasterly()`.
-#' @param xlim X limits in this layer
-#' @param ylim Y limits in this layer
+#' @param xlim Vector of type numeric. X limits in this layer.
+#' @param ylim Vector of type numeric. Y limits in this layer.
 #' @param max_size Numeric. When size changes, the upper bound of the number of pixels over which to spread a single observation.
 #' @param reduction_func Function. A reduction function is used to aggregate data points into their pixel representations. Currently
 #' supported reduction operators are `sum`, `any`, `mean`, `m2`, `first`, `last`, `min` and `max`. Default is `sum`. See details.
@@ -111,7 +112,7 @@ rasterize_points <- function(rastObj,
   } else {
     if(is.character(reduction_func)) reduction_func
     else if(is.function(reduction_func)) deparse(substitute(reduction_func))
-    else stop("unknown `reduction_func` type", call. = FALSE)
+    else stop("The reduction function passed is unknown; please verify that the value of reduction_func is valid.", call. = FALSE)
   }
   if(reduction_func == "") {
     reduction_func <- "sum"
@@ -137,15 +138,12 @@ rasterize_points <- function(rastObj,
                                  max_size = get_max_size(envir = rastObj$rasterly_env, max_size = max_size), 
                                  abs_size = get_size(envir = rastObj$rasterly_env, ...))
     
-    start_time <- Sys.time()
     range <- get_range(x_range = xlim, 
                        y_range = ylim,
                        x = aesthetics$x, 
                        y = aesthetics$y)
     xlim <- range$x_range
     ylim <- range$y_range
-    end_time <- Sys.time()
-    print(paste("get range time:", end_time - start_time))
     
   } else {
     # data come from 'rasterly'
@@ -173,19 +171,16 @@ rasterize_points <- function(rastObj,
                                        max_size = get_max_size(envir = rastObj$rasterly_env, max_size = max_size), 
                                        abs_size = get_size(envir = rastObj$rasterly_env, ...))
           
-          start_time <- Sys.time()
           range <- get_range(x_range = xlim, 
                              y_range = ylim,
                              x = aesthetics$x, 
                              y = aesthetics$y)
           xlim <- range$x_range
           ylim <- range$y_range
-          end_time <- Sys.time()
-          print(paste("get range time:", end_time - start_time))
         },
         error = function(e) {
-          message("data is missing; consider to set `remove_data = FALSE` or ")
-          message("set mapping aesthetics in `rasterly` environment")
+          message("data is missing; consider setting `remove_data = FALSE` or ")
+          message("provide mapping aesthetics in `rasterly` environment")
         }
       )
     }

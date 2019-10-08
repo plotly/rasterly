@@ -33,7 +33,7 @@ as.raster.rasterizeMatrix <- function(x, color = c('lightblue','darkblue'), span
         blue <- (blue + colors$blue)/2
       } else if (layout == "cover") {
         NULL
-      } else stop("Invalid `layout` value; `layout` can only be either `weighted` or `cover`")
+      } else stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
     }
 
     image[which_is_not_zero] <- grDevices::rgb(red = red/255 + 1e-8,
@@ -130,5 +130,5 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
                                  alpha = alpha, layout = layout)
            })
     image
-  } else stop("Unknown `layout` way; `layout` can only be either `weighted` or `cover`")
+  } else stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
 }

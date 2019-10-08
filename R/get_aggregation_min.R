@@ -2,7 +2,7 @@ get_aggregation.min <- function(plot_width, plot_height, aesthetics,
                                 x_range, y_range, xlim, ylim, 
                                 func, glyph, group_by_data_table, ...) {
   
-  if(is.null(aesthetics$on)) stop("No `on` argument. Which variable is used to maximize?")
+  if(is.null(aesthetics$on)) stop("No `on` argument was provided. Which variable should be used when calculating the minimum value for aggregation?")
   is_size <- !is.null(aesthetics$size)
   is_color <- !is.null(aesthetics$color)
   

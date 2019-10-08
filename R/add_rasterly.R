@@ -100,7 +100,7 @@ add_rasterly <- function(p,
         } else if(is.numeric(exp)) {
             data[[mapping_names[i]]] <- exp
             mapping[[i]] <- rlang::quo(!!rlang::parse_expr(mapping_names[i]))
-        } else stop("'on' is neither `quote` nor a numerical value", call. = FALSE)
+        } else stop("'on' is neither `quote` nor a numerical value.", call. = FALSE)
       }
     }
 
@@ -117,7 +117,7 @@ add_rasterly <- function(p,
     data <- NULL
 
     if(sum(lengths(rastObj$agg)) > 1)
-      message("More than one aggregation matrix is detected")
+      message("More than one aggregation matrix was detected.")
 
     z <- rastObj$agg[[1]][[1]]
     dimZ <- dim(z)

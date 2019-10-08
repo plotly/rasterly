@@ -6,7 +6,7 @@ print.rasterly <- function(x, ...) {
   grid::grid.newpage()
   
   if(is.null(x$image)) {
-    message("No image is found")
+    message("No image was found.")
     invisible(grid::grid.draw(grid::grob()))
   } else {
     invisible(grid::grid.raster(x$image))
