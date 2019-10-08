@@ -15,7 +15,7 @@ colors <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00
 test_that("example works", {
   # ex1
   ########### "sum" ##############
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y),
              x_range = c(min_x, max_x),
              y_range = c(min_y, max_y)) %>%
@@ -35,12 +35,12 @@ test_that("example works", {
                      ylim = c((max_y + min_y)/2, max_y),
                      max_size = 3,
                      layout = "cover") %>%
-    rasterizer_build() -> ds
+    rasterly_build() -> ds
   expect_equal(grid::is.grob(grid::rasterGrob(ds$image)), TRUE)
   
   ########### "any" ##############
   # reduction function is any and group_by_data_table is TRUE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -48,11 +48,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "any") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   # reduction function is any and group_by_data_table is FALSE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -60,12 +60,12 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "any") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   ########### "mean" ##############
   # reduction function is any and group_by_data_table is TRUE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -73,11 +73,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "mean") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   # reduction function is any and group_by_data_table is FALSE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -85,11 +85,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "mean") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   ########### "first" ##############
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -97,11 +97,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "first") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   # reduction function is any and group_by_data_table is FALSE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -109,11 +109,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "first") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   ########### "last" ##############
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -121,11 +121,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "last") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   # reduction function is any and group_by_data_table is FALSE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -133,11 +133,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "last") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   ########### "m2" ##############
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -145,11 +145,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "m2") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   # reduction function is any and group_by_data_table is FALSE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -157,11 +157,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "m2") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   ########### "max" ##############
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -169,11 +169,11 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "max") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
   
   # reduction function is any and group_by_data_table is FALSE
-  rasterizer(data,
+  rasterly(data,
              mapping = aes(x = x, y = y, on = x),
              background = "black",
              x_range = c(min_x, max_x),
@@ -181,6 +181,6 @@ test_that("example works", {
              color_key = colors,
              reduction_func = "max") %>%
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
-    rasterizer_build() -> ds
-  expect_equal(is.rasterizer(ds), TRUE)
+    rasterly_build() -> ds
+  expect_equal(is.rasterly(ds), TRUE)
 })

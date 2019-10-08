@@ -39,6 +39,8 @@ spread out -- should the pattern be circular or square? Other glyphs may be adde
 \item{group_by_data_table}{Logical. Default is `TRUE`; when "color" is provided via `aes()`, the "group by" operation may be
 perfromed within `data.table` or natively within `rasterly`. Generally, `group_by_data_table = TRUE` is faster, but for very
 large datasets grouping within `rasterly` may offer better performance.}
+
+\item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics, rather than combining with them.}
 }
 \value{
 A list of environments.

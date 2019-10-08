@@ -11,7 +11,7 @@ Authors@R: c(person(given = "Zehao", family = "Xu",
                     role = "ctb")
              )
 Maintainer: Zehao Xu <z267xu@uwaterloo.ca>
-Description: Easily and rapidly generate raster image data for large datasets using 'Plotly.js' 
+Description: Easily and rapidly generate raster image data for large datasets using 'Plotly.js'. 
 LinkingTo: Rcpp
 License: MIT + file LICENSE
 Encoding: UTF-8

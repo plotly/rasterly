@@ -50,6 +50,19 @@ remove_missing_matrix <- function(m, value = 0) {
   m
 }
 
+rename_mapping <- function(mapping) {
+  
+  if (!missing(mapping) && !inherits(mapping, "uneval")) {
+    stop("Mapping should be created with `aes()`.", call. = FALSE)
+  }
+  
+  names_mapping <- names(mapping)
+  if(length(names_mapping) == 0 || !"colour" %in% names_mapping) return(mapping)
+  names_mapping[names_mapping == "colour"] <- "color"
+  names(mapping) <- names_mapping
+  return(mapping)
+}
+
 # Pass R CMD check --as-cran
 # Suggestion from https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 # The reason to set globalVariables instead of define x, y, ... is because

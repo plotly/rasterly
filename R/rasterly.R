@@ -61,10 +61,7 @@ rasterly <- function(data = NULL,
                      show_raster = TRUE,
                      drop_data = FALSE,
                      variable_check = FALSE) {
-  # argument check
-  if(!missing(mapping) && !inherits(mapping, "uneval")) {
-    stop("Mapping should be created with `aes()`.", call. = FALSE)
-  }
+  mapping <- rename_mapping(mapping)
   
   stopifnot(
     exprs = {

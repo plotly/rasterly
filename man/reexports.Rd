@@ -5,7 +5,7 @@
 \alias{reexports}
 \alias{\%>\%}
 \alias{aes}
-\title{Exports}
+\title{Objects exported from other packages}
 \keyword{internal}
 \description{
 These objects are imported from other packages. Follow the links
