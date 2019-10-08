@@ -39,11 +39,9 @@ remotes::install_github("https://github.com/plotly/rasterly")
 
 `rasterly` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics from large datasets.
 
-In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate single channel heatmaps using the `plotly` package.
+In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate raster data for use with the `plotly` package; it cannot be used for plotting or rendering figures on its own.
 
 #### Basic usage
-
-Data highlights Uber trips taken in New York City from April 1 2014 to September 30 2014 with 4533327 observations.
 
 To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
 
