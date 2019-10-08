@@ -1,6 +1,6 @@
 Package: rasterly
 Type: Package
-Title: Modern heat map visualizations for large data using Plotly.js 
+Title: Easily and rapidly generate raster image data for large datasets using Plotly.js 
 Version: 0.1.0
 Authors@R: c(person(given = "Zehao", family = "Xu", 
                     email = "z267xu@uwaterloo.ca", 
@@ -11,7 +11,7 @@ Authors@R: c(person(given = "Zehao", family = "Xu",
                     role = "ctb")
              )
 Maintainer: Zehao Xu <z267xu@uwaterloo.ca>
-Description: Modern heat map visualizations for large data using Plotly.js.
+Description: Easily and rapidly generate raster image data for large datasets using 'Plotly.js' 
 LinkingTo: Rcpp
 License: MIT + file LICENSE
 Encoding: UTF-8
