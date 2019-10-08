@@ -17,34 +17,32 @@ Since "rasterly" is used for large dataset, "\link[data.table]{data.table}" is r
 \item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
 See details.}
 
-\item{...}{Other arguments can be passed to layers.}
+\item{...}{Other arguments which will be passed through to layers.}
 
-\item{plot_width}{The width of image, must be positive integer. Higher value indicates higher resolution.}
+\item{plot_width}{Integer. The width of the image to plot; must be a positive integer. A higher value indicates a higher resolution.}
 
-\item{plot_height}{The height of image, must be positive integer. Higher value indicates higher resolution.}
+\item{plot_height}{Integer. The height of the image to plot; must be a positive integer. A higher value indicates a higher resolution.}
 
-\item{x_range}{The range of x; It can be used to clip the image. Also, to large dataset, provided `x_range`
-can help to speed code}
+\item{x_range}{Vector of type numeric. The range of `x`; it can be used to clip the image. For larger datasets, providing `x_range`
+may result in improved performance.}
 
-\item{y_range}{The range of y; It can be used to clip the image. Also, to large dataset, provided `y_range`
-can help to speed code}
+\item{y_range}{Vector of type numeric. The range of `y`; it can be used to clip the image. For larger datasets, providing `y_range`
+may result in improved performance.}
 
-\item{background}{Background color of this image.}
+\item{background}{Character. The background color of the image to plot.}
 
-\item{color_map}{Colour used to map in each pixel. The `color_map` would be extended by linear interpolation
-independently for RGB. The darkness of the color depends on the aggregation matrix value.}
+\item{color_map}{Vector of type character. Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
+independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.}
 
-\item{color_key}{Used for categorical variable. In general, `color_key` would be called when "color"
-is set in `aes()`}
+\item{color_key}{Vector of type character. The `color_key` is used for categorical variables; it is passed when the `color` aesthetic
+is provided.}
 
-\item{show_raster}{Logical value. Whether show raster or not.}
+\item{show_raster}{Logical. Should the raster be displayed?}
 
-\item{drop_data}{Logical value. In general, data passed in has large size which may take too many rooms. When data is 
-manipulated by given `aes()`, original data can be dropped via function `remove()` by setting `drop_data = TRUE`. 
-See details for more information.}
+\item{drop_data}{Logical. When working with large datasets, drops the original data once processed according to the provided
+`aes()` parameters, using the `remove()` function. See details for additional information.}
 
-\item{variable_check}{Logical value to drop unused columns. Setting `TRUE` can help to 
-save more space by sacrificing speed.}
+\item{variable_check}{Logical. If `TRUE`, drops unused columns to save memory; may result in reduced performance.}
 }
 \value{
 An environment wrapped by a list
@@ -52,16 +50,8 @@ An environment wrapped by a list
 \description{
 Set initials for rasterly.
 }
-\details{
-\itemize{
- \item{}{In package "rasterly", only five aesthetics can be passed in `aes()` so far, "x", "y", "on", "color" and "size".
-variable "on" represents the reduction function works "on" which column.}
- \item{}{`drop_data` can help save space, especially to extremly large dataset, 
-however, drop original data can cause layers fail to set new `aes()`.}
-}
-}
 \note{
-Call `rasterly()` alone does not generate anyting. `rasterize_...()` layers need to be attached. 
+Calling `rasterly()` without providing `rasterly_...()` layers has no effect.
 More info can be found in \href{https://github.com/plotly/rasterly/blob/master/README.md}{README.md}
 }
 \seealso{
