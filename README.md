@@ -41,7 +41,7 @@ remotes::install_github("https://github.com/plotly/rasterly")
 
 In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate raster data for use with the `plotly` package; it cannot be used for plotting or rendering figures on its own.
 
-#### Basic usage
+#### Producing an interactive graph with the plotly package
 
 To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations, and is several gigabytes in size.
 
@@ -56,6 +56,16 @@ ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rid
 ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
   data.table::rbindlist()
 ```
+
+Now that the data are loaded, we can pass them to `plot_ly` and pipe the output into `add_rasterly`:
+
+```
+plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
+ add_rasterly()
+```
+![](man/figures/add_rasterizer.gif)
+
+#### General usage
 
 Pass the data into `rasterly`:
 ```
@@ -72,15 +82,6 @@ r <- rasterly_build(p)
 str(r)
 ```
 "r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
-
-#### Producing an interactive graph with the plotly package
-
-* `plotly`
-```
-plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
- add_rasterly()
-```
-![](man/figures/add_rasterizer.gif)
 
 ## Example use in an interactive web application
 
