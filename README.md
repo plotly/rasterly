@@ -1,7 +1,7 @@
-# rasterly
+# rasterly <img src="https://user-images.githubusercontent.com/9809798/67039802-18c6a680-f0f0-11e9-9739-e5d08bb220d3.png" align="right" height="66.5" width="357">
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
 
-Easily and rapidly visualize very large datasets with R and the plotly package.
+Easily and rapidly visualize very large datasets with R and the `plotly` package.
 
 ## Importing large datasets for use with rasterly
 
