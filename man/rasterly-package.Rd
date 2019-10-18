@@ -4,6 +4,8 @@
 \alias{rasterly-package}
 \title{Easily and rapidly generate raster image data for large datasets using Plotly.js}
 \description{
+\if{html}{\figure{logo.png}{options: width=175 align='right'}}
+
 rasterly makes it easy to rapidly generate rasters in R, even for very large datasets, with an aesthetics-based mapping syntax that should be familiar to users of the \link{ggplot2} package. While rasterly does not attempt to reproduce the full functionality of the Datashader graphics pipeline system for Python, the rasterly API has several core elements in common with that software package.
 
 A raster may be described as a matrix of cells or pixels arranged in grid-like fashion, in which each pixel represents a value in the source data.
