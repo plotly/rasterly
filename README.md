@@ -1,5 +1,6 @@
-# rasterly
+# rasterly <img src="man/figures/logo.png" align="right" width="120" />
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
+[![Codecov test coverage](https://codecov.io/gh/z267xu/rasterly/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/rasterly?branch=master)
 
 Easily and rapidly visualize very large datasets with R and the plotly package.
 
@@ -93,7 +94,7 @@ p
 * `plotly`
 ```
 plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
- add_rasterly()
+ add_rasterly_heatmap()
 ```
 ![](man/figures/add_rasterizer.gif)
 
