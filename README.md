@@ -1,8 +1,9 @@
-# rasterly <img src="man/figures/logo.png" align="right" width="120" />
+# rasterly <img src="https://user-images.githubusercontent.com/9809798/67056539-75d75200-f11a-11e9-9b62-2b62a349a45b.jpg" align="right" height="144" width="124.8">
+
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
 [![Codecov test coverage](https://codecov.io/gh/z267xu/rasterly/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/rasterly?branch=master)
 
-Easily and rapidly visualize very large datasets with R and the plotly package.
+Easily and rapidly visualize very large datasets with R and the `plotly` package.
 
 ## Importing large datasets for use with rasterly
 
@@ -17,41 +18,34 @@ data <- data.table::fread("yourpath/somefile.csv") # or a link
 ```
 
 * parquet file:
-Parquet files can provide efficient data compression for large datasets. Package `reticulate` (https://rstudio.github.io/reticulate/) offers "pandas" library (from Python) in R, which can help load parquet files.
-```
-library(data.table)
-library(reticulate)
-library(magrittr)
-pandas <- reticulate::import("pandas")
-read_parquet <- function(path, columns = NULL) {
-  if (!is.null(columns)) columns <- as.list(columns)
-  path.expand(path) %>%
-      normalizePath() %>%
-      pandas$read_parquet(., columns = columns) %>%
-      data.table::as.data.table(., stringsAsFactors = FALSE)
-}
-data <- read_parquet("yourpath/somefile.parquet")
-```
-Note, make sure `NumPy` and `Pandas` are installed with latest version.
+Parquet files can provide efficient data compression for large datasets. There are a few options in R for importing Parquet data. One of these is the [`arrow`](https://cran.r-project.org/web/packages/arrow/index.html) package, now available on CRAN.
 
-## Install
+The package must build Apache Arrow first, so it may take a few minutes to install the first time around.
+
+```
+library(arrow)
+parquet_data <- read_parquet("somefile.parquet")
+# returns a data.frame if sparklyr is not loaded, otherwise it will be a tibble
+# to obtain an ordinary data.frame, some slight postprocessing may be required
+# parquet_data <- base::as.data.frame(parquet_data)
+```
+
+## Installing the package
 
 `rasterly` can be installed directly from github
 ```
-remotes::install_github("https://github.com/plotly/rasterly", ref = "dev")
+remotes::install_github("https://github.com/plotly/rasterly")
 ```
 
 ## Visualizing data with `rasterly`
 
-`rasterly` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics from large datasets.
+`rasterly` is inspired by the [`datashader`](http://datashader.org/getting_started/index.html) package available for Python. Both provide the capability to generate raster data for rapid rendering of graphics for even very large datasets.
 
-In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate single channel heatmaps using the `plotly` package.
+In terms of performance, `datashader` is faster but `rasterly` is comparable. `rasterly` aims to provide a user-friendly interface to generate raster data for use with the `plotly` package; it cannot be used for plotting or rendering figures on its own.
 
-#### Basic usage
+#### Producing an interactive graph with the plotly package
 
-Data highlights Uber trips taken in New York City from April 1 2014 to September 30 2014 with 4533327 observations.
-
-To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
+To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations, and is several gigabytes in size.
 
 ```
 # Load data
@@ -64,6 +58,16 @@ ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rid
 ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
   data.table::rbindlist()
 ```
+
+Now that the data are loaded, we can pass them to `plot_ly` and pipe the output into `add_rasterly`:
+
+```
+plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
+ add_rasterly()
+```
+![](man/figures/add_rasterizer.gif)
+
+#### General usage
 
 Pass the data into `rasterly`:
 ```
@@ -79,6 +83,7 @@ Note that, "p" is a list of environments. The display info can be accessed throu
 r <- rasterly_build(p)
 str(r)
 ```
+<<<<<<< HEAD
 "r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs.
 
 #### Static graph
@@ -97,7 +102,10 @@ plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
  add_rasterly_heatmap()
 ```
 ![](man/figures/add_rasterizer.gif)
+=======
+"r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
+>>>>>>> 6f569b246c3e8c0547174853d5778250bf20d2aa
 
-## Apps
+## Example use in an interactive web application
 
 A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
