@@ -1,13 +1,7 @@
-#' @title Objects exported from other packages
-#' @details 
-#' These objects are imported from other packages. Follow the links below to see their documentation.
-#' \itemize{
-#'   \item{magrittr}{\code{\link[magrittr]{%>%}}}
-#'   \item{ggplot2}{\code{\link[ggplot2]{aes}}}
-#' }
-#'
+#' @importFrom magrittr '%>%'
 #' @export
 magrittr::'%>%'
 
+#' @importFrom ggplot2 aes
 #' @export
 ggplot2::aes

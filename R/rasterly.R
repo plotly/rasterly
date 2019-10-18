@@ -43,9 +43,7 @@
 #' @import rlang
 #' @import methods
 #' @importFrom grDevices rgb col2rgb hcl extendrange as.raster
-#' @importFrom magrittr '%>%'
 #' @importFrom stats ecdf approx setNames na.omit
-#' @importFrom ggplot2 aes
 #' @importFrom data.table data.table
 #' @importFrom compiler cmpfun
 
