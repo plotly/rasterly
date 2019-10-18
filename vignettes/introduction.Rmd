@@ -123,11 +123,11 @@ It contains:
 
 #### `plotly` graphics
 
-  + `add_rasterly()`: Layers are added to Plotly objects via `add_trace(...)`; `rasterly` provides the `add_rasterly()` function which also leverages `add_heatmap()` to generate single channel heatmap overlays for Plotly figures. Multi-channel heatmaps are not currently supported; this feature will be available in an upcoming release.
+  + `add_rasterly_heatmap()`: Layers are added to Plotly objects via `add_trace(...)`; `rasterly` provides the `add_rasterly_heatmap()` function which also leverages `add_heatmap()` to generate single channel heatmap overlays for Plotly figures. Multi-channel heatmaps are not currently supported; this feature will be available in an upcoming release.
     
-    ```{r add_rasterly, fig.width = 4, fig.height = 3}
+    ```{r add_rasterly_heatmap, fig.width = 4, fig.height = 3}
     plotly::plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
-      add_rasterly() %>% 
+      add_rasterly_heatmap() %>% 
       layout(
         title = "Uber drives",
         x <- list(
