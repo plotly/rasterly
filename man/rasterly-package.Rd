@@ -1,6 +1,5 @@
 \docType{package}
 \name{rasterly-package}
-\alias{rasterly}
 \alias{rasterly-package}
 \title{Easily and rapidly generate raster image data for large datasets using Plotly.js}
 \description{
