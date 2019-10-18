@@ -2,6 +2,7 @@ context("test examples")
 library(data.table)
 library(magrittr)
 library(grid)
+library(plotly)
 library(rasterly)
 
 data <- data.table::data.table(x = rnorm(1e5), y = rnorm(1e5), z = sample(1:5, 1e5, replace = TRUE))
@@ -183,4 +184,10 @@ test_that("example works", {
     rasterize_points(color_map = fire, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
+  
+  # add_rasterly_heatmap
+  p <- plot_ly(data = data) %>%
+         add_rasterly_heatmap(x = ~x, y = ~y)
+  p
+  expect_equal(inherits(p, "plotly"), TRUE)
 })

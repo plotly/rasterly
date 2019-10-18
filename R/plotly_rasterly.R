@@ -1,7 +1,7 @@
 #' @title `rasterly` to `plotly`
 #' @description Display raster image via `plotly`
 #' @param rastObj A rasterly object
-#' @param as_heatmap Draw `plotly` by adding heatmap layer. See \code{add_rasterly}
+#' @param as_heatmap Draw `plotly` by adding heatmap layer. See \code{add_rasterly_heatmap}
 #' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
 #' @param sizing Specifies which dimension of the image to constrain. One of "stretch" "fill", "contain"
 #' @param ... Arguments to the layout object. For documentation, 
