@@ -1,4 +1,5 @@
-# rasterly <img src="https://user-images.githubusercontent.com/9809798/67039802-18c6a680-f0f0-11e9-9739-e5d08bb220d3.png" align="right" height="66.5" width="357">
+# rasterly <img src="https://user-images.githubusercontent.com/9809798/67056539-75d75200-f11a-11e9-9b62-2b62a349a45b.jpg" align="right" height="144" width="124.8">
+
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
 
 Easily and rapidly visualize very large datasets with R and the `plotly` package.
