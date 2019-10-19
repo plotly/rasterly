@@ -33,6 +33,7 @@ Suggests:
     compiler,
     loon,
     purrr,
+    covr,
     testthat,
     knitr,
     rmarkdown,
