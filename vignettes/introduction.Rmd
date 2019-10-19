@@ -130,10 +130,10 @@ It contains:
       add_rasterly_heatmap() %>% 
       layout(
         title = "Uber drives",
-        x <- list(
+        x = list(
           title = "Lat"
         ),
-        y <- list(
+        y = list(
           title = "Lon"
         )
       )
