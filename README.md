@@ -63,7 +63,7 @@ Now that the data are loaded, we can pass them to `plot_ly` and pipe the output 
 
 ```
 plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
- add_rasterly()
+ add_rasterly_heatmap()
 ```
 ![](man/figures/add_rasterizer.gif)
 
@@ -83,28 +83,8 @@ Note that, "p" is a list of environments. The display info can be accessed throu
 r <- rasterly_build(p)
 str(r)
 ```
-<<<<<<< HEAD
-"r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs.
 
-#### Static graph
-
-* `grid`
-```
-# same with plot(p)
-p
-```
-
-#### Interactive graph
-
-* `plotly`
-```
-plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
- add_rasterly_heatmap()
-```
-![](man/figures/add_rasterizer.gif)
-=======
 "r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
->>>>>>> 6f569b246c3e8c0547174853d5778250bf20d2aa
 
 ## Example use in an interactive web application
 
