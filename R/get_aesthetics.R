@@ -56,14 +56,23 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
 
   args <- list(...)
   abs_size <- args$size
-  max_size <- if(is.null(args$max_size)) 2 else args$max_size
+  max_size <- args$max_size %||% 2
 
   if(!is.null(data$size) || !is.null(abs_size)) {
 
     if(is.null(abs_size)) {
       # standardized size
-      std <- function(size, max_size) {floor((size - min(size))/(max(size) - min(size)) * (max_size - 1))}
-      data[, size := std(data$size, max_size)]
+      std_size <- function(size, max_size) {
+        maxS <- max(size)
+        minS <- min(size)
+        if(maxS == minS) {
+          if(maxS < 1) stop("Pixel size cannot be less than one.")
+          floor(size)
+        } else {
+          floor((size - minS)/(maxS - minS) * (max_size - 1))
+        }
+      }
+      data[, size := std_size(data$size, max_size)]
     } else {
       data[, size := abs_size]
     }

@@ -1,34 +1,36 @@
 ggRasterly <- function(data = NULL,
-                         mapping = aes(),
-                         ...,
-                         plot_width = 600, plot_height = 600,
-                         x_range = NULL, y_range = NULL,
-                         background = "white",
-                         color_map = c('lightblue','darkblue'),
-                         color_key = NULL,
-                         show_raster = TRUE,
-                         drop_data = FALSE,
-                         variable_check = FALSE) {
+                       mapping = aes(),
+                       ...,
+                       plot_width = 600, plot_height = 600,
+                       x_range = NULL, y_range = NULL,
+                       background = "white",
+                       color_map = c('lightblue','darkblue'),
+                       color_key = NULL,
+                       show_raster = TRUE,
+                       drop_data = FALSE,
+                       variable_check = FALSE) {
   
   rastObj <- rasterly(data = data,
-                        mapping = mapping,
-                        ...,
-                        plot_width = plot_width, 
-                        plot_height = plot_height,
-                        x_range = x_range, 
-                        y_range = y_range,
-                        background = background,
-                        color_map = color_map,
-                        color_key = color_key,
-                        show_raster = show_raster,
-                        drop_data = drop_data,
-                        variable_check = variable_check) %>% 
+                      mapping = mapping,
+                      ...,
+                      plot_width = plot_width, 
+                      plot_height = plot_height,
+                      x_range = x_range, 
+                      y_range = y_range,
+                      background = background,
+                      color_map = color_map,
+                      color_key = color_key,
+                      show_raster = show_raster,
+                      drop_data = drop_data,
+                      variable_check = variable_check) %>% 
     rasterize_points() %>% 
     rasterly_build()
+
+  len <- max(plot_width, plot_height)
   
   ggObj <- ggplot2::ggplot(
-    data = data.frame(x = seq(rastObj$x_range[1], rastObj$x_range[2], length.out = rastObj$plot_width),
-                      y = seq(rastObj$y_range[1], rastObj$y_range[2], length.out = rastObj$plot_height)),
+    data = data.frame(x = seq(rastObj$x_range[1], rastObj$x_range[2], length.out = len),
+                      y = seq(rastObj$y_range[1], rastObj$y_range[2], length.out = len)),
     mapping = aes(x = x, y = y)
   )
   
@@ -46,20 +48,9 @@ ggRasterly <- function(data = NULL,
                           panel_line = theme$panel.grid$color %||% "white",
                           background = rastObj$background)
   
-  
-  
   ggObj <- ggObj + 
-    ggplot2::annotation_custom(grid::rasterGrob(image), 
-                               xmin = -Inf, xmax = Inf, 
-                               ymin = -Inf, ymax = Inf) + 
-    ggplot2::theme(
-      axis.ticks = ggplot2::element_line(),
-      axis.text.x = ggplot2::element_text(),
-      axis.text.y = ggplot2::element_text(),
-      axis.title = ggplot2::element_text(),
-      axis.title.x = ggplot2::element_text(),
-      axis.title.y = ggplot2::element_text()
-    )
+    ggplot2::annotation_custom(grid::rasterGrob(image))
+  return(ggObj)
 }
 
 gg_pretty <- function(ggObj) {
@@ -70,11 +61,11 @@ gg_pretty <- function(ggObj) {
   lapply(panel_params, 
          function(panel_param) {
            list(
-             x_major = panel_param$x$breaks,
-             x_minor = panel_param$x$minor_breaks,
+             x_major = panel_param$x.major_source,
+             x_minor = panel_param$x.minor_source,
              x_range = panel_param$x.range,
-             y_major = panel_param$y$breaks,
-             y_minor = panel_param$y$minor_breaks,
+             y_major = panel_param$y.major_source,
+             y_minor = panel_param$y.minor_source,
              y_range = panel_param$y.range
            )
          })
@@ -90,7 +81,7 @@ reset_image_bg <- function(image = NULL,
                            background = "white") {
   
   if(is.null(image)) return(grid::rectGrob())
-  
+
   dimI <- dim(image)
   
   x_range <- x_range %||% c(1, dimI[2])
@@ -111,7 +102,7 @@ reset_image_bg <- function(image = NULL,
   
   image[image == background] <- panel_background
   image <- matrix(image, nrow = dimI[1])
-  
+
   for(x in x_pos) {
     column <- image[, x]
     column[column == panel_background] <- panel_line

@@ -10,7 +10,7 @@ plotly.rasterly(rastObj, as_heatmap = FALSE, scaling = NULL,
 \arguments{
 \item{rastObj}{A rasterly object}
 
-\item{as_heatmap}{Draw `plotly` by adding heatmap layer. See \code{add_rasterly}}
+\item{as_heatmap}{Draw `plotly` by adding heatmap layer. See \code{add_rasterly_heatmap}}
 
 \item{scaling}{It could be an artificial function or a scaling way ("log", "origin")}
 

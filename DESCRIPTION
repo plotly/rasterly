@@ -33,8 +33,10 @@ Suggests:
     compiler,
     loon,
     purrr,
+    covr,
     testthat,
     knitr,
+    rmarkdown,
     lubridate
 LazyData: true
 RoxygenNote: 6.1.1

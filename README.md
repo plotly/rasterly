@@ -1,6 +1,7 @@
 # rasterly <img src="https://user-images.githubusercontent.com/9809798/67056539-75d75200-f11a-11e9-9b62-2b62a349a45b.jpg" align="right" height="144" width="124.8">
 
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
+[![Codecov test coverage](https://codecov.io/gh/z267xu/rasterly/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/rasterly?branch=master)
 
 Easily and rapidly visualize very large datasets with R and the `plotly` package.
 
@@ -82,7 +83,28 @@ Note that, "p" is a list of environments. The display info can be accessed throu
 r <- rasterly_build(p)
 str(r)
 ```
+<<<<<<< HEAD
+"r" contains image raster and other useful info (like numeric aggregation matrices) to produce image but it does **not** provide any graphs.
+
+#### Static graph
+
+* `grid`
+```
+# same with plot(p)
+p
+```
+
+#### Interactive graph
+
+* `plotly`
+```
+plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
+ add_rasterly_heatmap()
+```
+![](man/figures/add_rasterizer.gif)
+=======
 "r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
+>>>>>>> 6f569b246c3e8c0547174853d5778250bf20d2aa
 
 ## Example use in an interactive web application
 

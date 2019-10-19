@@ -13,6 +13,9 @@ addons:
 sudo: false
 
 language: r
+r_github_packages:
+  - r-lib/covr
+
 before_install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1  &
@@ -23,3 +26,6 @@ cache: packages
 r:
   - release
   - devel
+
+after_success:
+ - Rscript -e 'covr::codecov()'

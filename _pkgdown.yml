@@ -15,7 +15,8 @@ reference:
   - title: Functions
     desc:  Functions for changing ggplot structures into loon
     contents:
-    - add_rasterly
+    - add_rasterly_heatmap
     - rasterly
     - rasterly_build
     - rasterize_points
+    - is.rasterly

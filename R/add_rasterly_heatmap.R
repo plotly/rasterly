@@ -14,49 +14,50 @@
 #'
 #' @examples
 #' \dontrun{
-#'    library(rasterly)
-#'    if(requireNamespace("plotly") && requireNamespace("data.table")) {
-#'      # Load data
-#'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/
-#'      master/uber-rides-data1.csv" %>%
-#'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/
-#'      master/uber-rides-data2.csv" %>%
-#'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/
-#'      master/uber-rides-data3.csv"  %>%
-#'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
-#'        data.table::rbindlist()
+#'library(rasterly)
+#'if(requireNamespace("plotly") && requireNamespace("data.table")) {
+#'  # Load data
+#'  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"
+#'  ridesRaw_1 <-  url1 %>%
+#'    data.table::fread(stringsAsFactors = FALSE)
+#'  url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv"
+#'  ridesRaw_2 <-  url2 %>%
+#'    data.table::fread(stringsAsFactors = FALSE)
+#'  url3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"
+#'  ridesRaw_3 <-  url3 %>%
+#'    data.table::fread(stringsAsFactors = FALSE) 
+#'    
+#'  ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>%
+#'    data.table::rbindlist()
 #'
-#'      #### quick start
-#'      p <- plot_ly(data = ridesDf) %>%
-#'             add_rasterly(x = ~Lat, y = ~Lon)
-#'      p
-#'      #### set artificial scaling function
-#'      zeroOneTransform <- function(z) {
-#'        minz <- min(z)
-#'        maxz <- max(z)
-#'        M <- matrix((z - minz)/(maxz - minz), nrow = dim(z)[1])
-#'        return(M)
-#'      }
-#'      plot_ly(data = ridesDf) %>%
-#'        add_rasterly(x = ~Lat,
-#'                       y = ~Lon,
-#'                       on = ~-Lat,
-#'                       reduction_func = "max",
-#'                       scaling = zeroOneTransform) %>%
-#'        plotly::layout(
-#'          xaxis = list(
-#'            title = "x"
-#'          ),
-#'          yaxis = list(
-#'            title = "y"
-#'          )
-#'        )
-#'    }
+#'  #### quick start
+#'  p <- plot_ly(data = ridesDf) %>%
+#'         add_rasterly_heatmap(x = ~Lat, y = ~Lon)
+#'  p
+#'  #### set artificial scaling function
+#'  zeroOneTransform <- function(z) {
+#'    minz <- min(z)
+#'    maxz <- max(z)
+#'    M <- matrix((z - minz)/(maxz - minz), nrow = dim(z)[1])
+#'    return(M)
+#'  }
+#'  plot_ly(data = ridesDf) %>%
+#'    add_rasterly_heatmap(x = ~Lat,
+#'                 y = ~Lon,
+#'                 on = ~-Lat,
+#'                 reduction_func = "max",
+#'                 scaling = zeroOneTransform) %>%
+#'    plotly::layout(
+#'      xaxis = list(
+#'        title = "x"
+#'      ),
+#'      yaxis = list(
+#'        title = "y"
+#'      )
+#'    )
+#'  }
 #' }
-add_rasterly <- function(p,
+add_rasterly_heatmap <- function(p,
                          x = NULL, y = NULL, z = NULL, ...,
                          data = NULL, inherit = TRUE,
                          on = NULL, size = NULL,
@@ -93,14 +94,16 @@ add_rasterly <- function(p,
       if(is.null(exp)) {
         mapping_names[i] <- NA
       } else {
-        if(rlang::is_expression(exp)) {
+        if(rlang::is_formula(exp)) {
           the_parse <-  sub("~", "", rlang::expr_text(exp)) %>%
             rlang::parse_expr()
           mapping[[i]] <- rlang::quo(!!the_parse)
         } else if(is.numeric(exp)) {
             data[[mapping_names[i]]] <- exp
             mapping[[i]] <- rlang::quo(!!rlang::parse_expr(mapping_names[i]))
-        } else stop("'on' is neither `quote` nor a numerical value.", call. = FALSE)
+        } else {
+          stop("'size' ,'on' are neither `quote` nor a numerical value.", call. = FALSE)
+        }
       }
     }
 
