@@ -10,6 +10,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignetteDepends{grid}
+  \usepackage[utf8]{inputenc}
 ---
   
 ```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
@@ -84,9 +85,9 @@ p["background"]
 p["background", level = 2] <- "black"
 p["background"]
 # color_maps in both `rasterly()` and `rasterly_points()` are replaced
-## fire is a vector of colors (as character strings) with length 256
-## see `rasterly::fire`
-p["color_map", level = 1:2] <- fire
+## fire_map is a vector of colors (as character strings) with length 256
+## see `rasterly::fire_map`
+p["color_map", level = 1:2] <- fire_map
 p
 ```
 
@@ -165,7 +166,7 @@ r <- rasterly(data = ridesDf,
 r %>% 
   rasterize_points(
      mapping = aes(color = hour),
-     color_key = hourColors,
+     color_key = hourColors_map,
      background = "black"
   ) -> g
 g
@@ -175,7 +176,7 @@ Different colors represent different hours:
 
 ```{r legend, fig.width = 4, fig.height = 3}
 # rasterly doesn't currently support legends, though this feature is forthcoming
-plot(1:24, y = rep(1,24), col = hourColors, pch = 19, cex = 3)
+plot(1:24, y = rep(1,24), col = hourColors_map, pch = 19, cex = 3)
 ```
 
 The number of aggregation matrices is equivalent to the number of categories:
@@ -193,7 +194,7 @@ The colors attribute in "image" within `build_g` is generated via weighted arith
 r %>% 
   rasterize_points(
      mapping = aes(color = hour),
-     color_key = hourColors,
+     color_key = hourColors_map,
      background = "black",
      layout = "cover"
   )
@@ -238,7 +239,7 @@ r %>%
   rasterize_points(
     reduction_func = "mean", # process the data points using the mean reduction function
     background = "black",    # change background to "black" from right to left (from dark to light)
-    color_map = fire # provide a custom color_map
+    color_map = fire_map # provide a custom color_map
   )  
 ```
 
