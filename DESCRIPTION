@@ -1,21 +1,13 @@
 Package: rasterly
-Type: Package
-Title: Easily and rapidly generate raster image data for large datasets using Plotly.js 
+Title: Easily and Rapidly Generate Raster Image Data for Use with 'Plotly.js'
 Version: 0.1.0
-Authors@R: c(person(given = "Zehao", family = "Xu", 
-                    email = "z267xu@uwaterloo.ca", 
-                    role = c("aut", "cre", "ths")),
-             person(given = "Ryan Patrick", family = "Kyle",
-                    comment = c(ORCID = "0000-0001-5829-9867"), 
-                    email = "ryan@plot.ly", 
-                    role = "ctb")
-             )
-Maintainer: Zehao Xu <z267xu@uwaterloo.ca>
-Description: Easily and rapidly generate raster image data for large datasets using 'Plotly.js'. 
+Authors@R: c(person("Zehao", "Xu", role = c("aut", "cre"), email = "z267xu@uwaterloo.ca"), person("Ryan Patrick", "Kyle", role = c("ctb"), comment = c(ORCID = "0000-0001-5829-9867"), email = "ryan@plot.ly"), person(family = "Plotly Technologies", role = "cph"))
+Description: Easily and rapidly generate raster image data for large datasets using 'Plotly.js'.
 LinkingTo: Rcpp
 License: MIT + file LICENSE
 Encoding: UTF-8
 ByteCompile: true
+KeepSource: true
 BugReports: https://github.com/plotly/rasterly/issues
 Depends:
     R (>= 3.4.0),
