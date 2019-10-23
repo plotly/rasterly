@@ -30,6 +30,16 @@ parquet_data <- read_parquet("somefile.parquet")
 # parquet_data <- base::as.data.frame(parquet_data)
 ```
 
+* fst file:
+The fst package offers an extremely efficient option for serializing large data frames in R. In addition to rapid compression using LZ4 and ZSTD, it provides support for multithreading to parallelize operations.
+
+The package must build Apache Arrow first, so it may take a few minutes to install the first time around.
+
+```
+library(fst)
+fst_data <- read.fst("somefile.fst")
+```
+
 ## Installing the package
 
 `rasterly` can be installed directly from github
