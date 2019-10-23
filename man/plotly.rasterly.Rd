@@ -58,7 +58,7 @@ Display raster image via `plotly`
        rasterize_points(xlim = c(min_x, (min_x+max_x)/2), 
                         ylim = c(min_y, max_y),
                         mapping = aes(x = Lat, y = Lon),
-                        color_map = fire) \%>\% 
+                        color_map = fire_map) \%>\% 
        rasterize_points(xlim = c((min_x+max_x)/2, max_x), 
          ylim = c(min_y, max_y),
          mapping = aes(x = Lat, y = Lon, color = hour),
