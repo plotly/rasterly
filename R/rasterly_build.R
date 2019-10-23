@@ -10,7 +10,7 @@
 #' @examples
 #' r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) %>%
 #'        rasterly(mapping = aes(x = x, y = y)) %>%
-#'        rasterize_points(color_map = fire)
+#'        rasterize_points(color_map = fire_map)
 #' str(r)
 #' p <- rasterly_build(r)
 #' str(p)
