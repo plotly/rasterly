@@ -1,5 +1,5 @@
 Package: rasterly
-Title: Easily and Rapidly Generate Raster Image Data for Use with 'Plotly.js'
+Title: Easily and Rapidly Generate Raster Image Data with Support for 'Plotly.js'
 Version: 0.1.0
 Authors@R: c(person("Zehao", "Xu", role = c("aut", "cre"), email = "z267xu@uwaterloo.ca"), person("Ryan Patrick", "Kyle", role = c("ctb"), comment = c(ORCID = "0000-0001-5829-9867"), email = "ryan@plot.ly"), person(family = "Plotly Technologies", role = "cph"))
 Description: Easily and rapidly generate raster image data for large datasets using 'Plotly.js'.
