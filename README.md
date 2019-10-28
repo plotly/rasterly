@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
 [![Codecov test coverage](https://codecov.io/gh/z267xu/rasterly/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/rasterly?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/rasterly)](https://cran.r-project.org/web/packages/rasterly/index.html)
 
 Easily and rapidly visualize very large datasets with R and the `plotly` package.
 
