@@ -99,6 +99,8 @@ str(r)
 
 "r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
 
-## Example use in an interactive web application
+## Example use in interactive web applications
 
-A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
+The Uber NYC Rasterizer application in our Dash Gallery provides a simple live demo of the `rasterly` package in action. Check it out [here](https://dash-gallery.plotly.host/dashr-uber-rasterizer/)!
+
+A second [Dash for R](https://github.com/plotly/dashR) application to visualize (a much larger) dataset from the US Census Bureau is also [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
