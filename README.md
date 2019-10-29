@@ -41,7 +41,11 @@ fst_data <- read.fst("somefile.fst")
 
 ## Installing the package
 
-`rasterly` can be installed directly from github
+The `rasterly` package is now available from CRAN, and the most recent release will always be available on GitHub. To install the CRAN package:
+```
+install.packages("rasterly")
+```
+To install the current version available via GitHub instead:
 ```
 remotes::install_github("https://github.com/plotly/rasterly")
 ```
