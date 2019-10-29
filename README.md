@@ -103,4 +103,6 @@ str(r)
 
 The Uber NYC Rasterizer application in our Dash Gallery provides a simple live demo of the `rasterly` package in action. Check it out [here](https://dash-gallery.plotly.host/dashr-uber-rasterizer/)!
 
+<img width="840" alt="Uber NYC Rasterizer screenshot" src="https://user-images.githubusercontent.com/9809798/67794376-f1a69800-fa52-11e9-930d-ce57575ddef7.png">
+
 A second [Dash for R](https://github.com/plotly/dashR) application to visualize (a much larger) dataset from the US Census Bureau is also [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
