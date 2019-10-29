@@ -47,7 +47,7 @@ install.packages("rasterly")
 ```
 To install the current version available via GitHub instead:
 ```
-remotes::install_github("https://github.com/plotly/rasterly")
+remotes::install_github("plotly/rasterly")
 ```
 
 ## Visualizing data with `rasterly`
