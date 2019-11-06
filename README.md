@@ -5,13 +5,11 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/rasterly)](https://cran.r-project.org/web/packages/rasterly/index.html)
 [![](https://cranlogs.r-pkg.org/badges/rasterly)](https://cran.r-project.org/package=rasterly)
 
-Easily and rapidly visualize very large datasets with R and the `plotly` package.
-
-## Importing large datasets for use with rasterly
-
 Easily and rapidly generate raster data in R, even for very large datasets, with an aesthetics-based mapping syntax that should be familiar to users of the `ggplot2` package. 
 
 While `rasterly` does not attempt to reproduce the full functionality of the Datashader graphics pipeline system for Python, the `rasterly` API has several core elements in common with that software package. Combined with Plotly.js and the `plotly` package, `rasterly` enables analysts to generate interactive figures which are responsive enough to embed into web applications.
+
+## Importing large datasets for use with rasterly
 
 There are several ways to import very large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
