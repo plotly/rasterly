@@ -5,13 +5,13 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/rasterly)](https://cran.r-project.org/web/packages/rasterly/index.html)
 [![](https://cranlogs.r-pkg.org/badges/rasterly)](https://cran.r-project.org/package=rasterly)
 
-Easily and rapidly generate raster data in R, even for very large datasets, with an aesthetics-based mapping syntax that should be familiar to users of the `ggplot2` package. 
+Easily and rapidly generate raster data in R, even for larger volumes of data, with an aesthetics-based mapping syntax that should be familiar to users of the `ggplot2` package. 
 
 While `rasterly` does not attempt to reproduce the full functionality of the Datashader graphics pipeline system for Python, the `rasterly` API has several core elements in common with that software package. Combined with Plotly.js and the `plotly` package, `rasterly` enables analysts to generate interactive figures which are responsive enough to embed into web applications.
 
-## Importing large datasets for use with rasterly
+## Importing datasets for use with rasterly
 
-There are several ways to import very large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
+There are several ways to import large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
 * csv file:
 ```
@@ -20,7 +20,7 @@ data <- data.table::fread("yourpath/somefile.csv") # or a link
 ```
 
 * parquet file:
-Parquet files can provide efficient data compression for large datasets. There are a few options in R for importing Parquet data. One of these is the [`arrow`](https://cran.r-project.org/web/packages/arrow/index.html) package, now available on CRAN.
+Apache Parquet is a column-oriented, open-source format which offers efficient data compression. There are a few options in R for importing Parquet data. One of these is the [`arrow`](https://cran.r-project.org/web/packages/arrow/index.html) package, now available on CRAN.
 
 The package must build Apache Arrow first, so it may take a few minutes to install the first time around.
 
@@ -33,7 +33,7 @@ parquet_data <- read_parquet("somefile.parquet")
 ```
 
 * fst file:
-The [fst package](https://www.fstpackage.org/) offers an extremely efficient option for serializing large data frames in R. In addition to rapid compression using LZ4 and ZSTD, it provides support for multithreading to parallelize operations.
+The [fst package](https://www.fstpackage.org/) is an excellent option for extremely fast serialization of large data frames in R. In addition to rapid compression using LZ4 and ZSTD, it provides support for multithreading to parallelize operations.
 
 ```
 library(fst)
