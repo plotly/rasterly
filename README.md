@@ -59,7 +59,7 @@ In terms of performance, `datashader` is faster but `rasterly` is comparable. `r
 
 #### Producing an interactive graph with the plotly package
 
-To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations, and is several gigabytes in size.
+To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
 
 ```
 # Load data
