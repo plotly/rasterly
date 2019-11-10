@@ -115,9 +115,7 @@ add_rasterly_heatmap <- function(p,
                  ...) %>%
       rasterly_points() %>%
       rasterly_build() -> rastObj
-    remove(data)
     data <- NULL
-
     if(sum(lengths(rastObj$agg)) > 1)
       message("More than one aggregation matrix was detected.")
 
