@@ -6,10 +6,10 @@ is.rasterly <- function(x) {
   inherits(x, "rasterly")
 }
 
-is.rasterly_build <- function(x) {
-  inherits(x, "rasterly_build")
+is.rasterlyBuild <- function(x) {
+  inherits(x, "rasterlyBuild")
 }
 
-is.rasterizeLayer <- function(x) {
+is.rasterlyLayer <- function(x) {
   inherits(x, "rasterlyLayer")
 }
