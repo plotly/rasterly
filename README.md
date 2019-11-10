@@ -2,14 +2,16 @@
 
 [![Build Status](https://travis-ci.org/z267xu/rasterly.svg?branch=master)](https://travis-ci.org/z267xu/rasterly)
 [![Codecov test coverage](https://codecov.io/gh/z267xu/rasterly/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/rasterly?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/rasterly)](https://cran.r-project.org/web/packages/rasterly/index.html)
+[![](https://cranlogs.r-pkg.org/badges/rasterly)](https://cran.r-project.org/package=rasterly)
 
-Easily and rapidly visualize very large datasets with R and the `plotly` package.
+Easily and rapidly generate raster data in R, even for larger volumes of data, with an aesthetics-based mapping syntax that should be familiar to users of the `ggplot2` package. 
 
-## Importing large datasets for use with rasterly
+While `rasterly` does not attempt to reproduce the full functionality of the Datashader graphics pipeline system for Python, the `rasterly` API has several core elements in common with that software package. Combined with Plotly.js and the `plotly` package, `rasterly` enables analysts to generate interactive figures which are responsive enough to embed into web applications.
 
-`rasterly` is an R package to generate raster data for very large datasets; combined with Plotly.js and the plotly package, it enables analysts to generate interactive figures which are responsive enough to embed into web applications.
+## Importing datasets for use with rasterly
 
-There are several ways to import very large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
+There are several ways to import large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
 
 * csv file:
 ```
@@ -18,7 +20,7 @@ data <- data.table::fread("yourpath/somefile.csv") # or a link
 ```
 
 * parquet file:
-Parquet files can provide efficient data compression for large datasets. There are a few options in R for importing Parquet data. One of these is the [`arrow`](https://cran.r-project.org/web/packages/arrow/index.html) package, now available on CRAN.
+Apache Parquet is a column-oriented, open-source format which offers efficient data compression. There are a few options in R for importing Parquet data. One of these is the [`arrow`](https://cran.r-project.org/web/packages/arrow/index.html) package, now available on CRAN.
 
 The package must build Apache Arrow first, so it may take a few minutes to install the first time around.
 
@@ -30,11 +32,23 @@ parquet_data <- read_parquet("somefile.parquet")
 # parquet_data <- base::as.data.frame(parquet_data)
 ```
 
+* fst file:
+The [fst package](https://www.fstpackage.org/) is an excellent option for extremely fast serialization of large data frames in R. In addition to rapid compression using LZ4 and ZSTD, it provides support for multithreading to parallelize operations.
+
+```
+library(fst)
+fst_data <- read.fst("somefile.fst")
+```
+
 ## Installing the package
 
-`rasterly` can be installed directly from github
+The `rasterly` package is now available from CRAN, and the most recent release will always be available on GitHub. To install the CRAN package:
 ```
-remotes::install_github("https://github.com/plotly/rasterly")
+install.packages("rasterly")
+```
+To install the current version available via GitHub instead:
+```
+remotes::install_github("plotly/rasterly")
 ```
 
 ## Visualizing data with `rasterly`
@@ -45,7 +59,7 @@ In terms of performance, `datashader` is faster but `rasterly` is comparable. `r
 
 #### Producing an interactive graph with the plotly package
 
-To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations, and is several gigabytes in size.
+To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
 
 ```
 # Load data
@@ -86,6 +100,10 @@ str(r)
 
 "r" contains image raster and other useful info (like numeric aggregation matrices) required to produce the image but it does **not** provide any graphs.
 
-## Example use in an interactive web application
+## Example use in interactive web applications
 
-A sample [Dash for R](https://github.com/plotly/dashR) application to visualize US census data is [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
+The Uber NYC Rasterizer application in our Dash Gallery provides a simple live demo of the `rasterly` package in action. Check it out [here](https://dash-gallery.plotly.host/dashr-uber-rasterizer/)!
+
+<img width="840" alt="Uber NYC Rasterizer screenshot" src="https://user-images.githubusercontent.com/9809798/67794376-f1a69800-fa52-11e9-930d-ce57575ddef7.png">
+
+A second [Dash for R](https://github.com/plotly/dashR) application to visualize (a much larger) dataset from the US Census Bureau is also [available](https://github.com/plotly/rasterly/tree/master/apps/UScensus).
