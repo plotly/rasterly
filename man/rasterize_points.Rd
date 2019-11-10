@@ -42,65 +42,9 @@ large datasets grouping within `rasterly` may offer better performance.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics, rather than combining with them.}
 }
-\value{
-A list of environments.
-}
 \description{
-Points layer for "rasterly".
-}
-\details{
-Reduction functions
-\itemize{
- \item{`sum`: If `on` is not provided within `aes()`, the default is to take the sum within each bin. 
- When `on` is specified, the function reduces by taking the sum of all elements within the variable 
- named in `on`.}
- \item{`any`: When `on` is provided within `aes()`, the `any` reduction function specifies whether any 
- elements in `on` should be mapped to each bin.}
- \item{`mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default.
- When `on` is given, the `mean` reduction function takes the mean of all elements within the variable
- specified by `on`.}
- \item{`m2`: Requires that `on` is specified within `aes()`. The `m2` function computes the sum of
- square differences from the mean of all elements in the variable specified by `on`.}
- \item{`var`: Requires that `on` is specified within `aes()`. The `var` function computes the variance 
- over all elements in the vector specified by `on`.}
- \item{`sd`: Requires that `on` is specified within `aes()`. The `sd` function computes the standard 
- deviation over all elements in the vector specified by `on`.}
- \item{`first`: Requires that `on` is specified within `aes()`. The `first` function returns the first 
- element in the vector specified by `on`.}
- \item{`last`: Requires that `on` is specified within `aes()`. The `last` function returns the last
- element in the vector specified by `on`.}
- \item{`min`: Requires that `on` is specified within `aes()`. The `min` function returns the minimum
- value in the vector specified by `on`.}
- \item{`max`: Requires that `on` is specified within `aes()`. The `min` function returns the maximum 
- value in the vector specified by `on`.}
-}
-}
-\examples{
-\dontrun{
-   library(rasterly)
-   if(requireNamespace("grid") && requireNamespace("gridExtra")) {
-     x <- rnorm(1e7)
-     y <- rnorm(1e7)
-     category <- sample(1:5, 1e7, replace = TRUE)
-     data.frame(x = x, y = y, category = category) \%>\%
-       rasterly(mapping = aes(x = x, y = y, color = category)) \%>\%
-       rasterize_points(layout = "weighted") -> ds1
-     ds1
-     # layout with cover
-     data.frame(x = x, y = y, category = category) \%>\%
-       rasterly(mapping = aes(x = x, y = y, color = category)) \%>\%
-       rasterize_points(layout = "cover") -> ds2
-     ds2
-     # display side by side
-     grid::grid.newpage()
-     gridExtra::grid.arrange(
-        grobs = list(rasterlyGrob(ds1), rasterlyGrob(ds2)),
-        ncol = 2,
-        top = "'weighted' layout versus 'cover' layout"
-     )
-   }
-}
+Points layer for "rasterly". Deprecated now, please use \code{rasterly_points} instead.
 }
 \seealso{
-\link{rasterly}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
+\link{rasterly_points}
 }

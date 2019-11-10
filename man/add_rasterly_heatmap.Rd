@@ -34,7 +34,6 @@ Add trace to a Plotly visualization.
 }
 \examples{
 \dontrun{
-library(rasterly)
 if(requireNamespace("plotly") && requireNamespace("data.table")) {
  # Load data
  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"

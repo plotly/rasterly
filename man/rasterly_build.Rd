@@ -19,11 +19,11 @@ A rasterly object will never be produced until `rasterly_build()` is called.
 \examples{
 r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) \%>\%
        rasterly(mapping = aes(x = x, y = y)) \%>\%
-       rasterize_points(color_map = fire)
+       rasterly_points(color = fire)
 str(r)
 p <- rasterly_build(r)
 str(p)
 }
 \seealso{
-\link{rasterly}, \link{rasterize_points}, \link{[.rasterly}, \link{[<-.rasterly}
+\link{rasterly}, \link{rasterly_points}, \link{[.rasterly}, \link{[<-.rasterly}
 }

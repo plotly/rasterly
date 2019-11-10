@@ -28,8 +28,8 @@ r <- rasterly(
        data = data.frame(x = 1:1e4, y = runif(1e4), category = sample(1:4, 1e4, replace = TRUE)),
        mapping = aes(x = x, y = y)
 ) \%>\%
-  rasterize_points(xlim = c(1, 5000)) \%>\%
-  rasterize_points(
+  rasterly_points(xlim = c(1, 5000)) \%>\%
+  rasterly_points(
     mapping = aes(x = x, y = y, color = category),
     xlim = c(5001, 1e4)
   )

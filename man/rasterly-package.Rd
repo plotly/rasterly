@@ -19,7 +19,7 @@ More info can be found in \href{https://github.com/plotly/rasterly/blob/master/R
 
 \seealso{
 \itemize{
-  \link{rasterize_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
+  \link{rasterly_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
   \item \url{https://github.com/plotly/rasterly}
   \item \url{https://github.com/plotly/dashR}  
   \item Please report bugs at \url{https://github.com/plotly/rasterly/issues}
