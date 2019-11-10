@@ -126,23 +126,15 @@ rasterly_build.rasterly <- function(rastObj) {
                     group_by_data_table = get("group_by_data_table", envir = envir, inherits = FALSE),
                     cores = get("cores", envir = envir, inherits = FALSE)
                   )
-                  
+
                   len_agg <- length(agg)
                   if(len_agg == 0) stop("No aggregation matrices are found", call. = FALSE)
                   else if(len_agg == 1) {
                     # agg is a matrix
                     agg <- agg[[1]]
-                    class(agg) <- c("rasterizeMatrix", "matrix")
                     # default color_map
                     color <- color %||% c('lightblue','darkblue')
                   } else {
-                    # agg is a list
-                    agg <- lapply(agg,
-                                  function(a) {
-                                    class(a) <- c("rasterizeMatrix", "matrix")
-                                    a
-                                  })
-                    class(agg) <- c("rasterizeList", "list")
                     # default color_key
                     color <- color %||% gg_color_hue(len_agg)
                     stopifnot(
@@ -154,7 +146,7 @@ rasterly_build.rasterly <- function(rastObj) {
                     background <- get("background", envir = envir, inherits = FALSE)
                     bg <<- c(bg, background)
                     colors <<- c(colors, list(color))
-                    image <<- as.raster(x = agg,
+                    image <<- as_raster(x = agg,
                                         color = color,
                                         span = get("span", envir = envir, inherits = FALSE),
                                         zeroIgnored = TRUE,
@@ -163,7 +155,7 @@ rasterly_build.rasterly <- function(rastObj) {
                                         layout = get("layout", envir = envir, inherits = FALSE))
                   }
                   
-                  if(inherits(agg, "rasterizeMatrix")) agg <- list(agg)
+                  if(inherits(agg, "matrix")) agg <- list(agg)
                   agg
                 }
   )
