@@ -17,4 +17,5 @@
 #' @note Calling `rasterly()` without providing `rasterly_...()` layers has no effect.
 #' More info can be found in \href{https://github.com/plotly/rasterly/blob/master/README.md}{README.md}
 #'
-#' @seealso \link{rasterize_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
+#' @seealso \link{rasterly_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
+#' \link{ggRasterly}, \link{plotRasterly}
