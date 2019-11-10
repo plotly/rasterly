@@ -1,106 +1,97 @@
-#' @title `rasterly` to `plotly`
-#' @description Display raster image via `plotly`
-#' @param rastObj A rasterly object
-#' @param as_heatmap Draw `plotly` by adding heatmap layer. See \code{add_rasterly_heatmap}
-#' @param scaling It could be an artificial function or a scaling way ("log", "origin") 
-#' @param sizing Specifies which dimension of the image to constrain. One of "stretch" "fill", "contain"
-#' @param ... Arguments to the layout object. For documentation, 
-#' see https://plot.ly/r/reference/#Layout_and_layout_style_objects
+#' @title plotRasterly
+#' @description Display large data set in `plotly`
+#' @inheritParams ggRasterly
+#' @param as_image Logical value. If \code{FALSE}, image raster will be transformed into a data frame, hence a points layer
+#' would be pipped on \code{plotly}; conversely, a raster layer will be added.
+#' @param sizing It affects only with \code{as_image = TRUE}. Specifies which dimension of the image to constrain.
+#'  One of "stretch" "fill", "contain". see https://plot.ly/r/reference/#Layout_and_layout_style_objects
+#' @return a `plotly` widget
+#' 
+#' @seealso \link{ggRasterly}
 #' 
 #' @export
 #' 
 #' @examples 
 #' \dontrun{
-#'    library(rasterly)
-#'    if(requireNamespace("plotly") && 
-#'       requireNamespace("data.table") && 
-#'       requireNamespace("lubridate")) {
-#'      # Load data
-#'      ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/
-#'      master/uber-rides-data1.csv" %>%
-#'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/
-#'      master/uber-rides-data2.csv" %>% 
-#'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesRaw_3 <- "https://raw.githubusercontent.com/plotly/datasets/
-#'      master/uber-rides-data3.csv"  %>% 
-#'        data.table::fread(stringsAsFactors = FALSE)
-#'      ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
-#'        data.table::rbindlist()
+#'  library(rasterly)
+#'  if(requireNamespace("plotly") && 
+#'     requireNamespace("data.table") && 
+#'     requireNamespace("lubridate")) {
+#'    # Load data
+#'  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"
+#'  ridesRaw_1 <-  url1 %>%
+#'    data.table::fread(stringsAsFactors = FALSE)
+#'  url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv"
+#'  ridesRaw_2 <-  url2 %>%
+#'    data.table::fread(stringsAsFactors = FALSE)
+#'  url3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"
+#'  ridesRaw_3 <-  url3 %>%
+#'    data.table::fread(stringsAsFactors = FALSE) 
+#'  ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+#'    data.table::rbindlist()
 #'        
-#'      time <- ymd_hms(ridesDf$`Date/Time`)
-#'      ridesDf <-  
-#'      ridesDf[, 'Date/Time':=NULL][, list(Lat, 
-#'                 Lon,                                               
-#'                 hour = hour(time),                                                
-#'                 month = month(time),
-#'                 day = day(time))]
-#'      
-#'      max_x <- max(ridesDf$Lat)
-#'      min_x <- min(ridesDf$Lat)
-#'      max_y <- max(ridesDf$Lon)
-#'      min_y <- min(ridesDf$Lon)
-#'      ridesDf %>% 
-#'        rasterly(background = "black") %>%
-#'        rasterize_points(xlim = c(min_x, (min_x+max_x)/2), 
-#'                         ylim = c(min_y, max_y),
-#'                         mapping = aes(x = Lat, y = Lon),
-#'                         color_map = fire) %>% 
-#'        rasterize_points(xlim = c((min_x+max_x)/2, max_x), 
-#'          ylim = c(min_y, max_y),
-#'          mapping = aes(x = Lat, y = Lon, color = hour),
-#'          color_key = hourColours) %>% 
-#'     rasterize_build() %>%
-#'     plotly.rasterly(title = "New York Uber Rides")
-#'    }
+#'  time <- lubridate::ymd_hms(ridesDf$`Date/Time`)
+#'  ridesDf <-  
+#'    ridesDf[, 'Date/Time':=NULL][, list(Lat, 
+#'               Lon,                                               
+#'               hour = lubridate::hour(time),                                                
+#'               month = lubridate::month(time),
+#'               day = lubridate::day(time))]
+#'  # A point layer is added
+#'  plotRasterly(data = ridesDf, 
+#'               mapping = aes(x = Lat, y = Lon, color = hour),
+#'               color = hourColors,
+#'               as_image = FALSE)
+#'   # An image layer is added       
+#'   plotRasterly(data = ridesDf, 
+#'                mapping = aes(x = Lat, y = Lon, color = hour),
+#'                color = hourColors,
+#'                as_image = TRUE)
+#'   
+#'  }
 #' }
-plotly.rasterly <- function(rastObj, 
-                              as_heatmap = FALSE, 
-                              scaling = NULL, 
-                              sizing = c("stretch", "fill", "contain"),
-                              ...) {
+plotRasterly <- function(data = NULL,
+                         mapping = aes(),
+                         ...,
+                         plot_width = 400, plot_height = 400,
+                         x_range = NULL, y_range = NULL,
+                         background = "white",
+                         color = NULL,
+                         show_raster = TRUE,
+                         drop_data = FALSE,
+                         variable_check = FALSE,
+                         alpha = 0.5,
+                         shape = 19,
+                         size = 0.5, 
+                         as_image = FALSE, 
+                         sizing = c("stretch", "fill", "contain")) {
   
-  if(missing(rastObj) || !is.rasterly(rastObj)) stop("No 'rasterly' object.", call. = FALSE)
-  if(is.rasterizeLayer(rastObj) && !is.rasterly_build(rastObj)) {
-    # to a 'rasterly_build' object
-    rastObj['show_raster', which = 1] <- !as_heatmap
-    rastObj <- rasterly_build(rastObj)
-  }
+  if(!show_raster) return(plotly::plot_ly())
   
-  if(as_heatmap) {
-    if(sum(lengths(rastObj$agg)) > 1) 
-      message("More than one aggregation matrix is detected. 
-            Set `as_heatmap = FALSE` is recommended.")
-    z <- rastObj$agg[[1]][[1]]
-    dimZ <- dim(z)
-    y <- seq(rastObj$y_range[1], rastObj$y_range[2], length.out = dimZ[1])
-    x <- seq(rastObj$x_range[1], rastObj$x_range[2], length.out = dimZ[2])
+  if(as_image) {
     
-    scaling <- scaling %||% {
-      message("The default scaling is 'log'.")
-      "log"
-    }
-    if(is.function(scaling)) {
-      z <- do.call(scaling, 
-                   list(z = z))
-    } else {
-      if(!is.character(scaling)) stop("'scaling' can be either 'function' or 'character'")
-      switch(scaling, 
-             "log" = {
-               z <- matrix(log(z + 1), nrow = dimZ[1])
-             }, 
-             "origin" = NULL)
-    }
+    mapping <- rename_mapping(mapping)
+    rastObj <- rasterly(data = data,
+                        mapping = mapping,
+                        ...,
+                        plot_width = plot_width, 
+                        plot_height = plot_height,
+                        x_range = x_range, 
+                        y_range = y_range,
+                        background = background,
+                        color = color,
+                        show_raster = show_raster,
+                        drop_data = drop_data,
+                        variable_check = variable_check) %>% 
+      rasterly_points() %>% 
+      rasterly_build()
     
-    p <- plotly::plot_ly(x = x, y = y) %>% 
-      plotly::add_heatmap(z = z)
-  } else {
     image <- rastObj$image
     if(is.null(image)) 
       stop("No image is found. Consider set `show_raster = TRUE` in `rasterly()`?", call. = FALSE)
     
     var_names <- unlist(rastObj$variable_names)
-
+    
     sizing <- match.arg(sizing)
     
     p <- plotly::plot_ly(
@@ -131,6 +122,24 @@ plotly.rasterly <- function(rastObj,
         ),
         plot_bgcolor = rastObj$background
       )
+  } else {
+    p <- ggRasterly(
+      data = data,
+      mapping = mapping,
+      ...,
+      plot_width = plot_width, 
+      plot_height = plot_height,
+      x_range = x_range, y_range = y_range,
+      background = background,
+      color = color,
+      show_raster = show_raster,
+      drop_data = drop_data,
+      variable_check = variable_check,
+      alpha = alpha,
+      shape = shape,
+      size = size
+    ) %>% 
+      plotly::ggplotly()
   }
   return(p)
 }
