@@ -13,10 +13,13 @@
 #' @param y_range Vector of type numeric. The range of `y`; it can be used to clip the image. For larger datasets, providing `y_range`
 #' may result in improved performance.
 #' @param background Character. The background color of the image to plot.
-#' @param color_map Vector of type character. Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
-#' independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.
-#' @param color_key Vector of type character. The `color_key` is used for categorical variables; it is passed when the `color` aesthetic
-#' is provided.
+#' @param color Merge arguments `color_key` and `color_map` into one argument. It could be set as either of the followings:
+#' \itemize{
+#'  \item{`color_map`}{Vector of type character. Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
+#'  independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.}
+#'  \item{`color_key`}{Vector of type character. The `color_key` is used for categorical variables; it is passed when the `color` aesthetic
+#' is provided.}
+#' }
 #' @param show_raster Logical. Should the raster be displayed?
 #' @param drop_data Logical. When working with large datasets, drops the original data once processed according to the provided
 #' `aes()` parameters, using the `remove()` function. See details for additional information.
@@ -27,7 +30,7 @@
 #' @note Calling `rasterly()` without providing `rasterly_...()` layers has no effect.
 #' More info can be found in \href{https://github.com/plotly/rasterly/blob/master/README.md}{README.md}
 #'
-#' @seealso \link{rasterize_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
+#' @seealso \link{rasterly_points}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
 #' @details 
 #' \itemize{
 #'  \item{}{The rasterly package currently supports five aesthetics via `aes()`: "x", "y", "on", "color", and "size".
@@ -52,8 +55,7 @@ rasterly <- function(data = NULL,
                      plot_width = 600, plot_height = 600,
                      x_range = NULL, y_range = NULL,
                      background = "white",
-                     color_map = c('lightblue','darkblue'),
-                     color_key = NULL,
+                     color = NULL,
                      show_raster = TRUE,
                      drop_data = FALSE,
                      variable_check = FALSE) {
@@ -101,16 +103,22 @@ rasterly <- function(data = NULL,
   
   # make sure all arguments exist in `rasterly` environment
   args <- list(...)
-  reduction_func <- args$reduction_func
-  layout <- args$layout
-  glyph <- args$glyph
-  group_by_data_table <- args$group_by_data_table
+  if(!is.null(args$color_map)) {
+    warning("`color_map` is deprecated now. Please use `color` instead.", call. = FALSE)
+    color_map <- args$color_map
+    color <- color_map
+  }
+  if(!is.null(args$color_key)) {
+    warning("`color_key` is deprecated now. Please use `color` instead.", call. = FALSE)
+    color_key <- args$color_key
+    color <- color_key
+  }
   
-  p <- structure(
+  rastObj <- structure(
     list(
       rasterly_env = environment()
     ),
     class = c("rasterly")
   )
-  invisible(return(p))
+  invisible(return(rastObj))
 }
