@@ -1,7 +1,10 @@
-#' @export
-as.raster.rasterizeMatrix <- function(x, color = c('lightblue','darkblue'), span = 50,
-                                      zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
-                                      alpha = 1, layout = c("weighted", "cover")) {
+as_raster <- function(x, ...) {
+  UseMethod("as_raster", x)
+}
+
+as_raster.matrix <- function(x, color = c('lightblue','darkblue'), span = 50,
+                             zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
+                             alpha = 1, layout = c("weighted", "cover")) {
   
   layout <- match.arg(layout)
   span <- max(span, length(color))
@@ -48,17 +51,12 @@ as.raster.rasterizeMatrix <- function(x, color = c('lightblue','darkblue'), span
   
   image <- matrix(image, nrow = dimM[1])
   image <- image[dimM[1]:1, ]
-  # when image convert from matrix to raster
-  # the elements in matrix will be reshape from by col 
-  # to by row
-  class(image) <- "raster"
-  return(t(image))
+  return(as.raster(image))
 }
 
-#' @export
-as.raster.rasterizeList <- function(x, color = NULL, span = 50,
-                                    zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
-                                    alpha = 1, layout = c("weighted", "cover")) {
+as_raster.list <- function(x, color = NULL, span = 50,
+                           zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
+                           alpha = 1, layout = c("weighted", "cover")) {
   
   n <- length(x)
   if(missing(color) || is.null(color)) color <- gg_color_hue(n)
@@ -126,7 +124,7 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
     
     lapply(1:n,
            function(i){
-             image <<- as.raster(x = x[[i]],
+             image <<- as_raster(x = x[[i]],
                                  color = c(background, color[i]),
                                  span = span,
                                  zeroIgnored = zeroIgnored,
@@ -137,9 +135,5 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
   } else 
     stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
   
-  # when image convert from matrix to raster
-  # the elements in matrix will be reshape from by col 
-  # to by row
-  class(image) <- "raster"
-  return(t(image))
+  return(as.raster(image))
 }
