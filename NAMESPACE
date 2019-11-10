@@ -2,8 +2,6 @@
 
 S3method("[",rasterly)
 S3method("[<-",rasterly)
-S3method(as.raster,rasterizeList)
-S3method(as.raster,rasterizeMatrix)
 S3method(image2data,matrix)
 S3method(image2data,raster)
 S3method(image2data,rasterly)
