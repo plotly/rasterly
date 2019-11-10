@@ -8,7 +8,7 @@
 #'  \item{Aggregation: }{"data", "mapping", "plot_width", "plot_height", "range", "x_range",
 #' "y_range", "xlim", "ylim", "aesthetics", "reduction_func", "glyph",
 #' "max_size", "group_by_data_table", "drop_data", "variable_check"}
-#'  \item{Display: }{"background", "color_map", "color_key", "alpha", "span",
+#'  \item{Display: }{"background", "color", "alpha", "span",
 #'  "show_raster", "layout"}
 #' }
 #'
@@ -18,8 +18,8 @@
 #'        data = data.frame(x = 1:1e4, y = runif(1e4), category = sample(1:4, 1e4, replace = TRUE)),
 #'        mapping = aes(x = x, y = y)
 #' ) %>%
-#'   rasterize_points(xlim = c(1, 5000)) %>%
-#'   rasterize_points(
+#'   rasterly_points(xlim = c(1, 5000)) %>%
+#'   rasterly_points(
 #'     mapping = aes(x = x, y = y, color = category),
 #'     xlim = c(5001, 1e4)
 #'   )
@@ -36,7 +36,7 @@
 #' @export
 `[.rasterly` <- function(x, name) {
   # x is executed
-  if(is.rasterly_build(x)) {
+  if(is.rasterlyBuild(x)) {
     .Primitive("[")(x,name)
   } else {
     # x is an unexecuted list of environments
@@ -63,7 +63,7 @@
   level <- args$level %||% 1
 
   # x is executed
-  if(is.rasterly_build(x)) {
+  if(is.rasterlyBuild(x)) {
     .Primitive("[<-")(x, name, value)
   } else {
     # x is an unexecuted list of environments

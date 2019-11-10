@@ -1,26 +1,26 @@
 #' @export
 as.raster.rasterizeMatrix <- function(x, color = c('lightblue','darkblue'), span = 50,
                                       zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
-                                      alpha = 255, layout = c("weighted", "cover")) {
-
+                                      alpha = 1, layout = c("weighted", "cover")) {
+  
   layout <- match.arg(layout)
   span <- max(span, length(color))
   # get dimension
   dimM <- dim(x)
   which_is_not_zero <- x != 0
-
+  
   if(length(which_is_not_zero) > 0) {
-
+    
     cdf <- get_cdf(M = x, zeroIgnored = TRUE, which_is_not_zero = which_is_not_zero)
     id <- floor(cdf(x) * (span - 1))[which_is_not_zero] + 1
-
-    col_index <- get_mapped_color(color_map = color,
-                                   span = span)
-
+    
+    col_index <- get_mapped_color(color = color,
+                                  span = span)
+    
     red <- col_index$red[id]
     green <- col_index$green[id]
     blue <- col_index$blue[id]
-
+    
     if(is.null(image)) {
       # build image
       image <- rep(background, dimM[1]*dimM[2])
@@ -35,7 +35,7 @@ as.raster.rasterizeMatrix <- function(x, color = c('lightblue','darkblue'), span
         NULL
       } else stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
     }
-
+    
     image[which_is_not_zero] <- grDevices::rgb(red = red/255 + 1e-8,
                                                green = green/255 + 1e-8,
                                                blue = blue/255 + 1e-8,
@@ -45,16 +45,21 @@ as.raster.rasterizeMatrix <- function(x, color = c('lightblue','darkblue'), span
     # x is a zero matrix
     image <- rep(background, dimM[1] * dimM[2])
   }
-
+  
   image <- matrix(image, nrow = dimM[1])
-  image[dimM[1]:1, ]
+  image <- image[dimM[1]:1, ]
+  # when image convert from matrix to raster
+  # the elements in matrix will be reshape from by col 
+  # to by row
+  class(image) <- "raster"
+  return(t(image))
 }
 
 #' @export
 as.raster.rasterizeList <- function(x, color = NULL, span = 50,
                                     zeroIgnored = TRUE, image = NULL, background = "#FFFFFF",
-                                    alpha = 255, layout = c("weighted", "cover")) {
-
+                                    alpha = 1, layout = c("weighted", "cover")) {
+  
   n <- length(x)
   if(missing(color) || is.null(color)) color <- gg_color_hue(n)
   stopifnot(
@@ -62,12 +67,12 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
       length(color) >= n
     }
   )
-
+  
   layout <- match.arg(layout)
   dimM <- dim(x[[1]])
-
+  
   if(layout == "weighted") {
-
+    
     color_key_rgb_num <- get_rgb_num(color)
     # weighted x
     summed_M <- Reduce('+', x)
@@ -78,7 +83,7 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
                    function(i){
                      M <- x[[i]]
                      M <- M/summed_M
-
+                     
                      if(i == 1) {
                        red <<- color_key_rgb_num$red[i] * M
                        green <<- color_key_rgb_num$green[i] * M
@@ -89,7 +94,7 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
                        blue <<- blue + color_key_rgb_num$blue[i] * M
                      }
                    })
-
+    
     if(is.null(image)) {
       # build image
       image <- rep(background, dimM[1]*dimM[2])
@@ -104,21 +109,21 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
     }
     #
     colors <- grDevices::rgb(red = red/255 + 1e-8,
-                              green = green/255 + 1e-8,
-                              blue = blue/255 + 1e-8,
-                              alpha = alpha + 1e-8,
-                              maxColorValue = 1 + 2e-8)
-
+                             green = green/255 + 1e-8,
+                             blue = blue/255 + 1e-8,
+                             alpha = alpha + 1e-8,
+                             maxColorValue = 1 + 2e-8)
+    
     colors[grepl("#000000", colors)] <- background
-
+    
     image <- matrix(colors, nrow = dimM[1])
-    image[dimM[1]:1, ]
+    image <- image[dimM[1]:1, ]
   } else if (layout == "cover") {
-
+    
     if(is.null(image)) {
       image <- matrix(rep(background, dimM[1]*dimM[2]), nrow = dimM[1])
     }
-
+    
     lapply(1:n,
            function(i){
              image <<- as.raster(x = x[[i]],
@@ -129,6 +134,12 @@ as.raster.rasterizeList <- function(x, color = NULL, span = 50,
                                  background = background,
                                  alpha = alpha, layout = layout)
            })
-    image
-  } else stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
+  } else 
+    stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
+  
+  # when image convert from matrix to raster
+  # the elements in matrix will be reshape from by col 
+  # to by row
+  class(image) <- "raster"
+  return(t(image))
 }

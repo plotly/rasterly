@@ -21,32 +21,38 @@ get_background <- function(envir, ...) {
   
   args <- list(...)
   
-  background <- args$background %||% .get("background", envir = envir)
-  
-  if(is.null(background)) stop("No background color was provided.", call. = FALSE)
+  background <- args$background %||% .get("background", envir = envir) %||% "white"
   
   return(background)
 }
 
-get_color_map <- function(envir, ...) {
+get_color <- function(envir, mapping, ...) {
   
   args <- list(...)
-  names_args <- names(args)
-  col <- c("color", "color_map")
+  is_color_in_mapping <- mapping$color
+  if(is.null(is_color_in_mapping)) {
+    # color_map
+    color <- args$color_map %||% args$color
+  } else {
+    # color_key
+    color <- args$color_key %||% args$color
+  }
+  color_warning(envir, args)
   
-  which_col_name_is_mapped <- which(names_args %in% col)
-  matched_name_len <- length(which_col_name_is_mapped)
+  return(color %||% .get("color", envir = envir))
+}
+
+get_mapped_color <- function(color = c('lightblue','darkblue'),
+                             span = 50) {
   
-  if(matched_name_len == 0) {
-    
-    return(.get("color_map", envir = envir))
-    
-  } else if(matched_name_len > 1) {
-    
-    col_name <- col[which(col %in% names_args)[1]]
-    return(args[[col_name]])
-    
-  } else return(args[[which_col_name_is_mapped]])
+  # get color rgb value
+  rgb_num <- get_rgb_num(color)
+  span <- max(span, length(color))
+  # use interpolation to extend color
+  col_index <- interpolation(red = rgb_num$red, green = rgb_num$green, blue = rgb_num$blue,
+                             span = span)
+  
+  col_index
 }
 
 get_alpha <- function(envir, ...) {
@@ -78,18 +84,6 @@ get_span <- function(envir, ...) {
   )
   
   return(span)
-}
-
-get_color_key <- function(color_key, n, rasterly_color_key) {
-  
-  color_key <- color_key %||% rasterly_color_key %||% gg_color_hue(n)
-  
-  stopifnot(
-    exprs = {
-      length(color_key) >= n
-    }
-  )
-  return(color_key)
 }
 
 get_max_size <- function(envir, max_size) {
@@ -144,7 +138,9 @@ get_variable_check <- function(envir, ...) {
 get_layout <- function(envir, ...) {
   
   args <- list(...)
-  layout <- args$layout %||% .get("layout", envir = envir) %||% "weighted"
+  parent_args <- .get("args", envir = envir)
+  
+  layout <- args$layout %||% parent_args$layout %||% "weighted"
   
   if(!layout %in% c("weighted", "cover")) {
     warning("`layout` options in this release include 'weighted' or 'cover'; assuming 'weighted'", call. = FALSE)
@@ -156,7 +152,8 @@ get_layout <- function(envir, ...) {
 
 get_glyph <- function(envir, glyph) {
   
-  glyph <- glyph %||% .get("glyph", envir = envir) %||% "circle" 
+  parent_args <- .get("args", envir = envir)
+  glyph <- glyph %||% parent_args$glyph %||% "circle" 
   
   if(!glyph %in% c("circle", "square")) {
     warning("`glyph` options in this release include 'circle' or 'square'; assuming 'circle'", call. = FALSE)
@@ -166,9 +163,22 @@ get_glyph <- function(envir, glyph) {
   return(glyph)
 }
 
+get_x_pretty <- function(envir, x_pretty) {
+  
+  parent_args <- .get("args", envir = envir)
+  return(x_pretty %||% parent_args$x_pretty)
+}
+
+get_y_pretty <- function(envir, y_pretty) {
+  
+  parent_args <- .get("args", envir = envir)
+  return(y_pretty %||% parent_args$y_pretty)
+}
+
 get_group_by_data_table <- function(envir, group_by_data_table) {
   
-  group_by_data_table <- group_by_data_table %||% .get("group_by_data_table", envir = envir) %||% TRUE
+  parent_args <- .get("args", envir = envir)
+  group_by_data_table <- group_by_data_table %||% parent_args$group_by_data_table %||% TRUE
   
   if(!is.logical(group_by_data_table)) {
     warning("group_by_data_table must be a logical value; assuming TRUE.")

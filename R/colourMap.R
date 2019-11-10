@@ -1,6 +1,6 @@
 #' @title fire
 #' @description Hex codes for the "fire" color map.
-#' Used in setting argument `color_map` or `color_key` in \code{rasterly} or \code{rasterly} layers.
+#' Used in setting argument `color` in \code{rasterly} or \code{rasterly} layers.
 #' These may be deprecated in the future. 
 #' @export
 fire <-
