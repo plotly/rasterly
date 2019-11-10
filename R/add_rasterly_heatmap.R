@@ -14,7 +14,6 @@
 #'
 #' @examples
 #' \dontrun{
-#'library(rasterly)
 #'if(requireNamespace("plotly") && requireNamespace("data.table")) {
 #'  # Load data
 #'  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"
@@ -69,7 +68,7 @@ add_rasterly_heatmap <- function(p,
   }
 
   args <- list(...)
-  rasterly_args <- union(methods::formalArgs(rasterly), methods::formalArgs(rasterize_points))
+  rasterly_args <- union(methods::formalArgs(rasterly), methods::formalArgs(rasterly_points))
   args[rasterly_args] <- NULL
 
   if (is.null(z)) {
@@ -114,7 +113,7 @@ add_rasterly_heatmap <- function(p,
       rasterly(mapping = mapping,
                  show_raster = FALSE,
                  ...) %>%
-      rasterize_points() %>%
+      rasterly_points() %>%
       rasterly_build() -> rastObj
     remove(data)
     data <- NULL
