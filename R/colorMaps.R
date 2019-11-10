@@ -1,9 +1,10 @@
-#' @title fire
+#' @title Supplemental color maps for rasterly 
 #' @description Hex codes for the "fire" color map.
-#' Used in setting argument `color` in \code{rasterly} or \code{rasterly} layers.
-#' These may be deprecated in the future. 
+#' Used in setting argument `color_map` or `color_key` in \code{rasterly} or \code{rasterly} layers.
+#' This may be deprecated in the future. 
+#' @format An object of class \code{character} of length 256.
 #' @export
-fire <-
+fire_map <-
   c('#000000',
     '#060000',
     '#0d0000',
@@ -261,11 +262,13 @@ fire <-
     '#fffeee',
     '#ffffff')
 
-#' @title viridis
+#' @title Supplemental color maps for rasterly 
 #' @description Hex codes for the "viridis" color map.
+#' Used in setting argument `color_map` or `color_key` in \code{rasterly} or \code{rasterly} layers.
+#' This may be deprecated in the future. 
+#' @format An object of class \code{character} of length 256.
 #' @export
-#' @rdname fire
-viridis <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095D","#460B5E","#460C60","#470E61","#470F62","#471164"
+viridis_map <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095D","#460B5E","#460C60","#470E61","#470F62","#471164"
              ,"#471265","#471466","#481568","#481669","#48186A","#48196C","#481A6D","#481C6E","#481D6F","#481E70","#482071","#482173"
              ,"#482274","#482475","#482576","#482677","#482778","#472979","#472A79","#472B7A","#472C7B","#472E7C","#462F7D","#46307E"
              ,"#46317E","#46337F","#453480","#453581","#453681","#443882","#443983","#443A83","#433B84","#433C84","#433E85","#423F85"
@@ -288,10 +291,12 @@ viridis <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095
              ,"#D8E319","#DBE318","#DDE318","#E0E418","#E2E418","#E5E418","#E8E519","#EAE519","#EDE51A","#EFE61B","#F2E61C","#F4E61E"
              ,"#F7E61F","#F9E721","#FBE723","#FEE724")
 
-#' @title hourColors
-#' @description Hex codes for a palette with 24 colors, one for each hour of the day.
+#' @title Supplemental color maps for rasterly 
+#' @description Hex codes for the "hourColors" color map.
+#' Used in setting argument `color_map` or `color_key` in \code{rasterly} or \code{rasterly} layers.
+#' This may be deprecated in the future. 
+#' @format An object of class \code{character} of length 24.
 #' @export
-#' @rdname fire
-hourColors <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00","#3FFF00",
+hourColors_map <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00","#3FFF00",
                  "#00FF00","#00FF3F","#00FF7F","#00FFBF","#00FFFF","#00BFFF","#007FFF","#003FFF",
                  "#0000FF","#3F00FF","#7F00FF","#BF00FF","#FF00FF","#FF00BF","#FF007F","#FF003F")
