@@ -3,7 +3,7 @@
 #' @inheritParams rasterly
 #' @param alpha The transparency of points, from 0 to 1.
 #' @param shape The shape of points, see \link{pch}.
-#' @param stroke The stroke of points (size).
+#' @param point_size The size of points.
 #' @return a `ggplot` object
 #' 
 #' @seealso \link{plotRasterly}
@@ -56,7 +56,7 @@ ggRasterly <- function(data = NULL,
                        variable_check = FALSE,
                        alpha = 0.5,
                        shape = 19,
-                       stroke = 0.1) {
+                       point_size = 0.5) {
   
   if(!show_raster) return(ggplot2::ggplot())
   
@@ -113,14 +113,14 @@ ggRasterly <- function(data = NULL,
                         mapping = aes(x = x, y = y),
                         fill = imageData$color,
                         alpha = alpha,
-                        stroke = stroke,
+                        size = point_size,
                         shape = shape)
   } else {
     ggplot2::geom_point(data = imageData,
                         mapping = aes(x = x, y = y),
                         color = imageData$color,
                         alpha = alpha,
-                        stroke = stroke,
+                        size = point_size,
                         shape = shape)
   }
   ggObj <- ggObj + 

@@ -62,7 +62,7 @@ plotRasterly <- function(data = NULL,
                          variable_check = FALSE,
                          alpha = 0.5,
                          shape = 19,
-                         stroke = 0.5, 
+                         point_size = 0.5, 
                          as_image = FALSE, 
                          sizing = c("stretch", "fill", "contain")) {
   
@@ -137,7 +137,7 @@ plotRasterly <- function(data = NULL,
       variable_check = variable_check,
       alpha = alpha,
       shape = shape,
-      stroke = stroke
+      point_size = point_size
     ) %>% 
       plotly::ggplotly()
   }

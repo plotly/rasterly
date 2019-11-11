@@ -205,15 +205,6 @@ test_that("example works", {
                     plot_width = 300, plot_height = 400,
                     x_range = c(min_x, max_x),
                     y_range = c(min_y, max_y),
-                    as_image = TRUE)
-  expect_equal(inherits(p, "plotly"), TRUE)
-  
-  # plotRasterly as image
-  p <- plotRasterly(data,
-                    mapping = aes(x = x, y = y),
-                    plot_width = 300, plot_height = 400,
-                    x_range = c(min_x, max_x),
-                    y_range = c(min_y, max_y),
                     as_image = FALSE)
   expect_equal(inherits(p, "plotly"), TRUE)
 })
