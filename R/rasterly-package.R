@@ -13,10 +13,15 @@
 #' @param y_range Vector of type numeric. The range of `y`; it can be used to clip the image. For larger datasets, providing `y_range`
 #' may result in improved performance.
 #' @param background Character. The background color of the image to plot.
-#' @param color_map Vector of type character. Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
+#' @param color Vector of type character. It will determine this color vector is a `color_map` or `color_key` automatically.
+#' \itemize{
+#'  \item{color_map}{It has Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
 #' independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.
-#' @param color_key Vector of type character. The `color_key` is used for categorical variables; it is passed when the `color` aesthetic
-#' is provided.
+#'  }
+#'  \item{color_key}{Vector of type character. The `color_key` is used for categorical variables; 
+#'  it is passed when the `color` aesthetic is provided.
+#' }
+#' }
 #' @param show_raster Logical. Should the raster be displayed?
 #' @param drop_data Logical. When working with large datasets, drops the original data once processed according to the provided
 #' `aes()` parameters, using the `remove()` function. See details for additional information.
