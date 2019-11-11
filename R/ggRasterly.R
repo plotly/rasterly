@@ -47,7 +47,7 @@
 ggRasterly <- function(data = NULL,
                        mapping = aes(),
                        ...,
-                       plot_width = 600, plot_height = 600,
+                       plot_width = 400, plot_height = 400,
                        x_range = NULL, y_range = NULL,
                        background = "white",
                        color = NULL,
@@ -96,7 +96,10 @@ ggRasterly <- function(data = NULL,
                                             color = color),
                           mapping = aes(x = x, y = y, color = color),
                           alpha = 0) + 
-      ggplot2::guides(color = ggplot2::guide_legend(override.aes = list(alpha=1))) + 
+      ggplot2::guides(
+        color = ggplot2::guide_legend(override.aes = list(alpha=1), 
+                                      title = sub("~", "", rlang::expr_text(mapping$color)))
+      ) + 
       ggplot2::scale_colour_manual(
         values = stats::setNames(rastObj$colors[[1]][seq_len(length(uni_color))], uni_color)
       )

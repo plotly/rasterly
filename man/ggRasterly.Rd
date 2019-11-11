@@ -8,7 +8,7 @@ ggRasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
   plot_height = 600, x_range = NULL, y_range = NULL,
   background = "white", color = NULL, show_raster = TRUE,
   drop_data = FALSE, variable_check = FALSE, alpha = 0.5,
-  shape = 19, stroke = 0.1)
+  shape = 19, point_size = 0.5)
 }
 \arguments{
 \item{data}{Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.
@@ -52,7 +52,7 @@ independently for RGB. The darkness of the mapped color depends upon the values 
 
 \item{shape}{The shape of points, see \link{pch}.}
 
-\item{stroke}{The stroke of points (size).}
+\item{point_size}{The size of points.}
 }
 \value{
 a `ggplot` object
