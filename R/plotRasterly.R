@@ -40,12 +40,12 @@
 #'  # A point layer is added
 #'  plotRasterly(data = ridesDf, 
 #'               mapping = aes(x = Lat, y = Lon, color = hour),
-#'               color = hourColors,
+#'               color = hourColors_map,
 #'               as_image = FALSE)
 #'   # An image layer is added       
 #'   plotRasterly(data = ridesDf, 
 #'                mapping = aes(x = Lat, y = Lon, color = hour),
-#'                color = hourColors,
+#'                color = hourColors_map,
 #'                as_image = TRUE)
 #'   
 #'  }
@@ -62,7 +62,7 @@ plotRasterly <- function(data = NULL,
                          variable_check = FALSE,
                          alpha = 0.5,
                          shape = 19,
-                         size = 0.5, 
+                         stroke = 0.5, 
                          as_image = FALSE, 
                          sizing = c("stretch", "fill", "contain")) {
   
@@ -137,7 +137,7 @@ plotRasterly <- function(data = NULL,
       variable_check = variable_check,
       alpha = alpha,
       shape = shape,
-      size = size
+      stroke = stroke
     ) %>% 
       plotly::ggplotly()
   }
