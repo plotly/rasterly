@@ -19,7 +19,7 @@ A rasterly object will never be produced until `rasterly_build()` is called.
 \examples{
 r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) \%>\%
        rasterly(mapping = aes(x = x, y = y)) \%>\%
-       rasterly_points(color = fire)
+       rasterly_points(color = fire_map)
 str(r)
 p <- rasterly_build(r)
 str(p)
