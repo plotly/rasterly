@@ -3,7 +3,7 @@
 #' @inheritParams rasterly
 #' @param alpha The transparency of points, from 0 to 1.
 #' @param shape The shape of points, see \link{pch}.
-#' @param size The size of points.
+#' @param stroke The stroke of points (size).
 #' @return a `ggplot` object
 #' 
 #' @seealso \link{plotRasterly}
@@ -36,7 +36,7 @@
 #'  #### quick start
 #'  ggRasterly(data = ridesDf, 
 #'             mapping = aes(x = Lat, y = Lon, color = hour),
-#'             color = hourColors
+#'             color = hourColors_map
 #'  ) + 
 #'  labs(title = "New York Uber",
 #'       subtitle = "Apr to Sept, 2014",
@@ -56,7 +56,7 @@ ggRasterly <- function(data = NULL,
                        variable_check = FALSE,
                        alpha = 0.5,
                        shape = 19,
-                       size = 0.5) {
+                       stroke = 0.1) {
   
   if(!show_raster) return(ggplot2::ggplot())
   
@@ -113,14 +113,14 @@ ggRasterly <- function(data = NULL,
                         mapping = aes(x = x, y = y),
                         fill = imageData$color,
                         alpha = alpha,
-                        size = size,
+                        stroke = stroke,
                         shape = shape)
   } else {
     ggplot2::geom_point(data = imageData,
                         mapping = aes(x = x, y = y),
                         color = imageData$color,
                         alpha = alpha,
-                        size = size,
+                        stroke = stroke,
                         shape = shape)
   }
   ggObj <- ggObj + 
