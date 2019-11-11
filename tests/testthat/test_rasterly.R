@@ -22,7 +22,7 @@ test_that("example works", {
            y_range = c(min_y, max_y)) %>%
     rasterly_points(xlim = c(min_x, (max_x + min_x)/2),
                      ylim = c(min_y, (max_y + min_y)/2),
-                     color = fire) %>% 
+                     color = fire_map) %>% 
     rasterly_points(mapping = aes(x = x, y = y, on = -x),
                      xlim = c((max_x + min_x)/2, max_x),
                      ylim = c(min_y, (max_y + min_y)/2),
@@ -48,7 +48,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "any") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -60,7 +60,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "any") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -73,7 +73,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "mean") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -85,7 +85,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "mean") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -97,7 +97,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "first") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -109,7 +109,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "first") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -121,7 +121,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "last") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -133,7 +133,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "last") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -145,7 +145,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "m2") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -157,7 +157,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "m2") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -169,7 +169,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "max") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
@@ -181,7 +181,7 @@ test_that("example works", {
            y_range = c(min_y, max_y),
            color = colors,
            reduction_func = "max") %>%
-    rasterly_points(color = fire, group_by_data_table = FALSE) %>%
+    rasterly_points(color = fire_map, group_by_data_table = FALSE) %>%
     rasterly_build() -> ds
   expect_equal(is.rasterly(ds), TRUE)
   
