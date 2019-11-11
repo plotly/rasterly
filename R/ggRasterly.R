@@ -47,7 +47,7 @@
 ggRasterly <- function(data = NULL,
                        mapping = aes(),
                        ...,
-                       plot_width = 400, plot_height = 400,
+                       plot_width = 600, plot_height = 600,
                        x_range = NULL, y_range = NULL,
                        background = "white",
                        color = NULL,
