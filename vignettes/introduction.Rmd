@@ -66,6 +66,23 @@ end_time <- Sys.time()
 end_time - start_time
 ```
 
+A raster image, in essence, is a large sparse matrix and each element is a hexadecimal color (A character vector with elements of 7 or 9 characters, "#" followed by the red, blue, green and optionally alpha values). Since the range (x, y) of this display can be acquired, we can also map the image into a data.frame with mapping coordinates x, y and color. For example:
+
+```{r}
+image <- as.raster(matrix((1:4)/4, nrow = 2))
+image
+# mapping this image onto a 1 <= x <= 2 and 3 <= y <= 4 plane
+image2data(image, x_range = c(1,2), y_range = c(3,4))
+```
+
+In this way, we can transform a large dataset (million or billion) into a raster image (say 400 $\times$ 400), then, mapping this image to a data.frame but dropping blank ones. So the size can decrease from 160000 to rough 30k or 40k (It really depends on data). In other word, we can always reduce a huge size to a reasonable size and the darkness of color is judged by the "Reduction Function" (see section 'API' for more info)
+
+```{r basic plot, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3, eval = FALSE}
+imageData <- image2data(p)
+# basic graphics (but it is not that fast)
+plot(x = imageData$x, y = imageData$y, col = imageData$color)
+```
+
 ## `rasterly` Structure
 
 #### Subsetting
@@ -140,14 +157,28 @@ It contains:
       )
     ```
   
-  + `plotly.rasterly()`: `plotly.rasterly` takes a `rasterly` object and returns a "plotly" object:
+  + `plotRasterly()`: `plotRasterly` has very similar API with `rasterly` but return a `plotly` object.
     
     ```{r plotly_rasterly, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3, eval = FALSE}
-    # plotly
-    ply <- p %>% 
-      plotly.rasterly(sizing = "contain")
-    ply
+    # if as_image is FALSE, the image will be transformed to a data.frame
+    plotRasterly(ridesDf, 
+                 mapping = aes(x = Lat, y = Lon),
+                 as_image = TRUE) 
     ```
+    
+#### `ggplot` graphics
+
+`ggRasterly` takes the arguments from `rasterly` and returns a `ggplot` object. In this case, `image` will be transformed to a data.frame automatically. 
+
+```{r ggRasterly, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+ggRasterly(data = ridesDf, 
+           mapping = aes(x = Lat, y = Lon, color = hour),
+           color = hourColors_map) + 
+  labs(title = "New York Uber",
+       subtitle = "Apr to Sept, 2014",
+       caption = "Data from https://raw.githubusercontent.com/plotly/datasets/master")
+```
+    
 
 ## API
 
