@@ -34,10 +34,13 @@ image2data.rasterly <- function(x,
                                 background = "white",
                                 x_range = NULL,
                                 y_range = NULL) {
+  
+  if(!is.rasterlyBuild(x)) x <- rasterly_build(x)
+  
   imageData(image = x$image, 
-            background = background,
-            x_range = x_range,
-            y_range = y_range)
+            background = background %||% x$background,
+            x_range = x_range %||% x$x_range,
+            y_range = y_range %||% x$y_range)
 }
 
 #' @export
@@ -77,7 +80,7 @@ imageData <- function(image,
   y <- rep(seq(from = y_range[2], to = y_range[1], length.out = height), width)
   x <- rep(seq(from = x_range[1], to = x_range[2], length.out = width), each = height)
   
-  drop_id <- c(image != background)
+  drop_id <- c(image %in% background)
   y <- y[drop_id]
   x <- x[drop_id]
   image <- image[drop_id]
