@@ -71,15 +71,16 @@ A raster image, in essence, is a large sparse matrix and each element is a hexad
 ```{r}
 image <- as.raster(matrix((1:4)/4, nrow = 2))
 image
-# mapping this image onto a 1 <= x <= 2 and 3 <= y <= 4 plane
-image2data(image, x_range = c(1,2), y_range = c(3,4))
+# mapping this image onto a 1 <= x <= 2 and 2 <= y <= 5 plane
+image2data(image, x_range = c(1,2), y_range = c(2,5))
 ```
 
 In this way, we can transform a large dataset (million or billion) into a raster image (say 400 $\times$ 400), then, mapping this image to a data.frame but dropping blank ones. So the size can decrease from 160000 to rough 30k or 40k (It really depends on data). In other word, we can always reduce a huge size to a reasonable size and the darkness of color is judged by the "Reduction Function" (see section 'API' for more info)
 
 ```{r basic plot, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3, eval = FALSE}
 imageData <- image2data(p)
-# basic graphics (but it is not that fast)
+# basic graphics 
+# It is slow but still much faster than drawing the huge data directly)
 plot(x = imageData$x, y = imageData$y, col = imageData$color)
 ```
 
