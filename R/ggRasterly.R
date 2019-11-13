@@ -59,7 +59,6 @@ ggRasterly <- function(data = NULL,
                        point_size = 0.5) {
   
   if(!show_raster) return(ggplot2::ggplot())
-  
   mapping <- rename_mapping(mapping)
   rastObj <- rasterly(data = data,
                       mapping = mapping,
@@ -107,10 +106,7 @@ ggRasterly <- function(data = NULL,
     ggObj <- ggplot2::ggplot()
   }
   
-  imageData <- image2data(x = rastObj$image, 
-                          x_range = rastObj$x_range,
-                          y_range = rastObj$y_range,
-                          background = rastObj$background)
+  imageData <- image2data(x = rastObj)
   pointLayer <- if(shape %in% 21:24) {
     ggplot2::geom_point(data = imageData,
                         mapping = aes(x = x, y = y),
