@@ -84,15 +84,21 @@ if(requireNamespace("ggplot2") && requireNamespace("data.table") &&
                                                  hour = lubridate::hour(time),
                                                  month = lubridate::month(time),
                                                  day = lubridate::day(time))]
-
- #### quick start
+                                                 
+ # continuous variable legend
+ ggRasterly(data = ridesDf, 
+            mapping = aes(x = Lat, y = Lon),
+            color = fire_map
+ )
+ # discreate variable legend
  ggRasterly(data = ridesDf, 
             mapping = aes(x = Lat, y = Lon, color = hour),
             color = hourColors_map
  ) + 
- labs(title = "New York Uber",
-      subtitle = "Apr to Sept, 2014",
-      caption = "Data from https://raw.githubusercontent.com/plotly/datasets/master")
+ ggplot2::labs(title = "New York Uber",
+               subtitle = "Apr to Sept, 2014",
+               caption = 
+                 "https://raw.githubusercontent.com/plotly/datasets/master")
  }
 }
 }

@@ -32,15 +32,21 @@
 #'                                                  hour = lubridate::hour(time),
 #'                                                  month = lubridate::month(time),
 #'                                                  day = lubridate::day(time))]
-#'
-#'  #### quick start
+#'                                                  
+#'  # continuous variable legend
+#'  ggRasterly(data = ridesDf, 
+#'             mapping = aes(x = Lat, y = Lon),
+#'             color = fire_map
+#'  )
+#'  # discreate variable legend
 #'  ggRasterly(data = ridesDf, 
 #'             mapping = aes(x = Lat, y = Lon, color = hour),
 #'             color = hourColors_map
 #'  ) + 
-#'  labs(title = "New York Uber",
-#'       subtitle = "Apr to Sept, 2014",
-#'       caption = "Data from https://raw.githubusercontent.com/plotly/datasets/master")
+#'  ggplot2::labs(title = "New York Uber",
+#'                subtitle = "Apr to Sept, 2014",
+#'                caption = 
+#'                  "https://raw.githubusercontent.com/plotly/datasets/master")
 #'  }
 #' }
 #' @export
@@ -75,17 +81,16 @@ ggRasterly <- function(data = NULL,
     rasterly_points() %>% 
     rasterly_build()
   
-  len <- max(plot_width, plot_height)
   if("color" %in% names(mapping)) {
-    uni_color <- rlang::eval_tidy(mapping$color, data) %>% 
+    color <- rlang::eval_tidy(mapping$color, data) %>% 
       unique() %>% 
       as.factor() # this line may be expensive
-    if(len > length(uni_color)) {
-      color <- rep_len(uni_color, length.out = len)
-    } else {
-      len <- length(uni_color)
+    len <- length(color)
+    if(len == 1) {
+      color <- rep(color, 2)
+      len <- 2
     }
-
+    # categorical legend
     ggObj <- ggplot2::ggplot() + 
       # all the rest is for legend
       # This is a hack!
@@ -100,10 +105,29 @@ ggRasterly <- function(data = NULL,
                                       title = sub("~", "", rlang::expr_text(mapping$color)))
       ) + 
       ggplot2::scale_colour_manual(
-        values = stats::setNames(rastObj$colors[[1]][seq_len(length(uni_color))], uni_color)
+        values = stats::setNames(rastObj$colors[[1]][seq_len(length(color))], color)
       )
   } else {
-    ggObj <- ggplot2::ggplot()
+    # only one layer with one numerical matrix
+    numerical_matrix <- rastObj$agg[[1]][[1]]
+    color_map <- rastObj$colors[[1]]
+    
+    drop_id <- numerical_matrix != 0
+    color_num <- c(numerical_matrix[drop_id])
+    len <- length(color_num)
+    
+    if(len <= 1) {
+      color_num <- c(rastObj$background, color_num)
+      len <- length(color_num)
+    }
+    
+    ggObj <- ggplot2::ggplot() + 
+      ggplot2::geom_point(data = data.frame(x = seq(rastObj$x_range[1], rastObj$x_range[2], length.out = len),
+                                            y = seq(rastObj$y_range[1], rastObj$y_range[2], length.out = len),
+                                            color = color_num), 
+                          mapping = aes(x = x, y = y, color = color),
+                          alpha = 0) + 
+      ggplot2::scale_color_gradientn(colours =  color_map)
   }
   
   imageData <- image2data(x = rastObj)
