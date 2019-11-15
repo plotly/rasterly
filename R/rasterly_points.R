@@ -13,7 +13,8 @@
 #' supported reduction operators are `sum`, `any`, `mean`, `m2`, `first`, `last`, `min` and `max`. Default is `sum`. See details.
 #' @param layout Character. The method used to generate layouts for multiple images. The default is `weighted`. Useful for categorical
 #' data (i.e. "color" is provided via `aes()`). `weighted` specifies that the final raster should be a weighted combination of each
-#' (categorical) aggregation matrix.
+#' (categorical) aggregation matrix. Conversely, `cover` indicates that the afterwards objects will be drawn on top of 
+#' the previous ones.
 #' @param glyph Character. Currently, only "circle" and "square" are supported; as the `size` of the pixels increases, how should they
 #' spread out -- should the pattern be circular or square? Other glyphs may be added in the future.
 #' @param group_by_data_table Logical. Default is `TRUE`; when "color" is provided via `aes()`, the "group by" operation may be
