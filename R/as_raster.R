@@ -51,7 +51,7 @@ as_raster.matrix <- function(x, color = c('lightblue','darkblue'), span = 50,
   
   image <- matrix(image, nrow = dimM[1])
   image <- image[dimM[1]:1, ]
-  return(as.raster(image))
+  return(image)
 }
 
 as_raster.list <- function(x, color = NULL, span = 50,
@@ -135,5 +135,5 @@ as_raster.list <- function(x, color = NULL, span = 50,
   } else 
     stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
   
-  return(as.raster(image))
+  return(image)
 }

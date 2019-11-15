@@ -161,6 +161,7 @@ rasterly_build.rasterly <- function(rastObj) {
   )
   # set guides background
   if(!is.null(image)) {
+    image <- grDevices::as.raster(image)
     if(!is.null(guides_env)) {
       image <- set_guides(image, 
                           x_range = xlims,

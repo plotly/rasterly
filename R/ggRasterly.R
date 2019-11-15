@@ -129,7 +129,6 @@ ggRasterly <- function(data = NULL,
                           alpha = 0) + 
       ggplot2::scale_color_gradientn(colours =  color_map)
   }
-  
   imageData <- image2data(x = rastObj)
   pointLayer <- if(shape %in% 21:24) {
     ggplot2::geom_point(data = imageData,
