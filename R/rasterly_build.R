@@ -1,9 +1,9 @@
 #' @title rasterly_build
 #' @description Produce a rasterly object and return the raster information required to produce an image
-#' @param rastObj A rasterly object. It should be a list of environments composed of a `rasterly()` and
-#' several `rasterly_...` layers.
+#' @param rastObj A rasterly object. It should be a list of environments composed of a \code{rasterly()} and
+#' several \code{rasterly_...} layers.
 #'
-#' @note A rasterly object will never be produced until `rasterly_build()` is called.
+#' @note A rasterly object will never be produced until \code{rasterly_build()} is called.
 #'
 #' @seealso \link{rasterly}, \link{rasterly_points}, \link{[.rasterly}, \link{[<-.rasterly}
 #'

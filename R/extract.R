@@ -1,7 +1,8 @@
-#' @title Extract or replace parts of a `rasterly` object
-#' @description The `extract` function provides functionality for updating existing `rasterly` objects.
+#' @title Extract or replace parts of a \code{rasterly} object
+#' @name extract
+#' @description The \code{extract} function provides functionality for updating existing \code{rasterly} objects.
 #' @param x Object from which to extract element(s) or in which to replace element(s).
-#' @param name Character. A literal string to be extracted from `x`. See details for more information.
+#' @param name Character. A literal string to be extracted from \code{x}. See details for more information.
 #'
 #' @details Available names:
 #' \itemize{
@@ -48,13 +49,13 @@
   }
 }
 
-#' @inherit [.rasterly
-#' @param ... (missing) or NULL. See \code{help('[<-')}
+#' @inherit extract
+#' @param ... (missing) or NULL.
 #' @param value values to replace; typically an array-like R object of a similar class as x.
-#' 
+#' @rdname extract
 #' @details 
 #' Set \code{level} in \code{...}. \code{level} is numeric used for specifing level of `rasterly` object to modify; 
-#' default is 1 for the parent layer (`rasterly()`).
+#' default is 1 for the parent layer (\code{rasterly()}).
 #' 
 #' @export
 `[<-.rasterly` <- function(x, name, ..., value) {

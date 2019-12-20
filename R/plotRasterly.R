@@ -1,11 +1,11 @@
 #' @title plotRasterly
-#' @description Display large data set in `plotly`
+#' @description Display large data set in \code{plotly}
 #' @inheritParams ggRasterly
 #' @param as_image Logical value. If \code{FALSE}, image raster will be transformed into a data frame, hence a points layer
 #' would be pipped on \code{plotly}; conversely, a raster layer will be added.
 #' @param sizing It affects only with \code{as_image = TRUE}. Specifies which dimension of the image to constrain.
 #'  One of "stretch" "fill", "contain". see https://plot.ly/r/reference/#Layout_and_layout_style_objects
-#' @return a `plotly` widget
+#' @return a \code{plotly} widget
 #' 
 #' @seealso \link{ggRasterly}
 #' 

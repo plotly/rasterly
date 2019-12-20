@@ -14,7 +14,7 @@ ggRasterly(data = NULL, mapping = aes(), ..., plot_width = 600,
 \item{data}{Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.
 For best performance, particularly when processing large datasets, use of \link[data.table]{data.table} is recommended.}
 
-\item{mapping}{Default list of aesthetic mappings to use for plot. The same with `ggplot2` \link[ggplot2]{aes}.
+\item{mapping}{Default list of aesthetic mappings to use for plot. The same with \code{ggplot2} \link[ggplot2]{aes}.
 See details.}
 
 \item{...}{Other arguments which will be passed through to layers.}
@@ -23,30 +23,30 @@ See details.}
 
 \item{plot_height}{Integer. The height of the image to plot; must be a positive integer. A higher value indicates a higher resolution.}
 
-\item{x_range}{Vector of type numeric. The range of `x`; it can be used to clip the image. For larger datasets, providing `x_range`
+\item{x_range}{Vector of type numeric. The range of \code{x}; it can be used to clip the image. For larger datasets, providing \code{x_range}
 may result in improved performance.}
 
-\item{y_range}{Vector of type numeric. The range of `y`; it can be used to clip the image. For larger datasets, providing `y_range`
+\item{y_range}{Vector of type numeric. The range of \code{y}; it can be used to clip the image. For larger datasets, providing \code{y_range}
 may result in improved performance.}
 
 \item{background}{Character. The background color of the image to plot.}
 
-\item{color}{Vector of type character. It will determine this color vector is a `color_map` or `color_key` automatically.
+\item{color}{Vector of type character. It will determine this color vector is a \code{color_map} or \code{color_key} automatically.
 \itemize{
- \item{}{color_map: It has Color(s) used to draw each pixel. The `color_map` is extended by linear interpolation
+ \item{}{color_map: It has Color(s) used to draw each pixel. The \code{color_map} is extended by linear interpolation
 independently for RGB. The darkness of the mapped color depends upon the values of the aggregation matrix.
  }
- \item{}{color_key: Vector of type character. The `color_key` is used for categorical variables; 
- it is passed when the `color` aesthetic is provided.
+ \item{}{color_key: Vector of type character. The \code{color_key} is used for categorical variables; 
+ it is passed when the \code{color} aesthetic is provided.
 }
 }}
 
 \item{show_raster}{Logical. Should the raster be displayed?}
 
 \item{drop_data}{Logical. When working with large datasets, drops the original data once processed according to the provided
-`aes()` parameters, using the `remove()` function. See details for additional information.}
+\code{aes()} parameters, using the \code{remove()} function. See details for additional information.}
 
-\item{variable_check}{Logical. If `TRUE`, drops unused columns to save memory; may result in reduced performance.}
+\item{variable_check}{Logical. If \code{TRUE}, drops unused columns to save memory; may result in reduced performance.}
 
 \item{alpha}{The transparency of points, from 0 to 1.}
 
