@@ -1,9 +1,15 @@
-.get <- function(x, envir = parent.frame(), inherits = FALSE) {
+.get <- function(x, envir = as.environment(-1), mode = "any", ifnotfound,
+                 inherits = FALSE) {
   
-  m <- mget(x, envir = envir, ifnotfound = list(NULL),
-            inherits = inherits)
-  return(m[[x]])
+  if(missing(ifnotfound))
+    ifnotfound <- list(NULL)
+  
+  mget(x = x, envir = envir, mode = mode,
+       ifnotfound = ifnotfound,
+       inherits = inherits)[[x]]
+  
 }
+
 
 get_cdf <- function(M, zeroIgnored = TRUE, ...) {
   
