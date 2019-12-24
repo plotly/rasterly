@@ -21,9 +21,15 @@ library(grid)
 library(plotly)
 ```
 
-`rasterly` makes it easy to rapidly generate raster images for large datasets. Although the package is inspired by the Datashader library (http://datashader.org/getting_started/index.html) available for Python, `rasterly` does not attempt to reproduce all the features of Datashader.
+`rasterly` makes it easy to rapidly generate raster images for large datasets. Although the package is inspired by the Datashader library (http://datashader.org/getting_started/index.html) available for Python, `rasterly` does not attempt to reproduce all the features of Datashader. Rather, `rasterly` offers comparable performance to Datashader when generating rasters from source data. `rasterly` attempts to provide a flexible, convenient interface which should feel familiar to users of ggplot2 and its aesthetics-based approach to customizing plots and figures.
 
-Rather, `rasterly` offers comparable performance to Datashader when generating rasters from source data. `rasterly` attempts to provide a flexible, convenient interface which should feel familiar to users of ggplot2 and its aesthetics-based approach to customizing plots and figures.
+A raster may be described as a matrix of cells or pixels arranged in grid-like fashion, 
+in which each pixel represents a value in the source data. When combined with the \link{plotly} package and `Plotly.js`, `rasterly` enables analysts to generate interactive figures with very large datasets 
+which are responsive enough to embed into Dash for R applications.
+
+The `rasterly` function creates a rasterly object, to which aggregation layers may be added. 
+This function is the first step in the process of generating raster image data using the package. 
+The `rasterly` function is not intended to be used in isolation, since aggregation layers are required for full functionality.
 
 ## Data set
 
