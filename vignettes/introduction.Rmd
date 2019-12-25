@@ -140,7 +140,7 @@ It contains:
   * plot_width: plot width, number of columns in aggregation matrix 
   * variable_names: names of variables
   * background: background color
-  * colors: color_map (color used to map in each pixel) or color_key (used for categorical variable. In general, 'color_key' would be called when "color" is set in `aes()`)
+  * colors: color used to map in each pixel or used for categorical variable. It is distinguished by whether "color" is set in `aes()` or not
 
 ## Display
 
@@ -150,15 +150,15 @@ It contains:
 
   + `add_rasterly_heatmap()`: Layers are added to Plotly objects via `add_trace(...)`; `rasterly` provides the `add_rasterly_heatmap()` function which also leverages `add_heatmap()` to generate single channel heatmap overlays for Plotly figures. Multi-channel heatmaps are not currently supported; this feature will be available in an upcoming release.
     
-    ```{r add_rasterly_heatmap, fig.width = 4, fig.height = 3}
+    ```{r add_rasterly_heatmap, fig.width = 6, fig.height = 5}
     plotly::plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
       add_rasterly_heatmap() %>% 
       layout(
         title = "Uber drives",
-        x = list(
+        xaxis = list(
           title = "Lat"
         ),
-        y = list(
+        yaxis = list(
           title = "Lon"
         )
       )
@@ -177,7 +177,7 @@ It contains:
 
 `ggRasterly` takes the arguments from `rasterly` and returns a `ggplot` object. In this case, `image` will be transformed to a data.frame automatically. 
 
-```{r ggRasterly, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+```{r ggRasterly, warning=FALSE, message=FALSE, fig.width = 6, fig.height = 5}
 ggRasterly(data = ridesDf, 
            mapping = aes(x = Lat, y = Lon, color = hour),
            color = hourColors_map) + 
@@ -198,14 +198,14 @@ r <- rasterly(data = ridesDf,
 
 #### Mapping system 
 
-  * Set `color`
+* Set `color`
 
 ```{r set color, fig.width = 4, fig.height = 3}
 r %>% 
   rasterly_points(
-     mapping = aes(color = hour),
-     color_key = hourColors_map,
-     background = "black"
+    mapping = aes(color = hour),
+    color = hourColors_map,
+    background = "black"
   ) -> g
 g
 ```
@@ -213,8 +213,8 @@ g
 Different colors represent different hours:
 
 ```{r legend, fig.width = 4, fig.height = 3}
-# rasterly doesn't currently support legends, though this feature is forthcoming
-plot(1:24, y = rep(1,24), col = hourColors_map, pch = 19, cex = 3)
+    # rasterly doesn't currently support legends, though this feature is forthcoming
+    plot(1:24, y = rep(1,24), col = hourColors_map, pch = 19, cex = 3)
 ```
 
 The number of aggregation matrices is equivalent to the number of categories:
@@ -223,7 +223,6 @@ The number of aggregation matrices is equivalent to the number of categories:
 build_g <- rasterly_build(g)
 # the object has only one layer, so we index into the first element
 length(build_g$agg[[1]])
-# 24
 ```
 
 The colors attribute in "image" within `build_g` is generated via weighted arithmetic means (default) computed from the aggregation matrices. We can choose the "cover" layout to display multiple aggregation matrices:
@@ -231,18 +230,18 @@ The colors attribute in "image" within `build_g` is generated via weighted arith
 ```{r set color cover, fig.width = 4, fig.height = 3, eval = FALSE}
 r %>% 
   rasterly_points(
-     mapping = aes(color = hour),
-     color_key = hourColors_map,
-     background = "black",
-     layout = "cover"
+    mapping = aes(color = hour),
+    color = hourColors_map,
+    background = "black",
+    layout = "cover"
   )
 ```
 
 The resulting raster will be overlaid onto the plotting surface.
 
-  * Set `on`
+* Set `on`
   
-  `reduction_func` is implemented `on` which variable
+`reduction_func` is implemented `on` which variable
 
 ```{r set on, fig.width = 4, fig.height = 3, eval = FALSE}
 r %>% 
@@ -252,9 +251,9 @@ r %>%
   )  
 ```
 
-  * Set `size`
+* Set `size`
   
-  To control the number of pixels allocated to an observation, we can set the `size` aesthetic; when specified, the `max_size` argument provides the upper bound of the number of pixels a single observation is allocated:
+To control the number of pixels allocated to an observation, we can set the `size` aesthetic; when specified, the `max_size` argument provides the upper bound of the number of pixels a single observation is allocated:
   
 ```{r set size, fig.width = 4, fig.height = 3, eval = FALSE}
 r %>% 
@@ -272,53 +271,47 @@ A reduction operator function is used when aggregating data points within each b
 
   * `mean` reduction function:
 
-```{r reduction on mean, fig.width = 4, fig.height = 3, eval = FALSE}
-r %>% 
-  rasterly_points(
-    reduction_func = "mean", # process the data points using the mean reduction function
-    background = "black",    # change background to "black" from right to left (from dark to light)
-    color = fire_map # provide a custom color_map
-  )  
-```
+    ```{r reduction on mean, fig.width = 4, fig.height = 3, eval = FALSE}
+    r %>% 
+      rasterly_points(
+        reduction_func = "mean", # process the data points using the mean reduction function
+        background = "black",    # change background to "black" from right to left (from dark to light)
+        color = fire_map # provide a custom color_map
+      )  
+    ```
 
-The `mean` reduction function averages the y column (default setting) for every observation. It's also possible to average over other features using the `on` aesthetic; consult the list of available reduction functions below for additional details.
-
-`on` 
+  The `mean` reduction function averages the y column (default setting) for every observation. It's also possible to average over other features using the `on` aesthetic; consult the list of available reduction functions below for additional details.
 
   * `any` reduction function:
   
-```{r reduction on any, fig.width = 4, fig.height = 3, eval = FALSE}
-r %>% 
-  rasterly_points(
-    reduction_func = "any",
-    color = c("white", "black")
-  )
-```
+    ```{r reduction on any, fig.width = 4, fig.height = 3, eval = FALSE}
+    r %>% 
+      rasterly_points(
+        reduction_func = "any",
+        color = c("white", "black")
+      )
+    ```
 
-Currently supported reduction functions:
+  Currently supported reduction functions:
 
-+ `sum`: If `on` is not provided within `aes()`, the default is to take the sum within each bin. When `on` is specified, the function reduces by taking the sum of all elements within the variable named in `on`.
+  + `sum`: If `on` is not provided within `aes()`, the default is to take the sum within each bin. When `on` is specified, the function reduces by taking the sum of all elements within the variable named in `on`.
 
-+ `any`: When `on` is provided within `aes()`, the `any` reduction function specifies whether any elements in `on` should be mapped to each bin.
+  + `any`: When `on` is provided within `aes()`, the `any` reduction function specifies whether any elements in `on` should be mapped to each bin.
 
-+ `mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default. When `on` is given, the `mean` reduction function takes the mean of all elements within the variable specified by `on`.
+  + `mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default. When `on` is given, the `mean` reduction function takes the mean of all elements within the variable specified by `on`.
 
-The following functions require that `on` is first provided via `aes()`:
+  The following functions require that `on` is first provided via `aes()`:
 
-+ `m2`: The `m2` function computes the sum of square differences from the mean of all elements in the variable specified by `on`.
+  + `m2`: The `m2` function computes the sum of square differences from the mean of all elements in the variable specified by `on`.
 
-+ `var`: The `var` function computes the variance over all elements in the vector specified by `on`.
+  + `var`: The `var` function computes the variance over all elements in the vector specified by `on`.
 
-+ `sd`: The `sd` function computes the standard deviation over all elements in the vector specified by `on`.
+  + `sd`: The `sd` function computes the standard deviation over all elements in the vector specified by `on`.
 
-+ `first`: The `first` function returns the first element in the vector specified by `on`.
+  + `first`: The `first` function returns the first element in the vector specified by `on`.
 
-+ `last`: The `last` function returns the last element in the vector specified by `on`.
+  + `last`: The `last` function returns the last element in the vector specified by `on`.
 
-+ `min`: The `min` function returns the minimum value in the vector specified by `on`.
+  + `min`: The `min` function returns the minimum value in the vector specified by `on`.
 
-+ `max`: The `min` function returns the maximum value in the vector specified by `on`.
-
-`rasterly` is in active development; please report issues and request features via https://github.com/plotly/rasterly/issues.
-
-Future work: provide support for `ggplot2` via `geom_rasterly()`, and `loon` via `l_rasterly()`.
+  + `max`: The `min` function returns the maximum value in the vector specified by `on`.
