@@ -2,7 +2,7 @@
 % Please edit documentation in R/image2data.R
 \name{image2data}
 \alias{image2data}
-\title{Image ratser to data frame.}
+\title{Image raster to data frame.}
 \usage{
 image2data(x, background = "white", x_range = NULL, y_range = NULL)
 }
