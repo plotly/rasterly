@@ -6,10 +6,15 @@ is.rasterly <- function(x) {
   inherits(x, "rasterly")
 }
 
-is.rasterly_build <- function(x) {
-  inherits(x, "rasterly_build")
+#' @title Is \code{rasterlyBuild}
+#' @description Reports whether x is a \code{rasterlyBuild} object. In other word, it helps to define
+#' whether this object has been passed through `rasterly_build`
+#' @param x a \code{rasterly} object
+#' @export
+is.rasterlyBuild <- function(x) {
+  inherits(x, "rasterlyBuild")
 }
 
-is.rasterizeLayer <- function(x) {
+is.rasterlyLayer <- function(x) {
   inherits(x, "rasterlyLayer")
 }

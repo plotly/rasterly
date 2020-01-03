@@ -1,20 +1,19 @@
 #' @title Add "rasterly" trace to a Plotly visualization
 #' @description Add trace to a Plotly visualization.
 #' @param p A \code{plotly} object
-#' @param x Numeric vector or expression. The x variable, to be passed on to `aes()`.
-#' @param y Numeric or expression. The y variable, to be passed on to `aes()`.
-#' @param z Numeric. A numeric matrix (optional), to be processed with `add_heatmap`.
+#' @param x Numeric vector or expression. The x variable, to be passed on to \code{aes()}.
+#' @param y Numeric or expression. The y variable, to be passed on to \code{aes()}.
+#' @param z Numeric. A numeric matrix (optional), to be processed with \code{add_heatmap}.
 #' @param data A data.frame or \link[crosstalk]{SharedData} object (optional).
 #' @param inherit Logical. Inherit attributes from \link[plotly]{plotly}?
-#' @param on Numeric vector or expression. Provides the data on which to reduce, to be passed on to `aes()`.
-#' @param size Numeric vector or expression. Pixel size for each observation, to be passed on to `aes()`.
+#' @param on Numeric vector or expression. Provides the data on which to reduce, to be passed on to \code{aes()}.
+#' @param size Numeric vector or expression. Pixel size for each observation, to be passed on to \code{aes()}.
 #' @param scaling Character string or function. The scaling method to be used for the trace.
-#' @param ... Arguments (i.e., attributes) passed along to the trace type or `rasterly`.
+#' @param ... Arguments (i.e., attributes) passed along to the trace type or \code{rasterly}.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'library(rasterly)
 #'if(requireNamespace("plotly") && requireNamespace("data.table")) {
 #'  # Load data
 #'  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"
@@ -69,7 +68,7 @@ add_rasterly_heatmap <- function(p,
   }
 
   args <- list(...)
-  rasterly_args <- union(methods::formalArgs(rasterly), methods::formalArgs(rasterize_points))
+  rasterly_args <- union(methods::formalArgs(rasterly), methods::formalArgs(rasterly_points))
   args[rasterly_args] <- NULL
 
   if (is.null(z)) {
@@ -114,11 +113,9 @@ add_rasterly_heatmap <- function(p,
       rasterly(mapping = mapping,
                  show_raster = FALSE,
                  ...) %>%
-      rasterize_points() %>%
+      rasterly_points() %>%
       rasterly_build() -> rastObj
-    remove(data)
     data <- NULL
-
     if(sum(lengths(rastObj$agg)) > 1)
       message("More than one aggregation matrix was detected.")
 

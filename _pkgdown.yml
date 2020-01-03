@@ -18,5 +18,9 @@ reference:
     - add_rasterly_heatmap
     - rasterly
     - rasterly_build
-    - rasterize_points
+    - rasterly_points
     - is.rasterly
+    - image2data
+    - ggRasterly
+    - plotRasterly
+    - rasterly_guides

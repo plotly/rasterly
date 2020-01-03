@@ -19,7 +19,7 @@ r_github_packages:
 before_install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1  &
-  - R -q -e 'install.packages(c("Rcpp", "ggplot2", "data.table", "plotly", "magrittr","rlang","testthat","knitr","rmarkdown"))'
+  - R -q -e 'install.packages(c("Rcpp", "ggplot2", "data.table", "plotly", "magrittr","rlang","testthat","knitr","rmarkdown", "png"))'
 
 cache: packages
 

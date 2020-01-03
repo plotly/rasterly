@@ -11,21 +11,21 @@ add_rasterly_heatmap(p, x = NULL, y = NULL, z = NULL, ...,
 \arguments{
 \item{p}{A \code{plotly} object}
 
-\item{x}{Numeric vector or expression. The x variable, to be passed on to `aes()`.}
+\item{x}{Numeric vector or expression. The x variable, to be passed on to \code{aes()}.}
 
-\item{y}{Numeric or expression. The y variable, to be passed on to `aes()`.}
+\item{y}{Numeric or expression. The y variable, to be passed on to \code{aes()}.}
 
-\item{z}{Numeric. A numeric matrix (optional), to be processed with `add_heatmap`.}
+\item{z}{Numeric. A numeric matrix (optional), to be processed with \code{add_heatmap}.}
 
-\item{...}{Arguments (i.e., attributes) passed along to the trace type or `rasterly`.}
+\item{...}{Arguments (i.e., attributes) passed along to the trace type or \code{rasterly}.}
 
 \item{data}{A data.frame or \link[crosstalk]{SharedData} object (optional).}
 
 \item{inherit}{Logical. Inherit attributes from \link[plotly]{plotly}?}
 
-\item{on}{Numeric vector or expression. Provides the data on which to reduce, to be passed on to `aes()`.}
+\item{on}{Numeric vector or expression. Provides the data on which to reduce, to be passed on to \code{aes()}.}
 
-\item{size}{Numeric vector or expression. Pixel size for each observation, to be passed on to `aes()`.}
+\item{size}{Numeric vector or expression. Pixel size for each observation, to be passed on to \code{aes()}.}
 
 \item{scaling}{Character string or function. The scaling method to be used for the trace.}
 }
@@ -34,7 +34,6 @@ Add trace to a Plotly visualization.
 }
 \examples{
 \dontrun{
-library(rasterly)
 if(requireNamespace("plotly") && requireNamespace("data.table")) {
  # Load data
  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"

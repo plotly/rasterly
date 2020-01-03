@@ -10,15 +10,15 @@ rasterize_points(rastObj, data = NULL, mapping = aes(), ...,
   inherit.aes = TRUE)
 }
 \arguments{
-\item{rastObj}{A "rasterly" object.}
+\item{rastObj}{A \code{rasterly} object.}
 
-\item{data}{A `data.frame` or `function` with an argument `x`, specifying the dataset to use for plotting. If `data` 
-is `NULL`, the `data` argument provided to `rasterly()` may be passed through.}
+\item{data}{A \code{data.frame} or \code{function} with an argument \code{x}, specifying the dataset to use for plotting. If \code{data} 
+is \code{NULL}, the \code{data} argument provided to \code{rasterly} may be passed through.}
 
-\item{mapping}{Default list of aesthetic mappings to use for plot. If provided and `inherit.aes = TRUE`, it will be
-stacked on top of the mappings passed to `rasterly()`.}
+\item{mapping}{Default list of aesthetic mappings to use for plot. If provided and \code{inherit.aes = TRUE}, it will be
+stacked on top of the mappings passed to \code{rasterly}.}
 
-\item{...}{Pass-through arguments provided by `rasterly()`.}
+\item{...}{Pass-through arguments provided by \code{rasterly}.}
 
 \item{xlim}{Vector of type numeric. X limits in this layer.}
 
@@ -27,80 +27,25 @@ stacked on top of the mappings passed to `rasterly()`.}
 \item{max_size}{Numeric. When size changes, the upper bound of the number of pixels over which to spread a single observation.}
 
 \item{reduction_func}{Function. A reduction function is used to aggregate data points into their pixel representations. Currently
-supported reduction operators are `sum`, `any`, `mean`, `m2`, `first`, `last`, `min` and `max`. Default is `sum`. See details.}
+supported reduction operators are \code{sum}, \code{any}, \code{mean}, \code{m2}, \code{first}, \code{last}, \code{min} and \code{max}. Default is \code{sum}. See details.}
 
-\item{layout}{Character. The method used to generate layouts for multiple images. The default is `weighted`. Useful for categorical
-data (i.e. "color" is provided via `aes()`). `weighted` specifies that the final raster should be a weighted combination of each
-(categorical) aggregation matrix.}
+\item{layout}{Character. The method used to generate layouts for multiple images. The default is \code{weighted}. Useful for categorical
+data (i.e. "color" is provided via \code{aes()}). \code{weighted} specifies that the final raster should be a weighted combination of each
+(categorical) aggregation matrix. Conversely, \code{cover} indicates that the afterwards objects will be drawn on top of 
+the previous ones.}
 
-\item{glyph}{Character. Currently, only "circle" and "square" are supported; as the `size` of the pixels increases, how should they
+\item{glyph}{Character. Currently, only "circle" and "square" are supported; as the \code{size} of the pixels increases, how should they
 spread out -- should the pattern be circular or square? Other glyphs may be added in the future.}
 
-\item{group_by_data_table}{Logical. Default is `TRUE`; when "color" is provided via `aes()`, the "group by" operation may be
-perfromed within `data.table` or natively within `rasterly`. Generally, `group_by_data_table = TRUE` is faster, but for very
-large datasets grouping within `rasterly` may offer better performance.}
+\item{group_by_data_table}{Logical. Default is \code{TRUE}; when "color" is provided via \code{aes()}, the "group by" operation may be
+perfromed within \code{data.table} or natively within \code{rasterly}. Generally, \code{group_by_data_table = TRUE} is faster, but for very
+large datasets grouping within \code{rasterly} may offer better performance.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics, rather than combining with them.}
 }
-\value{
-A list of environments.
-}
 \description{
-Points layer for "rasterly".
-}
-\details{
-Reduction functions
-\itemize{
- \item{`sum`: If `on` is not provided within `aes()`, the default is to take the sum within each bin. 
- When `on` is specified, the function reduces by taking the sum of all elements within the variable 
- named in `on`.}
- \item{`any`: When `on` is provided within `aes()`, the `any` reduction function specifies whether any 
- elements in `on` should be mapped to each bin.}
- \item{`mean`: If `on` is not provided in mapping `aes()`, `on` would be set as variable "y" by default.
- When `on` is given, the `mean` reduction function takes the mean of all elements within the variable
- specified by `on`.}
- \item{`m2`: Requires that `on` is specified within `aes()`. The `m2` function computes the sum of
- square differences from the mean of all elements in the variable specified by `on`.}
- \item{`var`: Requires that `on` is specified within `aes()`. The `var` function computes the variance 
- over all elements in the vector specified by `on`.}
- \item{`sd`: Requires that `on` is specified within `aes()`. The `sd` function computes the standard 
- deviation over all elements in the vector specified by `on`.}
- \item{`first`: Requires that `on` is specified within `aes()`. The `first` function returns the first 
- element in the vector specified by `on`.}
- \item{`last`: Requires that `on` is specified within `aes()`. The `last` function returns the last
- element in the vector specified by `on`.}
- \item{`min`: Requires that `on` is specified within `aes()`. The `min` function returns the minimum
- value in the vector specified by `on`.}
- \item{`max`: Requires that `on` is specified within `aes()`. The `min` function returns the maximum 
- value in the vector specified by `on`.}
-}
-}
-\examples{
-\dontrun{
-   library(rasterly)
-   if(requireNamespace("grid") && requireNamespace("gridExtra")) {
-     x <- rnorm(1e7)
-     y <- rnorm(1e7)
-     category <- sample(1:5, 1e7, replace = TRUE)
-     data.frame(x = x, y = y, category = category) \%>\%
-       rasterly(mapping = aes(x = x, y = y, color = category)) \%>\%
-       rasterize_points(layout = "weighted") -> ds1
-     ds1
-     # layout with cover
-     data.frame(x = x, y = y, category = category) \%>\%
-       rasterly(mapping = aes(x = x, y = y, color = category)) \%>\%
-       rasterize_points(layout = "cover") -> ds2
-     ds2
-     # display side by side
-     grid::grid.newpage()
-     gridExtra::grid.arrange(
-        grobs = list(rasterlyGrob(ds1), rasterlyGrob(ds2)),
-        ncol = 2,
-        top = "'weighted' layout versus 'cover' layout"
-     )
-   }
-}
+Points layer for "rasterly". Deprecated now, please use \code{rasterly_points} instead.
 }
 \seealso{
-\link{rasterly}, \link{rasterly_build}, \link{[.rasterly}, \link{[<-.rasterly}
+\link{rasterly_points}
 }

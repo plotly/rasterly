@@ -87,7 +87,7 @@ Pass the data into `rasterly`:
 ```
 ridesDf %>%
   rasterly(mapping = aes(x = Lat, y = Lon)) %>%
-  rasterize_points() -> p
+  rasterly_points() -> p
 p
 ```
 ![](man/figures/grid_rasterizer.png)

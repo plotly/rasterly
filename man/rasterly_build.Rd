@@ -7,23 +7,23 @@
 rasterly_build(rastObj)
 }
 \arguments{
-\item{rastObj}{A rasterly object. It should be a list of environments composed of a `rasterly()` and
-several `rasterly_...` layers.}
+\item{rastObj}{A rasterly object. It should be a list of environments composed of a \code{rasterly()} and
+several \code{rasterly_...} layers.}
 }
 \description{
 Produce a rasterly object and return the raster information required to produce an image
 }
 \note{
-A rasterly object will never be produced until `rasterly_build()` is called.
+A rasterly object will never be produced until \code{rasterly_build()} is called.
 }
 \examples{
 r <- data.frame(x = rnorm(1e5), y = rnorm(1e5)) \%>\%
        rasterly(mapping = aes(x = x, y = y)) \%>\%
-       rasterize_points(color_map = fire_map)
+       rasterly_points(color = fire_map)
 str(r)
 p <- rasterly_build(r)
 str(p)
 }
 \seealso{
-\link{rasterly}, \link{rasterize_points}, \link{[.rasterly}, \link{[<-.rasterly}
+\link{rasterly}, \link{rasterly_points}, \link{[.rasterly}, \link{[<-.rasterly}
 }
