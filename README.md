@@ -62,7 +62,7 @@ In terms of performance, `datashader` is faster but `rasterly` is comparable. `r
 To illustrate the basic functionality provided by the package, we'll start by retrieving data on Uber trips taken in New York City from April 1st until September 30th of 2014. The dataset includes 4,533,327 observations.
 
 ```
-# Load data
+# Load New York Uber data
 ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
   data.table::fread(stringsAsFactors = FALSE)
 ridesRaw_2 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data2.csv" %>%
@@ -89,10 +89,14 @@ ridesDf %>%
   rasterly(mapping = aes(x = Lat, y = Lon)) %>%
   rasterly_points() -> p
 p
+# or use simplied `rplot`
+with(ridesDf,
+     rplot(x = Lat, y = Lon)
+)
 ```
 ![](man/figures/grid_rasterizer.png)
 
-Note that, "p" is a list of environments. The display info can be accessed through
+Note that, `p` is a list of environments. The display info can be accessed through
 ```
 r <- rasterly_build(p)
 str(r)
