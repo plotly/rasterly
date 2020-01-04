@@ -138,6 +138,7 @@ rasterly <- function(data = NULL,
     color_key <- args$color_key
     color <- color_key
   }
+  if(!is.null(args$col)) color <- args$col
   
   rastObj <- structure(
     list(
