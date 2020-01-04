@@ -42,7 +42,7 @@ spread out -- should the pattern be circular or square? Other glyphs may be adde
 }
 \description{
 \code{rplot} is created to generate \code{rasterly} plot quickly but with base 
-\link[plot]{plot} design. It is convenient but lack of flexibility and \link{rasterly} is highly
+\link{plot} design. It is convenient but lack of flexibility and \link{rasterly} is highly
 recommended.
 }
 \examples{

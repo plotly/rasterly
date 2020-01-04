@@ -1,7 +1,7 @@
 #' @title Rasterly plot
 #' @name rplot
 #' @description \code{rplot} is created to generate \code{rasterly} plot quickly but with base 
-#' \link[plot]{plot} design. It is convenient but lack of flexibility and \link{rasterly} is highly
+#' \link{plot} design. It is convenient but lack of flexibility and \link{rasterly} is highly
 #' recommended.
 #' @param x,y Coordinates x, y for the plot. 
 #' @param ... Other aesthetics to pass through, like \code{color}, \code{size} and \code{on}.
