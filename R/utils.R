@@ -1,3 +1,13 @@
+mbind <- function(new_mapping = aes(), mapping) {
+  
+  if (!missing(mapping) && !inherits(mapping, "uneval") &&
+      !missing(new_mapping) && !inherits(new_mapping, "uneval")) {
+    stop("Mapping should be created with `aes()`.", call. = FALSE)
+  }
+  
+  new_aes(new_mapping %<-% mapping)
+}
+
 .get <- function(x, envir = as.environment(-1), mode = "any", ifnotfound,
                  inherits = FALSE) {
   
