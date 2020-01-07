@@ -1,10 +1,10 @@
 #' @title Rasterly plot
 #' @name rplot
 #' @description \code{rplot} is created to generate \code{rasterly} plot quickly but with base 
-#' \link{plot} design. It is convenient but lack of flexibility and \link{rasterly} is highly
-#' recommended.
+#' \link{plot} design. It is convenient but lacks flexibility and \link{rasterly} is highly
+#' recommended for a more versatile method.
 #' @param x,y Coordinates x, y for the plot. 
-#' @param ... Other aesthetics to pass through, like \code{color}, \code{size} and \code{on}.
+#' @param ... Other \code{rasterly} arguments to pass through.
 #' @export
 #' @seealso \link{rasterly} \link{rasterly_points}
 rplot <- function(x, y = NULL, ...) {
@@ -28,7 +28,15 @@ rplot <- function(x, y = NULL, ...) {
 #' the previous ones.
 #' @param glyph Character. Currently, only "circle" and "square" are supported; as the \code{size} of the pixels increases, how should they
 #' spread out -- should the pattern be circular or square? Other glyphs may be added in the future.
-#' 
+#' @details \code{rasterly} arguments are passed through via \code{...}. But some of them are noticeable.
+#' \itemize{
+#'  \item{\code{size}: Size can be either a specified size (1, 2, 3, etc) or a mapping variable. Since \code{rasterly} does not provide
+#'  point to point display, if the length of input \code{size} is the same with the length of \code{x} (or \code{y}). It will be treated as 
+#'  a mapping variable.}
+#'  \item{\code{color}: Color can be either a color map vector or a mapping variable. If the length of \code{color} is equal to the length of 
+#'  \code{x} (or \code{y}). It will be treated as a mapping variable.}
+#'  \item{\code{on}: On is always treated as a mapping variable.}
+#' }
 #' @export
 #' @examples 
 #' if(requireNamespace("ggplot2")) {

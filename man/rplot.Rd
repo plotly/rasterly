@@ -15,7 +15,7 @@ rplot(x, y = NULL, ...)
 \arguments{
 \item{x, y}{Coordinates x, y for the plot.}
 
-\item{...}{Other aesthetics to pass through, like \code{color}, \code{size} and \code{on}.}
+\item{...}{Other \code{rasterly} arguments to pass through.}
 
 \item{plot_width}{Integer. The width of the image to plot; must be a positive integer. A higher value indicates a higher resolution.}
 
@@ -42,8 +42,19 @@ spread out -- should the pattern be circular or square? Other glyphs may be adde
 }
 \description{
 \code{rplot} is created to generate \code{rasterly} plot quickly but with base 
-\link{plot} design. It is convenient but lack of flexibility and \link{rasterly} is highly
-recommended.
+\link{plot} design. It is convenient but lacks flexibility and \link{rasterly} is highly
+recommended for a more versatile method.
+}
+\details{
+\code{rasterly} arguments are passed through via \code{...}. But some of them are noticeable.
+\itemize{
+ \item{\code{size}: Size can be either a specified size (1, 2, 3, etc) or a mapping variable. Since \code{rasterly} does not provide
+ point to point display, if the length of input \code{size} is the same with the length of \code{x} (or \code{y}). It will be treated as 
+ a mapping variable.}
+ \item{\code{color}: Color can be either a color map vector or a mapping variable. If the length of \code{color} is equal to the length of 
+ \code{x} (or \code{y}). It will be treated as a mapping variable.}
+ \item{\code{on}: On is always treated as a mapping variable.}
+}
 }
 \examples{
 if(requireNamespace("ggplot2")) {
