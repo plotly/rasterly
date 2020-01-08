@@ -52,7 +52,7 @@ An environment wrapped by a list which defines the properties of the raster data
 }
 \description{
 Create a rasterly object, to which aggregation layers may be added. This function is the first step in the process
-of generating raster image data using the \code{rasterly} package.
+to generate raster image data using the \code{rasterly} package.
 }
 \details{
 \itemize{

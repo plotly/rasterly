@@ -61,7 +61,7 @@ ggRasterly <- function(data = NULL,
                        drop_data = FALSE,
                        variable_check = FALSE,
                        alpha = 0.5,
-                       shape = 19,
+                       shape = 15,
                        point_size = 0.5) {
   
   if(!show_raster) return(ggplot2::ggplot())

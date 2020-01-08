@@ -19,7 +19,7 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
     mapping_names[which(mapping_names == "column")] <- "on"
   }
 
-  if(!all(mapping_names %in% c("x", "y", "on", "color", "size"))) {
+  if(!all(mapping_names %in% rasterly_aesthetics)) {
     message("Only `x`, `y`, `on` `size` and `color` parameters are currently accepted.")
     message("Additional aesthetics will be supported in the next release.")
   }
@@ -80,6 +80,7 @@ get_aesthetics <- function(data = NULL, mapping = aes(), variable_check = FALSE,
   return(data)
 }
 
+rasterly_aesthetics <- c("x", "y", "on", "color", "size")
 
 # TODO: argument check, but it is so expensive!
 #                 switch(mapping_names[i],

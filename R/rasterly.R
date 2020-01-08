@@ -1,6 +1,6 @@
 #' Easily and rapidly generate raster image data with support for Plotly.js 
 #' @description Create a rasterly object, to which aggregation layers may be added. This function is the first step in the process
-#' of generating raster image data using the \code{rasterly} package.
+#' to generate raster image data using the \code{rasterly} package.
 #' @param data Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.
 #' For best performance, particularly when processing large datasets, use of \link[data.table]{data.table} is recommended.
 #' @param mapping Default list of aesthetic mappings to use for plot. The same with \code{ggplot2} \link[ggplot2]{aes}.
@@ -138,6 +138,7 @@ rasterly <- function(data = NULL,
     color_key <- args$color_key
     color <- color_key
   }
+  if(!is.null(args$col)) color <- args$col
   
   rastObj <- structure(
     list(

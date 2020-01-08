@@ -1,4 +1,4 @@
-#' @title Image ratser to data frame.
+#' @title Image raster to data frame.
 #' @description Transform a image raster to a data frame.
 #' @param x It could be a rasterly object or a raster image.
 #' @param background The background of image raster.

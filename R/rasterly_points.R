@@ -124,7 +124,8 @@ rasterly_points <- function(rastObj,
     } else {
       if(inherit.aes)
         # }%<-%` is a symbol to merge two lists from right to left
-        mapping <- new_aes(.get("mapping", envir = rastObj$rasterly_env) %<-% mapping)
+        mapping <- mbind(.get("mapping", envir = rastObj$rasterly_env), 
+                         mapping)
     }
     aesthetics <- get_aesthetics(data, 
                                  mapping, 
@@ -156,7 +157,8 @@ rasterly_points <- function(rastObj,
       
       if(inherit.aes)
         # `%<-%` is a symbol to merge two lists from right to left
-        mapping <- new_aes(.get("mapping", envir = rastObj$rasterly_env) %<-% mapping)
+        mapping <- mbind(.get("mapping", envir = rastObj$rasterly_env), 
+                         mapping)
       
       tryCatch(
         expr = {

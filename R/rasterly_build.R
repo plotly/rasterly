@@ -145,6 +145,7 @@ rasterly_build.rasterly <- function(rastObj) {
                   if(show_raster) {
                     background <- get("background", envir = envir, inherits = FALSE)
                     bg <<- c(bg, background)
+                    if(length(color) == 1) color <- c(background, color)
                     colors <<- c(colors, list(color))
                     image <<- as_raster(x = agg,
                                         color = color,

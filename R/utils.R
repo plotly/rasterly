@@ -1,3 +1,13 @@
+mbind <- function(new_mapping = aes(), mapping) {
+  
+  if (!missing(mapping) && !inherits(mapping, "uneval") &&
+      !missing(new_mapping) && !inherits(new_mapping, "uneval")) {
+    stop("Mapping should be created with `aes()`.", call. = FALSE)
+  }
+  
+  new_aes(new_mapping %<-% mapping)
+}
+
 .get <- function(x, envir = as.environment(-1), mode = "any", ifnotfound,
                  inherits = FALSE) {
   
@@ -76,4 +86,4 @@ rename_mapping <- function(mapping) {
 # Suggestion from https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 # The reason to set globalVariables instead of define x, y, ... is because
 # the cost of extraction values from large data is very heavy
-if(getRversion() >= "3.1.0")  utils::globalVariables(c("..mapping_names", "size", "x", "y", "on", "color"))
+if(getRversion() >= "3.1.0")  utils::globalVariables(c("..mapping_names", "size", "x", "y", "on", "color", "."))
