@@ -12,16 +12,14 @@ vignette: >
   %\VignetteDepends{grid}
   \usepackage[utf8]{inputenc}
 ---
-  
-```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
-library(rasterly)
-library(data.table)
-library(lubridate)
-library(grid)
-library(plotly)
-```
 
-`rasterly` makes it easy to rapidly generate raster images for large datasets. Although the package is inspired by the Datashader library (http://datashader.org/getting_started/index.html) available for Python, `rasterly` does not attempt to reproduce all the features of Datashader. Rather, `rasterly` offers comparable performance to Datashader when generating rasters from source data. `rasterly` attempts to provide a flexible, convenient interface which should feel familiar to users of ggplot2 and its aesthetics-based approach to customizing plots and figures.
+<div style= "float:left;position: relative; top: -5px; width: 15%"; >  
+```{r pressure, echo=FALSE, fig.align='left', out.width = '90%'}
+knitr::include_graphics(system.file("help/figures/logo.png", package = "rasterly"))
+```
+</div>
+
+`rasterly` makes it easy to rapidly generate raster images for large datasets. Although the package is inspired by the [Datashader library](http://datashader.org/getting_started/index.html) available for Python, `rasterly` does not attempt to reproduce all the features of Datashader. Rather, `rasterly` offers comparable performance to Datashader when generating rasters from source data. `rasterly` attempts to provide a flexible, convenient interface which should feel familiar to users of ggplot2 and its aesthetics-based approach to customizing plots and figures.
 
 A raster may be described as a matrix of cells or pixels arranged in grid-like fashion, 
 in which each pixel represents a value in the source data. When combined with the \link{plotly} package and `Plotly.js`, `rasterly` enables analysts to generate interactive figures with very large datasets 
@@ -35,7 +33,13 @@ The `rasterly` function is not intended to be used in isolation, since aggregati
 
 The dataset used in this vignette describes Uber trips taken in New York City from April 1st to September 30th of 2014.
 
-```{r data}
+```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
+library(rasterly)
+library(data.table)
+library(lubridate)
+library(grid)
+library(plotly)
+
 # Load data
 ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
   data.table::fread(stringsAsFactors = FALSE)
