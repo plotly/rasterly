@@ -4,7 +4,7 @@
 \name{rasterly-package}
 \alias{rasterly-package}
 \alias{_PACKAGE}
-\title{rasterly: Easily and Rapidly Generate Raster Image Data with Support for \code{Plotly.js}}
+\title{rasterly: Easily and Rapidly Generate Raster Image Data with Support for Plotly.js}
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
 
