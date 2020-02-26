@@ -25,7 +25,7 @@ imageDirectory <- "./images/introduction"
 path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
 ```
   
-```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
+```{r library, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
 library(rasterly)
 library(data.table)
 library(lubridate)
@@ -90,17 +90,17 @@ knitr::include_graphics(path_concat(imageDirectory, "uberBasic.PNG"))
 
 A raster image, in essence, is a large sparse matrix and each element is a hexadecimal color (A character vector with elements of 7 or 9 characters, "#" followed by the red, blue, green and optionally alpha values). Since the range (x, y) of this display can be acquired, we can also map the image into a data.frame with mapping coordinates x, y and color. For example:
 
-```{r}
+```{r image2Data, }
 image <- as.raster(matrix((1:4)/4, nrow = 2))
 image
 # mapping this image onto a 1 <= x <= 2 and 2 <= y <= 5 plane
-image2data(image, x_range = c(1,2), y_range = c(2,5))
+rasterly::image2data(image, x_range = c(1,2), y_range = c(2,5))
 ```
 
 In this way, we can transform a large dataset (million or billion) into a raster image (say 400 $\times$ 400), then, mapping this image to a data.frame but dropping blank ones. So the size can decrease from 160000 to rough 30k or 40k (It really depends on data). In other word, we can always reduce a huge size to a reasonable size and the darkness of color is judged by the "Reduction Function" (see section 'API' for more info)
 
 ```{r basic plot, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
-imageData <- image2data(p)
+imageData <- rasterly::image2data(p)
 # basic graphics 
 # It is slow but still much faster than drawing the huge data directly)
 plot(x = imageData$x, y = imageData$y, col = imageData$color)
