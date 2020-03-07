@@ -99,4 +99,5 @@ rplot.default <- function(x, y = NULL, ...,
   
   print(r)
   invisible()
+  return(r)
 }
