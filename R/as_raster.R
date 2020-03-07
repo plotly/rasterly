@@ -11,6 +11,10 @@ as_raster.matrix <- function(x, color = c('lightblue','darkblue'), span = 50,
   # get dimension
   dimM <- dim(x)
   which_is_not_zero <- x != 0
+  if(all(which_is_not_zero)) {
+    # some decimal issues
+    which_is_not_zero <- (abs(x) - 1e-6) > 0
+  }
   
   if(length(which_is_not_zero) > 0) {
     
@@ -39,11 +43,21 @@ as_raster.matrix <- function(x, color = c('lightblue','darkblue'), span = 50,
       } else stop("Unknown `layout` method provided; `weighted` or `cover` are currently supported approaches.")
     }
     
-    image[which_is_not_zero] <- grDevices::rgb(red = red/255 + 1e-8,
-                                               green = green/255 + 1e-8,
-                                               blue = blue/255 + 1e-8,
-                                               alpha = alpha + 1e-8,
-                                               maxColorValue = 1 + 2e-8)
+    red <- red/255
+    green <- green/255
+    blue <- blue/255
+    red[red < 0] <- 0
+    green[green < 0] <- 0
+    blue[blue < 0] <- 0
+    red[red > 1] <- 1
+    green[green > 1] <- 1
+    blue[blue > 1] <- 1
+    
+    image[which_is_not_zero] <- grDevices::rgb(red = red,
+                                               green = green,
+                                               blue = blue,
+                                               alpha = alpha,
+                                               maxColorValue = 1)
   } else {
     # x is a zero matrix
     image <- rep(background, dimM[1] * dimM[2])
@@ -105,12 +119,22 @@ as_raster.list <- function(x, color = NULL, span = 50,
       green[not_background] <- image_rgb_num$green
       blue[not_background] <- image_rgb_num$blue
     }
-    #
-    colors <- grDevices::rgb(red = red/255 + 1e-8,
-                             green = green/255 + 1e-8,
-                             blue = blue/255 + 1e-8,
-                             alpha = alpha + 1e-8,
-                             maxColorValue = 1 + 2e-8)
+    
+    red <- red/255
+    green <- green/255
+    blue <- blue/255
+    red[red < 0] <- 0
+    green[green < 0] <- 0
+    blue[blue < 0] <- 0
+    red[red > 1] <- 1
+    green[green > 1] <- 1
+    blue[blue > 1] <- 1
+    
+    colors <- grDevices::rgb(red = red,
+                             green = green,
+                             blue = blue,
+                             alpha = alpha,
+                             maxColorValue = 1)
     
     colors[grepl("#000000", colors)] <- background
     
