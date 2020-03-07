@@ -314,11 +314,11 @@ test_that("example works", {
   expect_equal(is.rasterly(ds), TRUE)  
   
   # plotRasterly
-  p <- plotRasterly(data = data, 
-                  mapping = aes(x = x, y = y, color = z),
-                  color = hourColors_map,
-                  as_image = TRUE)
-  expect_equal(inherits(p, "plotly"), TRUE)
+  # p <- plotRasterly(data = data, 
+  #                 mapping = aes(x = x, y = y, color = z),
+  #                 color = hourColors_map,
+  #                 as_image = TRUE)
+  # expect_equal(inherits(p, "plotly"), TRUE)
   
   # add_rasterly_heatmap
   p <- plot_ly(data = data) %>%
