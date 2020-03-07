@@ -27,6 +27,8 @@
 #'  url3 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data3.csv"
 #'  ridesRaw_3 <-  url3 %>%
 #'    data.table::fread(stringsAsFactors = FALSE) 
+#'  ridesDf <- list(ridesRaw_1, ridesRaw_2, ridesRaw_3) %>% 
+#'    data.table::rbindlist()
 #'  time <- lubridate::ymd_hms(ridesDf$`Date/Time`)
 #'  ridesDf <-  ridesDf[, 'Date/Time':=NULL][, list(Lat, 
 #'                                                  Lon,
@@ -61,8 +63,10 @@
 #'    )
 #'  ############################# add_rasterly_image #############################
 #'  p <- plot_ly(data = ridesDf) %>%
-#'         add_rasterly_image(x = ~Lat, y = ~Lon, color = ~hour, 
-#'                            color_map = hourColors_map,
+#'         add_rasterly_image(x = ~Lat, y = ~Lon, color = ~hour,
+#'                            # even `color_map` is deprecated,
+#'                            # it is still a good way to specify the color mapping
+#'                            color_map = hourColors_map, 
 #'                            plot_width = 400, plot_height = 400)
 #'  p
 #'  }

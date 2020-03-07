@@ -72,7 +72,6 @@ add_rasterly_image <- function(p,
     
     z <- rastObj$image
     dimZ <- dim(z)
-    remove(rastObj)
     
     do.call(
       plotly::add_image,
