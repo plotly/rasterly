@@ -38,14 +38,13 @@
 `[.rasterly` <- function(x, name) {
   # x is executed
   if(is.rasterlyBuild(x)) {
-    .Primitive("[")(x,name)
+    getElement(x, name)
   } else {
     # x is an unexecuted list of environments
-    l <- lapply(x,
-                function(envir) {
-                  .get(name, envir = envir)
-                })
-    return(l)
+    lapply(x,
+           function(envir) {
+             .get(name, envir = envir)
+           })
   }
 }
 
@@ -65,7 +64,8 @@
 
   # x is executed
   if(is.rasterlyBuild(x)) {
-    .Primitive("[<-")(x, name, value)
+    warning("It is meaningless to replace object from `rasterlyBuild` object", call. = FALSE)
+    do.call(`$<-`, list(x = x, name = name, value = value))
   } else {
     # x is an unexecuted list of environments
     for(l in level) {
