@@ -4,12 +4,25 @@
 \alias{plotRasterly}
 \title{plotRasterly}
 \usage{
-plotRasterly(data = NULL, mapping = aes(), ..., plot_width = 400,
-  plot_height = 400, x_range = NULL, y_range = NULL,
-  background = "white", color = NULL, show_raster = TRUE,
-  drop_data = FALSE, variable_check = FALSE, alpha = 0.5,
-  shape = 19, point_size = 0.5, as_image = FALSE,
-  sizing = c("stretch", "fill", "contain"))
+plotRasterly(
+  data = NULL,
+  mapping = aes(),
+  ...,
+  plot_width = 400,
+  plot_height = 400,
+  x_range = NULL,
+  y_range = NULL,
+  background = "white",
+  color = NULL,
+  show_raster = TRUE,
+  drop_data = FALSE,
+  variable_check = FALSE,
+  alpha = 0.5,
+  shape = 19,
+  point_size = 0.5,
+  as_image = FALSE,
+  sizing = c("stretch", "fill", "contain")
+)
 }
 \arguments{
 \item{data}{Dataset to use for generating the plot. If not provided, data must be supplied in each layer of the plot.

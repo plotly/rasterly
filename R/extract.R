@@ -48,7 +48,6 @@
   }
 }
 
-#' @inherit extract
 #' @param ... (missing) or NULL.
 #' @param value values to replace; typically an array-like R object of a similar class as x.
 #' @rdname extract
@@ -64,7 +63,7 @@
 
   # x is executed
   if(is.rasterlyBuild(x)) {
-    warning("It is meaningless to replace object from `rasterlyBuild` object", call. = FALSE)
+    warning("Replacing elements of existing `rasterlyBuild` objects is not supported.", call. = FALSE)
     do.call(`$<-`, list(x = x, name = name, value = value))
   } else {
     # x is an unexecuted list of environments

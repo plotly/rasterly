@@ -1,4 +1,3 @@
-#' @inherit add_rasterly
 #' @param color Numeric vector or expression. Pixel color for each observation, to be passed on to \code{aes()}.
 #' @rdname add_rasterly
 #' @export

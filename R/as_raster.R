@@ -10,13 +10,9 @@ as_raster.matrix <- function(x, color = c('lightblue','darkblue'), span = 50,
   span <- max(span, length(color))
   # get dimension
   dimM <- dim(x)
-  which_is_not_zero <- x != 0
-  if(all(which_is_not_zero)) {
-    # some decimal issues
-    which_is_not_zero <- (abs(x) - 1e-6) > 0
-  }
+  which_is_not_zero <- !isZero(x)
   
-  if(length(which_is_not_zero) > 0) {
+  if(sum(which_is_not_zero) > 0) {
     
     cdf <- get_cdf(M = x, zeroIgnored = TRUE, which_is_not_zero = which_is_not_zero)
     id <- floor(cdf(x) * (span - 1))[which_is_not_zero] + 1

@@ -6,13 +6,31 @@
 \alias{add_rasterly_image}
 \title{Add "rasterly" trace to a Plotly visualization}
 \usage{
-add_rasterly_heatmap(p, x = NULL, y = NULL, z = NULL, ...,
-  data = NULL, inherit = TRUE, on = NULL, size = NULL,
-  scaling = NULL)
+add_rasterly_heatmap(
+  p,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  ...,
+  data = NULL,
+  inherit = TRUE,
+  on = NULL,
+  size = NULL,
+  scaling = NULL
+)
 
-add_rasterly_image(p, x = NULL, y = NULL, z = NULL, ...,
-  data = NULL, inherit = TRUE, color = NULL, on = NULL,
-  size = NULL)
+add_rasterly_image(
+  p,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  ...,
+  data = NULL,
+  inherit = TRUE,
+  color = NULL,
+  on = NULL,
+  size = NULL
+)
 }
 \arguments{
 \item{p}{A \code{plotly} object}
@@ -42,8 +60,8 @@ Add trace to a Plotly visualization.
 }
 \examples{
 \dontrun{
-if(requireNamespace("plotly") && requireNamespace("data.table")) {
- library(lubridate)
+if(requireNamespace("plotly") && requireNamespace("data.table") &&
+  requireNamespace("lubridate")) {
  # Load data
  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"
  ridesRaw_1 <-  url1 \%>\%

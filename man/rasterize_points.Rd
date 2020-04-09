@@ -4,10 +4,20 @@
 \alias{rasterize_points}
 \title{rasterize_points}
 \usage{
-rasterize_points(rastObj, data = NULL, mapping = aes(), ...,
-  xlim = NULL, ylim = NULL, max_size = NULL, reduction_func = NULL,
-  layout = NULL, glyph = NULL, group_by_data_table = NULL,
-  inherit.aes = TRUE)
+rasterize_points(
+  rastObj,
+  data = NULL,
+  mapping = aes(),
+  ...,
+  xlim = NULL,
+  ylim = NULL,
+  max_size = NULL,
+  reduction_func = NULL,
+  layout = NULL,
+  glyph = NULL,
+  group_by_data_table = NULL,
+  inherit.aes = TRUE
+)
 }
 \arguments{
 \item{rastObj}{A \code{rasterly} object.}

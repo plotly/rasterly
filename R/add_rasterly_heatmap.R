@@ -15,8 +15,8 @@
 #'
 #' @examples
 #' \dontrun{
-#'if(requireNamespace("plotly") && requireNamespace("data.table")) {
-#'  library(lubridate)
+#'if(requireNamespace("plotly") && requireNamespace("data.table") &&
+#'   requireNamespace("lubridate")) {
 #'  # Load data
 #'  url1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv"
 #'  ridesRaw_1 <-  url1 %>%
