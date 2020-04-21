@@ -7,7 +7,13 @@
 \alias{viridis_map}
 \alias{hourColors_map}
 \title{Supplemental color maps for rasterly}
-\format{An object of class \code{character} of length 256.}
+\format{
+An object of class \code{character} of length 256.
+
+An object of class \code{character} of length 256.
+
+An object of class \code{character} of length 24.
+}
 \usage{
 fire_map
 

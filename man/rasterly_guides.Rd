@@ -4,8 +4,13 @@
 \alias{rasterly_guides}
 \title{rasterly_guides}
 \usage{
-rasterly_guides(rastObj, x_pretty = NULL, y_pretty = NULL,
-  panel_background = "grey92", panel_line = "white")
+rasterly_guides(
+  rastObj,
+  x_pretty = NULL,
+  y_pretty = NULL,
+  panel_background = "grey92",
+  panel_line = "white"
+)
 }
 \arguments{
 \item{rastObj}{A "rasterly" object.}

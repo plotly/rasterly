@@ -13,11 +13,25 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-<div style= "float:left;position: relative; top: -5px; width: 15%"; >  
-```{r pressure, echo=FALSE, fig.align='left', out.width = '90%'}
-knitr::include_graphics(system.file("help/figures/logo.png", package = "rasterly"))
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    tidy.opts = list(width.cutoff = 65),
+    tidy = TRUE)
+
+set.seed(12314159)
+
+imageDirectory <- "./images/introduction"
+path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
 ```
-</div>
+  
+```{r library, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
+library(rasterly)
+library(data.table)
+library(lubridate)
+library(grid)
+library(plotly)
+```
 
 `rasterly` makes it easy to rapidly generate raster images for large datasets. Although the package is inspired by the [Datashader library](http://datashader.org/getting_started/index.html) available for Python, `rasterly` does not attempt to reproduce all the features of Datashader. Rather, `rasterly` offers comparable performance to Datashader when generating rasters from source data. `rasterly` attempts to provide a flexible, convenient interface which should feel familiar to users of ggplot2 and its aesthetics-based approach to customizing plots and figures.
 
@@ -33,13 +47,8 @@ The `rasterly` function is not intended to be used in isolation, since aggregati
 
 The dataset used in this vignette describes Uber trips taken in New York City from April 1st to September 30th of 2014.
 
-```{r library, eval = TRUE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 4, out.width = "75%", warning=FALSE, message=FALSE}
-library(rasterly)
-library(data.table)
-library(lubridate)
-library(grid)
-library(plotly)
 
+```{r data, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 # Load data
 ridesRaw_1 <- "https://raw.githubusercontent.com/plotly/datasets/master/uber-rides-data1.csv" %>%
   data.table::fread(stringsAsFactors = FALSE)
@@ -57,7 +66,6 @@ ridesDf <-  ridesDf[, 'Date/Time':=NULL][, list(Lat,
                                                 hour = lubridate::hour(time), 
                                                 month = lubridate::month(time),
                                                 day = lubridate::day(time))]
-head(ridesDf)
 ```
 
 This dataset has 4,533,327 observations, and includes the variables "latitude", "longitude", "hour", "month" and "day". 
@@ -66,7 +74,7 @@ This dataset has 4,533,327 observations, and includes the variables "latitude", 
 
 If we were to use `graphics::plot()`, it would take several minutes to render the image. What if we "rasterized" the image instead?
 
-```{r basic, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+```{r basic, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 start_time <- Sys.time()
 p <- ridesDf %>% 
   rasterly(mapping = aes(x = Lat, y = Lon)) %>% 
@@ -76,47 +84,62 @@ end_time <- Sys.time()
 end_time - start_time
 ```
 
+```{r, out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "uberBasic.png"))
+```
+
 A raster image, in essence, is a large sparse matrix and each element is a hexadecimal color (A character vector with elements of 7 or 9 characters, "#" followed by the red, blue, green and optionally alpha values). Since the range (x, y) of this display can be acquired, we can also map the image into a data.frame with mapping coordinates x, y and color. For example:
 
-```{r}
+```{r image2Data, }
 image <- as.raster(matrix((1:4)/4, nrow = 2))
 image
 # mapping this image onto a 1 <= x <= 2 and 2 <= y <= 5 plane
-image2data(image, x_range = c(1,2), y_range = c(2,5))
+rasterly::image2data(image, x_range = c(1,2), y_range = c(2,5))
 ```
 
 In this way, we can transform a large dataset (million or billion) into a raster image (say 400 $\times$ 400), then, mapping this image to a data.frame but dropping blank ones. So the size can decrease from 160000 to rough 30k or 40k (It really depends on data). In other word, we can always reduce a huge size to a reasonable size and the darkness of color is judged by the "Reduction Function" (see section 'API' for more info)
 
-```{r basic plot, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3, eval = FALSE}
-imageData <- image2data(p)
+```{r basic plot, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
+imageData <- rasterly::image2data(p)
 # basic graphics 
 # It is slow but still much faster than drawing the huge data directly)
 plot(x = imageData$x, y = imageData$y, col = imageData$color)
+```
+
+```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "image2data.png"))
 ```
 
 ## `rasterly` Structure
 
 #### Subsetting
 
-`rasterly()` generates a parent layer containing initial settings to generate the raster, which include `plot_height`, `plot_width` among others; child layers such as `rasterly_points()` can be piped in as well. Note that "p" above is a list of environments.
+`rasterly()` generates a parent layer containing initial settings to generate the raster, which include `plot_height`, `plot_width` among others; child layers such as `rasterly_points()` can be piped in as well. Note that "p" above is a list of environments. The elements in "p" can be easily extracted or replaced by `[` and `[<-`.
 
-```{r list return}
-# A list of environments
-str(p)
-```
-
-The elements in "p" can be easily extracted or replaced by `[` and `[<-`.
-
-```{r subsetting, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+```{r subsetting, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 p["background"]
-# Replace the background in child layer `rasterly_points()`
+# $rasterly_env
+# [1] "white"
+
+# $rasterlyPoints1
+# [1] "white"
+########### Replace the background in child layer `rasterly_points()`
 p["background", level = 2] <- "black"
 p["background"]
-# colors in both `rasterly()` and `rasterly_points()` are replaced
+# $rasterly_env
+# [1] "white"
+
+# $rasterlyPoints1
+# [1] "black"
+########## Colors in both `rasterly()` and `rasterly_points()` are replaced
 ## fire is a vector of colors (as character strings) with length 256
 ## see `rasterly::fire`
 p["color", level = 1:2] <- fire_map
 p
+```
+
+```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "darkBg.png"))
 ```
 
   * `level` helps to define which layer to replace; the default is `1` (the parent layer generated by `rasterly()`).
@@ -128,7 +151,7 @@ p
 
 To retrieve display info, use `rasterly_build()`:
 
-```{r rasterly_build}
+```{r rasterly_build, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 build <- rasterly_build(p)
 str(build)
 ```
@@ -154,7 +177,7 @@ It contains:
 
   + `add_rasterly_heatmap()`: Layers are added to Plotly objects via `add_trace(...)`; `rasterly` provides the `add_rasterly_heatmap()` function which also leverages `add_heatmap()` to generate single channel heatmap overlays for Plotly figures. Multi-channel heatmaps are not currently supported; this feature will be available in an upcoming release.
     
-    ```{r add_rasterly_heatmap, fig.width = 6, fig.height = 5}
+    ```{r add_rasterly_heatmap, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
     plotly::plot_ly(ridesDf, x = ~Lat, y = ~Lon) %>%
       add_rasterly_heatmap() %>% 
       layout(
@@ -167,10 +190,14 @@ It contains:
         )
       )
     ```
+    
+    ```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "add_rasterizer.gif"))
+    ```
   
   + `plotRasterly()`: `plotRasterly` has very similar API with `rasterly` but return a `plotly` object.
     
-    ```{r plotly_rasterly, warning=FALSE, message=FALSE, fig.width = 4, fig.height = 3, eval = FALSE}
+    ```{r plotly_rasterly, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
     # if as_image is FALSE, the image will be transformed to a data.frame
     plotRasterly(ridesDf, 
                  mapping = aes(x = Lat, y = Lon),
@@ -181,7 +208,7 @@ It contains:
 
 `ggRasterly` takes the arguments from `rasterly` and returns a `ggplot` object. In this case, `image` will be transformed to a data.frame automatically. 
 
-```{r ggRasterly, warning=FALSE, message=FALSE, fig.width = 6, fig.height = 5}
+```{r ggRasterly, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 ggRasterly(data = ridesDf, 
            mapping = aes(x = Lat, y = Lon, color = hour),
            color = hourColors_map) + 
@@ -189,13 +216,16 @@ ggRasterly(data = ridesDf,
        subtitle = "Apr to Sept, 2014",
        caption = "Data from https://raw.githubusercontent.com/plotly/datasets/master")
 ```
-    
+
+```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "ggUber.png"))
+```
 
 ## API
 
 `rasterly` application programming interface
 
-```{r}
+```{r API, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 r <- rasterly(data = ridesDf, 
                 mapping = aes(x = Lat, y = Lon))
 ```
@@ -204,7 +234,8 @@ r <- rasterly(data = ridesDf,
 
 * Set `color`
 
-```{r set color, fig.width = 4, fig.height = 3}
+Different colors represent different hours:
+```{r set color, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 r %>% 
   rasterly_points(
     mapping = aes(color = hour),
@@ -214,24 +245,13 @@ r %>%
 g
 ```
 
-Different colors represent different hours:
-
-```{r legend, fig.width = 4, fig.height = 3}
-    # rasterly doesn't currently support legends, though this feature is forthcoming
-    plot(1:24, y = rep(1,24), col = hourColors_map, pch = 19, cex = 3)
-```
-
-The number of aggregation matrices is equivalent to the number of categories:
-
-```{r number of aggregation matrices}
-build_g <- rasterly_build(g)
-# the object has only one layer, so we index into the first element
-length(build_g$agg[[1]])
+```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "uberColor.png"))
 ```
 
 The colors attribute in "image" within `build_g` is generated via weighted arithmetic means (default) computed from the aggregation matrices. We can choose the "cover" layout to display multiple aggregation matrices:
 
-```{r set color cover, fig.width = 4, fig.height = 3, eval = FALSE}
+```{r set color cover, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 r %>% 
   rasterly_points(
     mapping = aes(color = hour),
@@ -241,16 +261,22 @@ r %>%
   )
 ```
 
+```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "uberColorCover.png"))
+```
+
 The resulting raster will be overlaid onto the plotting surface.
 
 * Set `on`
   
 `reduction_func` is implemented `on` which variable
 
-```{r set on, fig.width = 4, fig.height = 3, eval = FALSE}
+```{r set on, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 r %>% 
   rasterly_points(
-    reduction_func = "mean", # take the "mean" reduction function
+    # take the "mean" reduction function 
+    # more details are in section 'Reduction function'
+    reduction_func = "mean", 
     mapping = aes(on = -Lat)
   )  
 ```
@@ -259,7 +285,7 @@ r %>%
   
 To control the number of pixels allocated to an observation, we can set the `size` aesthetic; when specified, the `max_size` argument provides the upper bound of the number of pixels a single observation is allocated:
   
-```{r set size, fig.width = 4, fig.height = 3, eval = FALSE}
+```{r set size, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
 r %>% 
   rasterly_points(
     mapping = aes(size = month),
@@ -275,7 +301,7 @@ A reduction operator function is used when aggregating data points within each b
 
   * `mean` reduction function:
 
-    ```{r reduction on mean, fig.width = 4, fig.height = 3, eval = FALSE}
+    ```{r reduction on mean, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
     r %>% 
       rasterly_points(
         reduction_func = "mean", # process the data points using the mean reduction function
@@ -283,17 +309,25 @@ A reduction operator function is used when aggregating data points within each b
         color = fire_map # provide a custom color_map
       )  
     ```
+    
+    ```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "meanAgg.png"))
+    ```
 
   The `mean` reduction function averages the y column (default setting) for every observation. It's also possible to average over other features using the `on` aesthetic; consult the list of available reduction functions below for additional details.
 
   * `any` reduction function:
   
-    ```{r reduction on any, fig.width = 4, fig.height = 3, eval = FALSE}
+    ```{r reduction on any, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE}
     r %>% 
       rasterly_points(
         reduction_func = "any",
         color = c("white", "black")
       )
+    ```
+    
+    ```{r , out.width= "60%", fig.align="center", echo=FALSE}
+knitr::include_graphics(path_concat(imageDirectory, "anyAgg.png"))
     ```
 
   Currently supported reduction functions:

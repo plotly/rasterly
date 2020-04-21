@@ -7,10 +7,19 @@
 \usage{
 rplot(x, y = NULL, ...)
 
-\method{rplot}{default}(x, y = NULL, ..., plot_width = 600,
-  plot_height = 600, x_range = NULL, y_range = NULL,
-  background = "white", reduction_func = NULL, layout = NULL,
-  glyph = NULL)
+\method{rplot}{default}(
+  x,
+  y = NULL,
+  ...,
+  plot_width = 600,
+  plot_height = 600,
+  x_range = NULL,
+  y_range = NULL,
+  background = "white",
+  reduction_func = NULL,
+  layout = NULL,
+  glyph = NULL
+)
 }
 \arguments{
 \item{x, y}{Coordinates x, y for the plot.}

@@ -1,3 +1,18 @@
+# it is equivalent to R.utils::isZero
+isZero <- function (x, neps = 1, eps = .Machine$double.eps, ...) {
+  if (is.character(eps)) {
+    eps <- match.arg(eps, choices = c("double.eps", "single.eps"))
+    if (eps == "double.eps") {
+      eps <- .Machine$double.eps
+    }
+    else if (eps == "single.eps") {
+      eps <- sqrt(.Machine$double.eps)
+    }
+  }
+  (abs(x) < neps * eps)
+}
+
+
 mbind <- function(new_mapping = aes(), mapping) {
   
   if (!missing(mapping) && !inherits(mapping, "uneval") &&

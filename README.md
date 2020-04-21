@@ -9,6 +9,8 @@ Easily and rapidly generate raster data in R, even for larger volumes of data, w
 
 While `rasterly` does not attempt to reproduce the full functionality of the Datashader graphics pipeline system for Python, the `rasterly` API has several core elements in common with that software package. Combined with Plotly.js and the `plotly` package, `rasterly` enables analysts to generate interactive figures which are responsive enough to embed into web applications.
 
+Documentation: [https://z267xu.github.io/rasterly/](https://z267xu.github.io/rasterly/)
+
 ## Importing datasets for use with rasterly
 
 There are several ways to import large datasets into R for use with `rasterly`; one option is the `data.table` package (https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).

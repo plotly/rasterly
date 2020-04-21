@@ -1,6 +1,6 @@
 Package: rasterly
 Title: Easily and Rapidly Generate Raster Image Data with Support for Plotly.js
-Version: 1.0.0
+Version: 0.2.0
 Authors@R: c(person("Zehao", "Xu", role = c("aut", "cre"), email = "z267xu@uwaterloo.ca"), person("Ryan Patrick", "Kyle", role = c("ctb"), comment = c(ORCID = "0000-0001-5829-9867"), email = "ryan@plot.ly"), person(family = "Plotly Technologies", role = "cph"))
 Description: This package aims to easily and rapidly generate raster data in R, even for very large datasets, with an aesthetics-based mapping syntax that should be familiar to users of the \code{ggplot2} package. While \code{rasterly} does not attempt to reproduce the full functionality of the \code{Datashader} graphics pipeline system for Python, the \code{rasterly} API has several core elements in common with that software package.
 LinkingTo: Rcpp
@@ -31,5 +31,5 @@ Suggests:
     rmarkdown,
     lubridate
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr

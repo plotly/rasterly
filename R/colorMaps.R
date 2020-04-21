@@ -262,7 +262,6 @@ fire_map <-
     '#fffeee',
     '#ffffff')
 
-#' @inherit color_map
 #' @rdname color_map
 #' @export
 viridis_map <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#46095D","#460B5E","#460C60","#470E61","#470F62","#471164"
@@ -288,7 +287,6 @@ viridis_map <- c("#440154","#440255","#450357","#450558","#45065A","#46085B","#4
              ,"#D8E319","#DBE318","#DDE318","#E0E418","#E2E418","#E5E418","#E8E519","#EAE519","#EDE51A","#EFE61B","#F2E61C","#F4E61E"
              ,"#F7E61F","#F9E721","#FBE723","#FEE724")
 
-#' @inherit color_map
 #' @rdname color_map
 #' @export
 hourColors_map <- c("#FF0000","#FF3F00","#FF7F00","#FFBF00","#FFFF00","#BFFF00","#7FFF00","#3FFF00",

@@ -11,7 +11,6 @@ rplot <- function(x, y = NULL, ...) {
   UseMethod("rplot")
 }
 
-#' @inherit rplot
 #' @rdname rplot
 #' @param plot_width Integer. The width of the image to plot; must be a positive integer. A higher value indicates a higher resolution.
 #' @param plot_height Integer. The height of the image to plot; must be a positive integer. A higher value indicates a higher resolution.
@@ -98,5 +97,4 @@ rplot.default <- function(x, y = NULL, ...,
     rasterly_build()
   
   print(r)
-  invisible()
 }
