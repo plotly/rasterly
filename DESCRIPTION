@@ -18,13 +18,10 @@ Imports:
     rlang,
     plotly,
     ggplot2,
-    magrittr
-Suggests:
+    magrittr,
     grid,
-    stats,
-    compiler,
-    loon,
-    purrr,
+    stats
+Suggests:
     covr,
     testthat,
     knitr,
