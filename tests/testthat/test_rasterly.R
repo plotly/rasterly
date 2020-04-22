@@ -407,4 +407,34 @@ test_that("example works", {
   p['background'] <- "yellow"
   p['background', level = 1:3] <- "yellow"
   
+  # grobs
+  rasterly(d,
+           mapping = aes(x = x, y = y, color = factor(l)),
+           x_range = c(min_x, max_x),
+           y_range = c(min_y, max_y)) %>%
+    rasterly_points() %>%
+    rasterly_build() -> ds
+  p <- plot(ds)
+  expect_equal(is.null(p), TRUE)
+  # test other arguments in plot
+  g <- rasterlyGrob(ds, xlim = c(-2, 2), ylim = c(-2 ,2), 
+                    main = "random", 
+                    xlab = "rnorm(.)", 
+                    ylab = "rnorm(.)",
+                    sub = "This is a sub title", 
+                    interpolate = TRUE, axes =  TRUE, 
+                    axes_gpar = grid::gpar(col = "red", cex = 1),
+                    label_gpar = grid::gpar(col = "blue", cex = 1.2),
+                    main_gpar = grid::gpar(col = "pink", cex = 1.5), 
+                    name = "MyGrob")
+  expect_equal(grid::is.grob(g), TRUE)
+  # test legends
+  grid::grid.newpage()
+  gr <- grid.rasterly(ds,
+                      legend = TRUE, legendlabel = 1:5)
+  expect_equal(is.null(gr), TRUE)
+  grid::grid.newpage()
+  gr <- grid.rasterly(ds,
+                      legend = TRUE, legendlabel = as.character(1:5))
+  expect_equal(is.null(gr), TRUE)
 })
