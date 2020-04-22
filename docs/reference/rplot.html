@@ -136,10 +136,19 @@ recommended for a more versatile method.</p>
     <pre class="usage"><span class='fu'>rplot</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>rplot</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>plot_width</span> <span class='kw'>=</span> <span class='fl'>600</span>,
-  <span class='kw'>plot_height</span> <span class='kw'>=</span> <span class='fl'>600</span>, <span class='kw'>x_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>background</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>reduction_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>glyph</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>rplot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>plot_width</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>plot_height</span> <span class='kw'>=</span> <span class='fl'>600</span>,
+  <span class='kw'>x_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>y_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>background</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
+  <span class='kw'>reduction_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>glyph</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,7 +228,7 @@ spread out -- should the pattern be circular or square? Other glyphs may be adde
   <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>diamonds</span>,
        <span class='fu'>rplot</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>carat</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>price</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>fire_map</span>)
   )
-}</div><div class='img'><img src='rplot-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='rplot-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='rplot-3.png' alt='' width='700' height='433' /></div></pre>
+}</div><div class='img'><img src='rplot-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='rplot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
