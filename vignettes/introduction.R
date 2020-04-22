@@ -134,7 +134,11 @@ knitr::include_graphics(path_concat(imageDirectory, "ggUber.png"))
 #      color = hourColors_map,
 #      background = "black"
 #    ) -> g
-#  g
+#  # `plot(g)` involves axes and legend as well
+#  plot(g, xlab = "latitude", ylab = "longitude",
+#       main = "NewYork Uber Visualization",
+#       legendmain = "hour",
+#       legendlabel = 0:23)
 
 ## ---- out.width= "60%", fig.align="center", echo=FALSE------------------------
 knitr::include_graphics(path_concat(imageDirectory, "uberColor.png"))
@@ -146,7 +150,10 @@ knitr::include_graphics(path_concat(imageDirectory, "uberColor.png"))
 #      color = hourColors_map,
 #      background = "black",
 #      layout = "cover"
-#    )
+#    ) -> g
+#  plot(g, xlab = "latitude", ylab = "longitude",
+#       main = "NewYork Uber Visualization",
+#       legend = FALSE)
 
 ## ---- out.width= "60%", fig.align="center", echo=FALSE------------------------
 knitr::include_graphics(path_concat(imageDirectory, "uberColorCover.png"))
@@ -179,11 +186,13 @@ knitr::include_graphics(path_concat(imageDirectory, "uberColorCover.png"))
 knitr::include_graphics(path_concat(imageDirectory, "meanAgg.png"))
 
 ## ----reduction on any, eval = FALSE, echo = TRUE, fig.align="center", fig.width = 6, fig.height = 5, out.width = "75%", warning=FALSE, message=FALSE, tidy=FALSE----
+#  # zoom in
 #  r %>%
 #    rasterly_points(
 #      reduction_func = "any",
 #      color = c("white", "black")
-#    )
+#    ) %>%
+#    plot(xlim = c(40.3, 41.3))
 
 ## ---- out.width= "60%", fig.align="center", echo=FALSE------------------------
 knitr::include_graphics(path_concat(imageDirectory, "anyAgg.png"))
