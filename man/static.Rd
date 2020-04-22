@@ -77,6 +77,8 @@ grid.rasterly(
 \method{print}{rasterly}(x, ...)
 }
 \arguments{
+\item{rasterlyObj}{A \code{rasterly} object.}
+
 \item{xlim}{The x limits (x1, x2) of the plot.}
 
 \item{ylim}{The y limits (x1, x2) of the plot.}
@@ -123,8 +125,6 @@ grid.rasterly(
 \item{y}{NULL, will be ignored.}
 
 \item{new.page}{display on a new page or not.}
-
-\item{raterlyObj}{A \code{rasterly} object.}
 }
 \description{
 Render a \code{rasterly} object. 

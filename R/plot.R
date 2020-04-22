@@ -2,7 +2,7 @@
 #' @description Render a \code{rasterly} object. 
 #' This object can involve axes, legend, etc to better convert graphics to data.
 #' @name static
-#' @param raterlyObj A \code{rasterly} object.
+#' @param rasterlyObj A \code{rasterly} object.
 #' @param xlim The x limits (x1, x2) of the plot.
 #' @param ylim The y limits (x1, x2) of the plot.
 #' @param xlab A y label for the plot.
