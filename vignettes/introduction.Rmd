@@ -245,8 +245,8 @@ r %>%
 # `plot(g)` involves axes and legend as well
 plot(g, xlab = "latitude", ylab = "longitude", 
      main = "NewYork Uber Visualization",
-     legendmain = "hour",
-     legendlabel = 0:23)
+     legend_main = "hour",
+     legend_label = 0:23)
 ```
 
 ```{r , out.width= "60%", fig.align="center", echo=FALSE}

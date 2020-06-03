@@ -431,10 +431,10 @@ test_that("example works", {
   # test legends
   grid::grid.newpage()
   gr <- grid.rasterly(ds,
-                      legend = TRUE, legendlabel = 1:5)
+                      legend = TRUE, legend_label = 1:5)
   expect_equal(is.null(gr), TRUE)
   grid::grid.newpage()
   gr <- grid.rasterly(ds,
-                      legend = TRUE, legendlabel = as.character(1:5))
+                      legend = TRUE, legend_label = as.character(1:5))
   expect_equal(is.null(gr), TRUE)
 })

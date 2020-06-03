@@ -1,35 +1,34 @@
-#' @title Static rasterly graphics
-#' @description Render a \code{rasterly} object. 
-#' This object can involve axes, legend, etc to better convert graphics to data.
+#' @title Generic Plot
+#' @description Create a static plot based on \code{rasterly} object. 
+#' This function allows users to add axes, legends and other descriptive details when generating `rasterly` objects.
 #' @name static
 #' @param rasterlyObj A \code{rasterly} object.
-#' @param xlim The x limits (x1, x2) of the plot.
-#' @param ylim The y limits (x1, x2) of the plot.
-#' @param xlab A y label for the plot.
-#' @param ylab A x label for the plot.
-#' @param main A title for the plot.
-#' @param sub A sub title for the plot.
-#' @param interpolate A logical value indicating whether to linearly interpolate the image
-#' (the alternative is to use nearest-neighbour interpolation, which gives a more blocky result).
-#' @param axes Show axes or not.
-#' @param legend Show legend or not.
-#' @param legendlabel The label of legend.
-#' @param legendlayer The legend represents which layer in \code{rasterly} object. Default is 1.
-#' @param legendmain The main title of legend
-#' @param axes_gpar \code{\link{gpar}} of axes. It is used to modify the axes' color, size and other aesthetics attributes.
-#' @param label_gpar \code{\link{gpar}} of label. It is used to modify the labels' color, size and other aesthetics attributes.
-#' @param main_gpar \code{\link{gpar}} of main. It is used to modify the main title's color, size and other aesthetics attributes.
-#' @param legend_gpar \code{\link{gpar}} of legend It is used to modify the main title's color, size and other aesthetics attributes.
-#' @param name a character identifier for the grob. Used to find the grob on the display list and/or as a child of another grob.
-#' @param gp A gpar object, typically the output from a call to the function \code{gpar}. This is basically a list of graphical parameter settings.
-#' @param vp a \code{\link{viewport}} object (or \code{NULL}).
-#' @details We provide three functions to produce static graphics, which is based on the API of `grid`, `plot` and `print`.
+#' @param xlim Numeric; the x limits (x1, x2) of the plot. Default is \code{NULL}.
+#' @param ylim Numeric; the y limits (y1, y2) of the plot. Default is \code{NULL}.
+#' @param xlab Character; the label to be used for the \code{x} axis. Default is \code{NULL}.
+#' @param ylab Character; the label to be used for the \code{y} axis. Default is \code{NULL}.
+#' @param main Character; the title to be used for the plot. Default is \code{NULL}.
+#' @param sub sub Character; a subtitle for the plot. Default is \code{NULL}.
+#' @param interpolate Logical. Linearly interpolates the image if \code{TRUE}. Default is \code{FALSE}.
+#' @param axes Logical; should axes be drawn? Default is \code{TRUE}, set to \code{FALSE} to hide axes.
+#' @param legend Logical. Show a figure legend? Default is \code{TRUE}; set to \code{FALSE} to hide the legend.
+#' @param legend_label Character. The label to apply to the figure legend. Default is \code{NULL}, which omits the figure legend label.
+#' @param legend_layer  Numeric. Specify the layer level within the \code{rasterly} object. The default layer level is `1`, which represents the uppermost layer.
+#' @param legend_main Character. The main title to use within the figure legend. The default is \code{NULL}, which omits the figure legend title.
+#' @param axes_gpar Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls axis color, size, and other aesthetics. 
+#' @param label_gpar Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls label color, size, and other aesthetics. 
+#' @param main_gpar Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls the main title's color, size, and other aesthetics.
+#' @param legend_gpar Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls the legend's color, size, and other aesthetics. 
+#' @param name Character. An identifier used to locate the \code{\link{grob}} within the display list and/or as a child of another grob.
+#' @param gp A \code{\link{gpar}} object, typically the output from a call to the function \code{grid::gpar}. This argument represents a list of graphical parameter settings.
+#' @param vp Object of class \code{\link{viewport}}. If provided, \code{\link{rasterlyGrob}} will pass this argument through to \code{grob}. Default is \code{NULL}.
+#' @details We provide three functions to produce static graphics, which is based on the API of \code{grid}, \code{plot} and \code{print}.
 #' \itemize{
 #'  \item{\code{grid}: The \code{rasterlyGrob} and \code{grid.rasterly} are the most flexible data structure. 
-#'  It is nothing but a **\code{grob}**. Users can modify the existing display by the functions provided by \code{grid}}.
-#'  \item{\code{plot.rasterly}: It is a S3 method. The usage is very similar to the classic `plot` function. 
-#'  Users can set the x limits, y limits, x label, y label and etc.}
-#'  \item{\code{print.rasterly}: It is a S3 method, however, it only provides the most basic image raster.}
+#'  These functions produce a **\code{grob}** object. Users can modify the existing display by the functions provided by \code{grid}}.
+#'  \item{\code{plot.rasterly}: The usage of this S3 method is very similar to the classic \code{\link{plot}} function.
+#'   Users can set axis limits via \code{xlim}  and \code{ylim}, as well as the corresponding labels using \code{xlab} and \code{ylab}, among other attributes.}
+#'  \item{\code{print.rasterly}: This S3 method returns only a basic image raster.}
 #' }
 #' @import grid
 #' @export
@@ -37,7 +36,7 @@ rasterlyGrob <- function(rasterlyObj,
                          xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, 
                          main = NULL, sub = NULL, 
                          interpolate = FALSE, axes = TRUE, 
-                         legend = TRUE, legendlabel = NULL, legendlayer = 1, legendmain = NULL,
+                         legend = TRUE, legend_label = NULL, legend_layer = 1, legend_main = NULL,
                          axes_gpar = grid::gpar(col = "black", cex = 1),
                          label_gpar = grid::gpar(col = "black", cex = 1),
                          main_gpar = grid::gpar(col = "black", cex = 1.5),
@@ -50,7 +49,7 @@ rasterlyGrob <- function(rasterlyObj,
   
   if(is.null(image)) {
     message("No image was found.\n 
-            Maybe you forget to pipe layers or set `show_image = FALSE`?")
+             Did you forget to pipe layers or set `show_image = FALSE`?")
     return(grid::grob(name = name, gp = gp, vp = vp))
   }
   
@@ -169,44 +168,44 @@ rasterlyGrob <- function(rasterlyObj,
   
   if(legend) {
     
-    if(is.null(legendlabel)) {
+    if(is.null(legend_label)) {
       
-      legendrange <- range(rasterlyObj$agg[[legendlayer]])
-      legendlabel <- grid::grid.pretty(legendrange)
-      legendAt <- legendlabel
+      legendrange <- range(rasterlyObj$agg[[legend_layer]])
+      legend_label <- grid::grid.pretty(legendrange)
+      legendAt <- legend_label
     } else {
       
-      if(is.numeric(legendlabel)) {
-        legendrange <- range(legendlabel)
+      if(is.numeric(legend_label)) {
+        legendrange <- range(legend_label)
         legendAt <- grid::grid.pretty(legendrange)
-        legendlabel <- legendAt
+        legend_label <- legendAt
       } else {
-        legendrange <- c(1, length(legendlabel))
-        legendAt <- seq(length(legendlabel))
+        legendrange <- c(1, length(legend_label))
+        legendAt <- seq(length(legend_label))
       }
         
     }
     
     legendGrob <- grid::gTree(
       children = grid::gList(
-        if(!is.null(legendmain)) {
+        if(!is.null(legend_main)) {
           grid::textGrob(
-            name = "legendmain",
-            label = as.character(legendmain),
+            name = "legend_main",
+            label = as.character(legend_main),
             x = grid::unit(1, "npc"),
             y = grid::unit(0.85, "npc") + grid::unit(.2, "lines"),
             gp = label_gpar
           )
         },
         grid::yaxisGrob(at = (legendAt - legendrange[1])/diff(range(legendrange)),
-                        label = legendlabel,
+                        label = legend_label,
                         vp = grid::viewport(x=0.5, 
                                             height = grid::unit(0.6-1e-2, "npc")),
                         main = FALSE,
                         name = "legendAxis",
                         gp = legend_gpar
         ),
-        grid::rasterGrob(matrix(rev(rasterlyObj$colors[[legendlayer]]), ncol = 1), 
+        grid::rasterGrob(matrix(rev(rasterlyObj$colors[[legend_layer]]), ncol = 1), 
                          x = grid::unit(1, "npc"),
                          height = grid::unit(0.6, "npc"), 
                          width = grid::unit(0.03, "npc"),
@@ -242,7 +241,7 @@ rasterlyGrob <- function(rasterlyObj,
 grid.rasterly <- function(rasterlyObj, interpolate = FALSE, axes = TRUE, 
                           xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, 
                           main = NULL, sub = NULL, 
-                          legend = TRUE, legendlabel = NULL, legendlayer = 1, legendmain = NULL,
+                          legend = TRUE, legend_label = NULL, legend_layer = 1, legend_main = NULL,
                           axes_gpar = grid::gpar(col = "black", cex = 1),
                           label_gpar = grid::gpar(col = "black", cex = 1),
                           main_gpar = grid::gpar(col = "black", cex = 1.5),
@@ -251,8 +250,8 @@ grid.rasterly <- function(rasterlyObj, interpolate = FALSE, axes = TRUE,
   rg <- rasterlyGrob(rasterlyObj = rasterlyObj, interpolate = interpolate, axes = axes, 
                      xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab, 
                      main = main, sub = sub, 
-                     legend = legend, legendlabel = legendlabel, legendlayer = legendlayer,
-                     legendmain = legendmain,
+                     legend = legend, legend_label = legend_label, legend_layer = legend_layer,
+                     legend_main = legend_main,
                      axes_gpar = axes_gpar,
                      label_gpar = label_gpar,
                      main_gpar = main_gpar,
@@ -268,8 +267,8 @@ grid.rasterly <- function(rasterlyObj, interpolate = FALSE, axes = TRUE,
 #' @param new.page display on a new page or not.
 #' @param ... Other arguments to modify the display.
 plot.rasterly <- function(x, y = NULL, xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, 
-                          main = NULL, legendmain = NULL, sub = NULL, interpolate=FALSE, axes = TRUE, 
-                          legend = TRUE, legendlabel = NULL, legendlayer = 1, new.page = TRUE, ...) {
+                          main = NULL, legend_main = NULL, sub = NULL, interpolate=FALSE, axes = TRUE, 
+                          legend = TRUE, legend_label = NULL, legend_layer = 1, new.page = TRUE, ...) {
   
   if(new.page)
     grid::grid.newpage()
@@ -296,7 +295,7 @@ plot.rasterly <- function(x, y = NULL, xlim = NULL, ylim = NULL, xlab = NULL, yl
   grid.rasterly(x, interpolate = interpolate, axes = axes, 
                 xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab, 
                 main = main, sub = sub, 
-                legend = legend, legendlabel = legendlabel, legendlayer = legendlayer, legendmain = legendmain,
+                legend = legend, legend_label = legend_label, legend_layer = legend_layer, legend_main = legend_main,
                 axes_gpar = grid::gpar(col = axiscolor, cex = axissize),
                 label_gpar = grid::gpar(col = labelcolor, cex = labelsize),
                 main_gpar = grid::gpar(col = maincolor, cex = mainsize),
