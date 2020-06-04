@@ -6,7 +6,7 @@
 \alias{grid.rasterly}
 \alias{plot.rasterly}
 \alias{print.rasterly}
-\title{Static rasterly graphics}
+\title{Annotate and customize rasterly figures}
 \usage{
 rasterlyGrob(
   rasterlyObj,
@@ -19,9 +19,9 @@ rasterlyGrob(
   interpolate = FALSE,
   axes = TRUE,
   legend = TRUE,
-  legendlabel = NULL,
-  legendlayer = 1,
-  legendmain = NULL,
+  legend_label = NULL,
+  legend_layer = 1,
+  legend_main = NULL,
   axes_gpar = grid::gpar(col = "black", cex = 1),
   label_gpar = grid::gpar(col = "black", cex = 1),
   main_gpar = grid::gpar(col = "black", cex = 1.5),
@@ -42,9 +42,9 @@ grid.rasterly(
   main = NULL,
   sub = NULL,
   legend = TRUE,
-  legendlabel = NULL,
-  legendlayer = 1,
-  legendmain = NULL,
+  legend_label = NULL,
+  legend_layer = 1,
+  legend_main = NULL,
   axes_gpar = grid::gpar(col = "black", cex = 1),
   label_gpar = grid::gpar(col = "black", cex = 1),
   main_gpar = grid::gpar(col = "black", cex = 1.5),
@@ -63,13 +63,13 @@ grid.rasterly(
   xlab = NULL,
   ylab = NULL,
   main = NULL,
-  legendmain = NULL,
+  legend_main = NULL,
   sub = NULL,
   interpolate = FALSE,
   axes = TRUE,
   legend = TRUE,
-  legendlabel = NULL,
-  legendlayer = 1,
+  legend_label = NULL,
+  legend_layer = 1,
   new.page = TRUE,
   ...
 )
@@ -79,44 +79,43 @@ grid.rasterly(
 \arguments{
 \item{rasterlyObj}{A \code{rasterly} object.}
 
-\item{xlim}{The x limits (x1, x2) of the plot.}
+\item{xlim}{Numeric; the x limits (x1, x2) of the plot. Default is \code{NULL}.}
 
-\item{ylim}{The y limits (x1, x2) of the plot.}
+\item{ylim}{Numeric; the y limits (y1, y2) of the plot. Default is \code{NULL}.}
 
-\item{xlab}{A y label for the plot.}
+\item{xlab}{Character; the label to be used for the \code{x} axis. Default is \code{NULL}.}
 
-\item{ylab}{A x label for the plot.}
+\item{ylab}{Character; the label to be used for the \code{y} axis. Default is \code{NULL}.}
 
-\item{main}{A title for the plot.}
+\item{main}{Character; the title to be used for the plot. Default is \code{NULL}.}
 
-\item{sub}{A sub title for the plot.}
+\item{sub}{sub Character; a subtitle for the plot. Default is \code{NULL}.}
 
-\item{interpolate}{A logical value indicating whether to linearly interpolate the image
-(the alternative is to use nearest-neighbour interpolation, which gives a more blocky result).}
+\item{interpolate}{Logical. Linearly interpolates the image if \code{TRUE}. Default is \code{FALSE}.}
 
-\item{axes}{Show axes or not.}
+\item{axes}{Logical; should axes be drawn? Default is \code{TRUE}, set to \code{FALSE} to hide axes.}
 
-\item{legend}{Show legend or not.}
+\item{legend}{Logical. Show a figure legend? Default is \code{TRUE}; set to \code{FALSE} to hide the legend.}
 
-\item{legendlabel}{The label of legend.}
+\item{legend_label}{Character. The label to apply to the figure legend. Default is \code{NULL}, which omits the figure legend label.}
 
-\item{legendlayer}{The legend represents which layer in \code{rasterly} object. Default is 1.}
+\item{legend_layer}{Numeric. Specify the layer level within the \code{rasterly} object. The default layer level is `1`, which represents the uppermost layer.}
 
-\item{legendmain}{The main title of legend}
+\item{legend_main}{Character. The main title to use within the figure legend. The default is \code{NULL}, which omits the figure legend title.}
 
-\item{axes_gpar}{\code{\link{gpar}} of axes. It is used to modify the axes' color, size and other aesthetics attributes.}
+\item{axes_gpar}{Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls axis color, size, and other aesthetics.}
 
-\item{label_gpar}{\code{\link{gpar}} of label. It is used to modify the labels' color, size and other aesthetics attributes.}
+\item{label_gpar}{Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls label color, size, and other aesthetics.}
 
-\item{main_gpar}{\code{\link{gpar}} of main. It is used to modify the main title's color, size and other aesthetics attributes.}
+\item{main_gpar}{Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls the main title's color, size, and other aesthetics.}
 
-\item{legend_gpar}{\code{\link{gpar}} of legend It is used to modify the main title's color, size and other aesthetics attributes.}
+\item{legend_gpar}{Object of class \code{gpar}. This graphical parameter (\code{\link{gpar}}) controls the legend's color, size, and other aesthetics.}
 
-\item{name}{a character identifier for the grob. Used to find the grob on the display list and/or as a child of another grob.}
+\item{name}{Character. An identifier used to locate the \code{\link{grob}} within the display list and/or as a child of another grob.}
 
-\item{gp}{A gpar object, typically the output from a call to the function \code{gpar}. This is basically a list of graphical parameter settings.}
+\item{gp}{A \code{\link{gpar}} object, typically the output from a call to the function \code{grid::gpar}. This argument represents a list of graphical parameter settings.}
 
-\item{vp}{a \code{\link{viewport}} object (or \code{NULL}).}
+\item{vp}{Object of class \code{\link{viewport}}. If provided, \code{\link{rasterlyGrob}} will pass this argument through to \code{grob}. Default is \code{NULL}.}
 
 \item{...}{Other arguments to modify the display.}
 
@@ -127,16 +126,43 @@ grid.rasterly(
 \item{new.page}{display on a new page or not.}
 }
 \description{
-Render a \code{rasterly} object. 
-This object can involve axes, legend, etc to better convert graphics to data.
+Create a static plot based on \code{rasterly} object. 
+This function allows users to add axes, legends and other descriptive details when generating `rasterly` objects.
 }
 \details{
-We provide three functions to produce static graphics, which is based on the API of `grid`, `plot` and `print`.
+We provide three functions to produce static graphics, which is based on the API of \code{grid}, \code{plot} and \code{print}.
 \itemize{
  \item{\code{grid}: The \code{rasterlyGrob} and \code{grid.rasterly} are the most flexible data structure. 
- It is nothing but a **\code{grob}**. Users can modify the existing display by the functions provided by \code{grid}}.
- \item{\code{plot.rasterly}: It is a S3 method. The usage is very similar to the classic `plot` function. 
- Users can set the x limits, y limits, x label, y label and etc.}
- \item{\code{print.rasterly}: It is a S3 method, however, it only provides the most basic image raster.}
+ These functions produce a **\code{grob}** object. Users can modify the existing display by the functions provided by \code{grid}}.
+ \item{\code{plot.rasterly}: The usage of this S3 method is very similar to the classic \code{\link{plot}} function.
+  Users can set axis limits via \code{xlim}  and \code{ylim}, as well as the corresponding labels using \code{xlab} and \code{ylab}, among other attributes.}
+ \item{\code{print.rasterly}: This S3 method returns only a basic image raster.}
 }
+}
+\examples{
+if(requireNamespace("grid")) {
+  data <- data.frame(x = rnorm(1e6), 
+                     y = rexp(1e6, 10))
+  # a rasterly object
+  rasterlyObj <- data \%>\% 
+                   rasterly(mapping = aes(x = x, y = y)) \%>\% 
+                   rasterly_points()
+  # Generate a grob
+  rg <- rasterlyGrob(rasterlyObj)
+  ## get the raster grob by `grid::getGrob()`
+  grid::getGrob(rg, "raster")
+  grid::grid.newpage()
+  grid::grid.draw(rg)
+  # or
+  grid::grid.newpage()
+  grid.rasterly(rasterlyObj)
+  # or `plot`
+  plot(rasterlyObj, xlab = "rnorm(1e6)", 
+       ylab = "rexp(1e6, 10)", 
+       main = "This is an arbitrary plot")
+  # or simply print
+  rasterlyObj 
+  ## it is equivalent to `print(rasterlyObj)`
+}
+
 }

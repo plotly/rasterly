@@ -1,4 +1,4 @@
-#' @title Generic Plot
+#' @title Annotate and customize rasterly figures
 #' @description Create a static plot based on \code{rasterly} object. 
 #' This function allows users to add axes, legends and other descriptive details when generating `rasterly` objects.
 #' @name static
@@ -32,6 +32,32 @@
 #' }
 #' @import grid
 #' @export
+#' @examples 
+#' if(requireNamespace("grid")) {
+#'   data <- data.frame(x = rnorm(1e6), 
+#'                      y = rexp(1e6, 10))
+#'   # a rasterly object
+#'   rasterlyObj <- data %>% 
+#'                    rasterly(mapping = aes(x = x, y = y)) %>% 
+#'                    rasterly_points()
+#'   # Generate a grob
+#'   rg <- rasterlyGrob(rasterlyObj)
+#'   ## get the raster grob by `grid::getGrob()`
+#'   grid::getGrob(rg, "raster")
+#'   grid::grid.newpage()
+#'   grid::grid.draw(rg)
+#'   # or
+#'   grid::grid.newpage()
+#'   grid.rasterly(rasterlyObj)
+#'   # or `plot`
+#'   plot(rasterlyObj, xlab = "rnorm(1e6)", 
+#'        ylab = "rexp(1e6, 10)", 
+#'        main = "This is an arbitrary plot")
+#'   # or simply print
+#'   rasterlyObj 
+#'   ## it is equivalent to `print(rasterlyObj)`
+#' }
+#' 
 rasterlyGrob <- function(rasterlyObj, 
                          xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, 
                          main = NULL, sub = NULL, 
