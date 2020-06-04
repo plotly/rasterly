@@ -121,5 +121,5 @@ Display large data set in \code{plotly}
 }
 }
 \seealso{
-\link{ggRasterly}
+\code{\link{ggRasterly}}, \code{\link{plot.rasterly}}
 }

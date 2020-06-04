@@ -166,3 +166,6 @@ if(requireNamespace("grid")) {
 }
 
 }
+\seealso{
+\code{\link{plotRasterly}}, \code{\link{ggRasterly}}
+}

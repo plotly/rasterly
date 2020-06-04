@@ -7,7 +7,7 @@
 #'  One of "stretch" "fill", "contain". see https://plot.ly/r/reference/#Layout_and_layout_style_objects
 #' @return a \code{plotly} widget
 #' 
-#' @seealso \link{ggRasterly}
+#' @seealso \code{\link{ggRasterly}}, \code{\link{plot.rasterly}}
 #' 
 #' @export
 #' 

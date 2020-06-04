@@ -31,6 +31,7 @@
 #'  \item{\code{print.rasterly}: This S3 method returns only a basic image raster.}
 #' }
 #' @import grid
+#' @seealso \code{\link{plotRasterly}}, \code{\link{ggRasterly}}
 #' @export
 #' @examples 
 #' if(requireNamespace("grid")) {
