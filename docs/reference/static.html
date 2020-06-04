@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Static rasterly graphics — static • rasterly</title>
+<title>Annotate and customize rasterly figures — static • rasterly</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,9 +42,9 @@
 
 
 
-<meta property="og:title" content="Static rasterly graphics — static" />
-<meta property="og:description" content="Render a rasterly object. 
-This object can involve axes, legend, etc to better convert graphics to data." />
+<meta property="og:title" content="Annotate and customize rasterly figures — static" />
+<meta property="og:description" content="Create a static plot based on rasterly object. 
+This function allows users to add axes, legends and other descriptive details when generating `rasterly` objects." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -121,14 +121,14 @@ This object can involve axes, legend, etc to better convert graphics to data." /
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Static rasterly graphics</h1>
+    <h1>Annotate and customize rasterly figures</h1>
     
     <div class="hidden name"><code>static.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Render a <code>rasterly</code> object. 
-This object can involve axes, legend, etc to better convert graphics to data.</p>
+    <p>Create a static plot based on <code>rasterly</code> object. 
+This function allows users to add axes, legends and other descriptive details when generating `rasterly` objects.</p>
     </div>
 
     <pre class="usage"><span class='fu'>rasterlyGrob</span>(
@@ -142,9 +142,9 @@ This object can involve axes, legend, etc to better convert graphics to data.</p
   <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>legendlabel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legendlayer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>legendmain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_layer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>legend_main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>axes_gpar</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/gpar.html'>gpar</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>label_gpar</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/gpar.html'>gpar</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>main_gpar</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/gpar.html'>gpar</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1.5</span>),
@@ -165,9 +165,9 @@ This object can involve axes, legend, etc to better convert graphics to data.</p
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>legendlabel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legendlayer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>legendmain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_layer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>legend_main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>axes_gpar</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/gpar.html'>gpar</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>label_gpar</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/gpar.html'>gpar</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>main_gpar</span> <span class='kw'>=</span> <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/gpar.html'>gpar</a></span>(<span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>1.5</span>),
@@ -187,13 +187,13 @@ This object can involve axes, legend, etc to better convert graphics to data.</p
   <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legendmain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>interpolate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>legendlabel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legendlayer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>legend_label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_layer</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>new.page</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )
@@ -210,80 +210,79 @@ This object can involve axes, legend, etc to better convert graphics to data.</p
     </tr>
     <tr>
       <th>xlim</th>
-      <td><p>The x limits (x1, x2) of the plot.</p></td>
+      <td><p>Numeric; the x limits (x1, x2) of the plot. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>ylim</th>
-      <td><p>The y limits (x1, x2) of the plot.</p></td>
+      <td><p>Numeric; the y limits (y1, y2) of the plot. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>xlab</th>
-      <td><p>A y label for the plot.</p></td>
+      <td><p>Character; the label to be used for the <code>x</code> axis. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>ylab</th>
-      <td><p>A x label for the plot.</p></td>
+      <td><p>Character; the label to be used for the <code>y</code> axis. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>main</th>
-      <td><p>A title for the plot.</p></td>
+      <td><p>Character; the title to be used for the plot. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>sub</th>
-      <td><p>A sub title for the plot.</p></td>
+      <td><p>sub Character; a subtitle for the plot. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>interpolate</th>
-      <td><p>A logical value indicating whether to linearly interpolate the image
-(the alternative is to use nearest-neighbour interpolation, which gives a more blocky result).</p></td>
+      <td><p>Logical. Linearly interpolates the image if <code>TRUE</code>. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>axes</th>
-      <td><p>Show axes or not.</p></td>
+      <td><p>Logical; should axes be drawn? Default is <code>TRUE</code>, set to <code>FALSE</code> to hide axes.</p></td>
     </tr>
     <tr>
       <th>legend</th>
-      <td><p>Show legend or not.</p></td>
+      <td><p>Logical. Show a figure legend? Default is <code>TRUE</code>; set to <code>FALSE</code> to hide the legend.</p></td>
     </tr>
     <tr>
-      <th>legendlabel</th>
-      <td><p>The label of legend.</p></td>
+      <th>legend_label</th>
+      <td><p>Character. The label to apply to the figure legend. Default is <code>NULL</code>, which omits the figure legend label.</p></td>
     </tr>
     <tr>
-      <th>legendlayer</th>
-      <td><p>The legend represents which layer in <code>rasterly</code> object. Default is 1.</p></td>
+      <th>legend_layer</th>
+      <td><p>Numeric. Specify the layer level within the <code>rasterly</code> object. The default layer level is `1`, which represents the uppermost layer.</p></td>
     </tr>
     <tr>
-      <th>legendmain</th>
-      <td><p>The main title of legend</p></td>
+      <th>legend_main</th>
+      <td><p>Character. The main title to use within the figure legend. The default is <code>NULL</code>, which omits the figure legend title.</p></td>
     </tr>
     <tr>
       <th>axes_gpar</th>
-      <td><p><code>gpar</code> of axes. It is used to modify the axes' color, size and other aesthetics attributes.</p></td>
+      <td><p>Object of class <code>gpar</code>. This graphical parameter (<code>gpar</code>) controls axis color, size, and other aesthetics.</p></td>
     </tr>
     <tr>
       <th>label_gpar</th>
-      <td><p><code>gpar</code> of label. It is used to modify the labels' color, size and other aesthetics attributes.</p></td>
+      <td><p>Object of class <code>gpar</code>. This graphical parameter (<code>gpar</code>) controls label color, size, and other aesthetics.</p></td>
     </tr>
     <tr>
       <th>main_gpar</th>
-      <td><p><code>gpar</code> of main. It is used to modify the main title's color, size and other aesthetics attributes.</p></td>
+      <td><p>Object of class <code>gpar</code>. This graphical parameter (<code>gpar</code>) controls the main title's color, size, and other aesthetics.</p></td>
     </tr>
     <tr>
       <th>legend_gpar</th>
-      <td><p><code>gpar</code> of legend It is used to modify the main title's color, size and other aesthetics attributes.</p></td>
+      <td><p>Object of class <code>gpar</code>. This graphical parameter (<code>gpar</code>) controls the legend's color, size, and other aesthetics.</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>a character identifier for the grob. Used to find the grob on the display list and/or as a child of another grob.</p></td>
+      <td><p>Character. An identifier used to locate the <code>grob</code> within the display list and/or as a child of another grob.</p></td>
     </tr>
     <tr>
       <th>gp</th>
-      <td><p>A gpar object, typically the output from a call to the function <code>gpar</code>. This is basically a list of graphical parameter settings.</p></td>
+      <td><p>A <code>gpar</code> object, typically the output from a call to the function <code><a href='https://rdrr.io/r/grid/gpar.html'>grid::gpar</a></code>. This argument represents a list of graphical parameter settings.</p></td>
     </tr>
     <tr>
       <th>vp</th>
-      <td><p>a <code>viewport</code> object (or <code>NULL</code>).</p></td>
+      <td><p>Object of class <code>viewport</code>. If provided, <code>rasterlyGrob</code> will pass this argument through to <code>grob</code>. Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -305,21 +304,52 @@ This object can involve axes, legend, etc to better convert graphics to data.</p
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>We provide three functions to produce static graphics, which is based on the API of `grid`, `plot` and `print`.</p><ul>
+    <p>We provide three functions to produce static graphics, which is based on the API of <code>grid</code>, <code>plot</code> and <code>print</code>.</p><ul>
 <li><p><code>grid</code>: The <code>rasterlyGrob</code> and <code>grid.rasterly</code> are the most flexible data structure. 
- It is nothing but a **<code>grob</code>**. Users can modify the existing display by the functions provided by <code>grid</code>.</p></li>
-<li><p><code>plot.rasterly</code>: It is a S3 method. The usage is very similar to the classic `plot` function. 
- Users can set the x limits, y limits, x label, y label and etc.</p></li>
-<li><p><code>print.rasterly</code>: It is a S3 method, however, it only provides the most basic image raster.</p></li>
+ These functions produce a **<code>grob</code>** object. Users can modify the existing display by the functions provided by <code>grid</code>.</p></li>
+<li><p><code>plot.rasterly</code>: The usage of this S3 method is very similar to the classic <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> function.
+  Users can set axis limits via <code>xlim</code>  and <code>ylim</code>, as well as the corresponding labels using <code>xlab</code> and <code>ylab</code>, among other attributes.</p></li>
+<li><p><code>print.rasterly</code>: This S3 method returns only a basic image raster.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='plotRasterly.html'>plotRasterly</a></code>, <code><a href='ggRasterly.html'>ggRasterly</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"grid"</span>)) {
+  <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1e6</span>),
+                     <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>1e6</span>, <span class='fl'>10</span>))
+  <span class='co'># a rasterly object</span>
+  <span class='no'>rasterlyObj</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span>
+                   <span class='fu'><a href='rasterly.html'>rasterly</a></span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>)) <span class='kw'>%&gt;%</span>
+                   <span class='fu'><a href='rasterly_points.html'>rasterly_points</a></span>()
+  <span class='co'># Generate a grob</span>
+  <span class='no'>rg</span> <span class='kw'>&lt;-</span> <span class='fu'>rasterlyGrob</span>(<span class='no'>rasterlyObj</span>)
+  <span class='co'>## get the raster grob by `grid::getGrob()`</span>
+  <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.get.html'>getGrob</a></span>(<span class='no'>rg</span>, <span class='st'>"raster"</span>)
+  <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.newpage.html'>grid.newpage</a></span>()
+  <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.draw.html'>grid.draw</a></span>(<span class='no'>rg</span>)
+  <span class='co'># or</span>
+  <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.newpage.html'>grid.newpage</a></span>()
+  <span class='fu'>grid.rasterly</span>(<span class='no'>rasterlyObj</span>)
+  <span class='co'># or `plot`</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>rasterlyObj</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"rnorm(1e6)"</span>,
+       <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"rexp(1e6, 10)"</span>,
+       <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"This is an arbitrary plot"</span>)
+  <span class='co'># or simply print</span>
+  <span class='no'>rasterlyObj</span>
+  <span class='co'>## it is equivalent to `print(rasterlyObj)`</span>
+}</div><div class='img'><img src='static-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='static-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='static-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='static-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
