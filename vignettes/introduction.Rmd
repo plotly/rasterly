@@ -244,7 +244,7 @@ r %>%
   ) -> g
 # `plot(g)` involves axes and legend as well
 plot(g, xlab = "latitude", ylab = "longitude", 
-     main = "NewYork Uber Visualization",
+     main = "Visualization of NYC Uber Rides in 2014",
      legend_main = "hour",
      legend_label = 0:23)
 ```
@@ -264,7 +264,7 @@ r %>%
     layout = "cover"
   ) -> g
 plot(g, xlab = "latitude", ylab = "longitude", 
-     main = "NewYork Uber Visualization",
+     main = "Visualization of NYC Uber Rides in 2014",
      legend = FALSE)
 ```
 
