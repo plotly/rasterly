@@ -85,7 +85,7 @@ as_raster.list <- function(x, color = NULL, span = 50,
     # weighted x
     summed_M <- Reduce('+', x)
     # used for divide
-    summed_M[summed_M == 0] <- 1
+    summed_M[isZero(summed_M)] <- 1
     red <- green <- blue <- matrix()
     hide <- lapply(1:n,
                    function(i){

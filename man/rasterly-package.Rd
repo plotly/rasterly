@@ -4,11 +4,11 @@
 \name{rasterly-package}
 \alias{rasterly-package}
 \alias{_PACKAGE}
-\title{rasterly: Easily and Rapidly Generate Raster Image Data with Support for Plotly.js}
+\title{rasterly: Easily and Rapidly Generate Raster Image Data with Support for 'Plotly.js'}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-This package aims to easily and rapidly generate raster data in R, even for very large datasets, with an aesthetics-based mapping syntax that should be familiar to users of the \code{ggplot2} package. While \code{rasterly} does not attempt to reproduce the full functionality of the \code{Datashader} graphics pipeline system for Python, the \code{rasterly} API has several core elements in common with that software package.
+It aims to easily and rapidly generate raster data in R, even for very large datasets, with an aesthetics-based mapping syntax that should be familiar to users of the \code{ggplot2} package. While \code{rasterly} does not attempt to reproduce the full functionality of the \code{Datashader} graphics pipeline system for Python, the \code{rasterly} API has several core elements in common with that software package.
 }
 \seealso{
 Useful links:

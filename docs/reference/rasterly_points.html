@@ -129,10 +129,20 @@
     <p>Points layer for <code>rasterly</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rasterly_points</span>(<span class='no'>rastObj</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(), <span class='no'>...</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>reduction_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>glyph</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group_by_data_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>rasterly_points</span>(
+  <span class='no'>rastObj</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(),
+  <span class='no'>...</span>,
+  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>reduction_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>glyph</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group_by_data_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,7 +259,7 @@ large datasets grouping within <code>rasterly</code> may offer better performanc
      <span class='co'># display side by side</span>
      <span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.newpage.html'>grid.newpage</a></span>()
      <span class='kw pkg'>gridExtra</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html'>grid.arrange</a></span>(
-        <span class='kw'>grobs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'>rasterlyGrob</span>(<span class='no'>ds1</span>), <span class='fu'>rasterlyGrob</span>(<span class='no'>ds2</span>)),
+        <span class='kw'>grobs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='static.html'>rasterlyGrob</a></span>(<span class='no'>ds1</span>), <span class='fu'><a href='static.html'>rasterlyGrob</a></span>(<span class='no'>ds2</span>)),
         <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>,
         <span class='kw'>top</span> <span class='kw'>=</span> <span class='st'>"'weighted' layout versus 'cover' layout"</span>
      )

@@ -6,7 +6,7 @@
 #' @param point_size The size of points.
 #' @return a `ggplot` object
 #' 
-#' @seealso \link{plotRasterly}
+#' @seealso \code{\link{plotRasterly}}, \code{\link{plot.rasterly}}
 #' 
 #' @examples
 #' \dontrun{

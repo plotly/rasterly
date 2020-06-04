@@ -115,5 +115,5 @@ if(requireNamespace("ggplot2") && requireNamespace("data.table") &&
 }
 }
 \seealso{
-\link{plotRasterly}
+\code{\link{plotRasterly}}, \code{\link{plot.rasterly}}
 }
